@@ -1,0 +1,30 @@
+#include "Position.h"
+
+
+
+
+Position::Position() :x(0.), y(0.), z(0.) {}
+Position::Position(double xx, double yy) :x(xx), y(yy), z(0.) {}
+Position::Position(double xx, double yy, double zz) :x(xx), y(yy), z(zz) {}
+
+Position & Position::operator += (const Position rhs) {
+
+	x += rhs.x;
+	y += rhs.y;
+	z += rhs.z;
+
+	return *this;
+}
+
+
+
+
+Position operator * (const Position lhs, const Size rhs) {
+
+	Position ret(lhs);
+
+	ret.x *= rhs.w;
+	ret.y *= rhs.h;
+
+	return ret;
+}
