@@ -14,6 +14,7 @@ class Keyboard {
 
 
 public:
+	virtual ~Keyboard() {}
 	bool isKeyDown(Key key);
 	bool isKeyUp(Key key);
 	bool isKeyDownOnce(Key key);

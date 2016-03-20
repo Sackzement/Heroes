@@ -4,12 +4,24 @@
 #include <iostream>
 
 
+
+
 Texture::Texture() 
 	:texture(nullptr),
-	 name(""),
-	 w(0),
-	 h(0)
+	 name("")
 {}
+Texture::Texture(int w, int h)
+	: texture(nullptr),
+	name("")
+{
+	size.w = w;
+	size.h = h;
+}
+Texture::Texture(const char* name)
+	: texture(nullptr),
+	name(name)
+{}
+
 
 
 
@@ -21,30 +33,57 @@ Texture:: operator SDL_Texture* () {
 
 
 bool Texture::load() {
-	return false;
+
+	return load(name);
 }
+
+
+
 bool Texture:: load (const char* name) {
 
-		// load surface
-		SDL_Surface* loadedSurf = IMG_Load(name);
-		if (loadedSurf == nullptr) { cout << endl << SDL_GetError(); return false; }
+	// CREATE NEW FROM SIZE
+	if (name == "") {
+		if ( size.w < 1 || size.h < 1 )   {
+			cout << endl << "Texture Size too small";
+			return false;
+		}
 
-		
+    SDL_Texture* createdTexture=SDL_CreateTexture(game.renderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,(int)size.w,(int)size.h);
+		if (createdTexture == nullptr) { cout << endl << SDL_GetError();  return false; }
 
-		// create texture from surface
-		texture = SDL_CreateTextureFromSurface(game.renderer, loadedSurf);
-		int width = loadedSurf->w,
-			height = loadedSurf->h;
-		SDL_FreeSurface(loadedSurf);
+		texture = createdTexture;
+	}
+	// LOAD FROM FILE
+	else {
+		//check if already exists
+		try {
+			Texture& tex = game.textures.at(name);
+			*this = tex;
+		}
+		catch (out_of_range ex) {
+			// load surface
+			string str = game.path + name;
+			SDL_Surface* loadedSurf = IMG_Load(str.c_str());
+			if (loadedSurf == nullptr) { cout << endl << SDL_GetError(); return false; }
+			
+			// create texture from surface
+			SDL_Texture* loadedTexture = SDL_CreateTextureFromSurface(game.renderer, loadedSurf);
+			int width = loadedSurf->w,
+				height = loadedSurf->h;
+			SDL_FreeSurface(loadedSurf);
+			if (loadedTexture == nullptr) { cout << endl << SDL_GetError();  return false; }
 
-		if (texture == nullptr) { cout << endl << SDL_GetError();  return false; }
+			texture = loadedTexture;
+			this->name = name;
+			size.w = width;
+			size.h = height;
 
-		this->texture  = texture;
-		this->name     = name;
-		this->w        = width;
-		this->h        = height;
+			game.textures[name] = *this;
+		}
+	}
 
-		return true;
+
+	return true;
 }
  
 
@@ -54,20 +93,22 @@ void Texture::unload() {
 	texture = nullptr;
 
 	name = "";
-	w = h = 0;
+	Transform::Transform();
 
 }
 
 
 void Texture::render(Transform offset) const {
 
-	offset << *this;
+	// transfer pixel to units
+	/*Transform scale = *this;
+	scale.size.w = game.scene->pixelToUnits((int)size.w);
+	scale.size.h = game.scene->pixelToUnits((int)size.h);
 
+	offset << *this;*/
+	
 	SDL_Rect dstRect = offset.toRect();
-
-	dstRect.w *= w;
-	dstRect.h *= h;
-
+	
 
 	SDL_RenderCopyEx(
 		game.renderer, // renderer

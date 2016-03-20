@@ -80,8 +80,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\build\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>..\build\$(PlatformTarget)\$(Configuration)\intermediate\</IntDir>
-    <IncludePath>C:\dev\libs\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\libs\lib_files\$(PlatformTarget)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\libs\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -166,11 +166,14 @@
     <ClCompile Include="..\src\Events.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
     <ClCompile Include="..\src\Keyboard.cpp" />
+    <ClCompile Include="..\src\Level.cpp" />
     <ClCompile Include="..\src\Libs.cpp" />
     <ClCompile Include="..\src\Log.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\MainMenu.cpp" />
+    <ClCompile Include="..\src\Mouse.cpp" />
     <ClCompile Include="..\src\Object.cpp" />
+    <ClCompile Include="..\src\Options.cpp" />
     <ClCompile Include="..\src\Player.cpp" />
     <ClCompile Include="..\src\Point.cpp" />
     <ClCompile Include="..\src\Position.cpp" />
@@ -187,11 +190,14 @@
     <ClInclude Include="..\src\Game.h" />
     <ClInclude Include="..\src\Input.h" />
     <ClInclude Include="..\src\Keyboard.h" />
+    <ClInclude Include="..\src\Level.h" />
     <ClInclude Include="..\src\Libs.h" />
     <ClInclude Include="..\src\Load.h" />
     <ClInclude Include="..\src\Log.h" />
     <ClInclude Include="..\src\MainMenu.h" />
+    <ClInclude Include="..\src\Mouse.h" />
     <ClInclude Include="..\src\Object.h" />
+    <ClInclude Include="..\src\Options.h" />
     <ClInclude Include="..\src\Player.h" />
     <ClInclude Include="..\src\Point.h" />
     <ClInclude Include="..\src\Position.h" />

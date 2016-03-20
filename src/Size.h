@@ -7,6 +7,7 @@ struct Size {
 	
 	Size();
 	Size(double ww, double hh);
+	virtual ~Size() {}
 
 	Size & operator *= (const Size rhs);
 	Size & operator *= (const double rhs);

@@ -2,38 +2,75 @@
 #include "game.h"
 
 Button::Button()
-	: m_state(bt_state::normal)
-{}
+	: state(bt_state::normal)
+{
+	addLoad(&textureNormal);
+	addLoad(&textureHighlighted);
+	addLoad(&texturePressed);
+
+	setFunction([]() {});
+}
 void Button::setTextures(Texture normal, Texture highlighted, Texture pressed)
 {
-	m_textureNormal = normal;
-	m_textureHighlighted = highlighted;
-	m_texturePressed = pressed;
+	textureNormal = normal;
+	textureHighlighted = highlighted;
+	texturePressed = pressed;
+}
+void Button::setFunction(function<void()> func) {
+	pressfunction = func;
+}
+void Button::setState(bt_state st) {
+	state = st;
 }
 void Button::highlight() {
-	m_state = bt_state::highlighted;
+	state = bt_state::highlighted;
 }
 void Button::unhighlight() {
-	m_state = bt_state::normal;
+	state = bt_state::normal;
 }
 void Button::press()
 {
-	m_state = bt_state::pressed;
+	state = bt_state::pressed;
 }
+
+
+void Button::input() {
+
+	Transform offset = *(game.scene);
+	offset << *this;
+	SDL_Rect rect = offset.toRect();
+
+	SDL_Point point = { game.mouse.x(),game.mouse.y() };
+
+	SDL_bool res = SDL_PointInRect(&point, &rect);
+	if (res) {
+		if (game.mouse.isButtonUp(SDL_BUTTON_LEFT))
+		state = bt_state::highlighted;
+		else {
+			state = bt_state::pressed;
+			pressfunction();
+		}
+
+	}
+	else
+		state = bt_state::normal;
+}
+
+
 void Button::render(Transform offset) const {
 
 	Texture toDraw;
 
-	switch (m_state)
+	switch (state)
 	{
 	case bt_state::normal:
-		toDraw = m_textureNormal;
+		toDraw = textureNormal;
 		break;
 	case bt_state::highlighted:
-		toDraw = m_textureHighlighted;
+		toDraw = textureHighlighted;
 		break;
 	case bt_state::pressed:
-		toDraw = m_texturePressed;
+		toDraw = texturePressed;
 		break;
 	}
 
@@ -41,5 +78,6 @@ void Button::render(Transform offset) const {
 
 	SDL_Rect dst = offset.toRect();
 
-	SDL_RenderCopyEx(game.renderer, toDraw, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
+	toDraw.render(offset);
+	//SDL_RenderCopyEx(game.renderer, toDraw, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
 }

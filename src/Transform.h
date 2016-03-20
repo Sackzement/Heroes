@@ -14,7 +14,11 @@ struct Transform {
 
 	Transform();
 	Transform(Position p, Size s, double r);
+	virtual ~Transform() {}
 
 	Transform & operator<< (const Transform rhs);
 	SDL_Rect toRect() const;
+
+	SDL_bool checkCollision(Transform other);
+
 };

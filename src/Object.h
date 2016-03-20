@@ -14,6 +14,7 @@ using std::vector;
 struct Object : virtual public Transform, virtual public Load, virtual public Input, virtual public Update, virtual public Render  {
 
 	Object();
+	virtual ~Object() {}
 
 	vector<Load*>  loads;
 	vector<Input*>  inputs;
@@ -29,11 +30,7 @@ struct Object : virtual public Transform, virtual public Load, virtual public In
 	void update() override;
     void render(Transform offset) const override;
 
-	void addChild(Object * ch);
-	void addChild(Load   * lo);
-	void addChild(Input  * in);
-	void addChild(Update * up);
-	void addChild(Render * re);
+	void addObject(Object * ch);
 
 	void addLoad  (Load   * lo);
 	void addInput (Input  * in);

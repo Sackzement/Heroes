@@ -60,6 +60,15 @@
     <ClCompile Include="..\src\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Mouse.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Options.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Level.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Game.h">
@@ -123,6 +132,15 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Player.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Mouse.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Options.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Level.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

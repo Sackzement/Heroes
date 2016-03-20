@@ -8,7 +8,7 @@ bool Window::create() {
 	if (m_window)
 		SDL_DestroyWindow(m_window);
 
-	m_window = SDL_CreateWindow("Ducklight", 0, 0, 1920, 1080, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+	m_window = SDL_CreateWindow("Heroes", 100, 100, 800, 450, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
 	if (!m_window) {
 		Log(std::string("\n") + SDL_GetError());
@@ -50,7 +50,7 @@ bool Renderer::create() {
 		Log(std::string("\n") + SDL_GetError());
 		return false;
 	}
-
+	
 	return true;
 }
 void Renderer::destroy() {

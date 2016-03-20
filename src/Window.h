@@ -7,6 +7,9 @@
 class Window {
 	SDL_Window*  m_window;
 public:
+
+
+	virtual ~Window() {}
 	int w, h;
 
 
@@ -23,9 +26,12 @@ public:
 
 
 
-struct Renderer {
+class Renderer {
 	SDL_Renderer*  m_renderer;
 public:
+
+	virtual ~Renderer() {}
+
 	bool create();
 	void destroy();
 	operator SDL_Renderer* () const;

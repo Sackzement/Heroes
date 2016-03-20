@@ -1,60 +1,74 @@
 #include "MainMenu.h"
-#include "Button.h"
-#include "Player.h"
 #include "game.h"
+#include "Options.h"
 
 MainMenu::MainMenu() {
+	addObject(&player);
 
+	btn_start.pos = { 0.2,1 };
+	btn_options.pos = { 2,5 };
+	btn_quit.pos = { 2,8 };
+
+	Texture btn_tex = Texture(780, 66);
+	btn_start.setTextures(btn_tex, btn_tex, btn_tex);
+	btn_options.setTextures(btn_tex, btn_tex, btn_tex);
+	btn_quit.setTextures(btn_tex, btn_tex, btn_tex);
+
+	addObject(&btn_start);
+	addObject(&btn_options);
+	addObject(&btn_quit);
+
+	btn_start.setFunction([]() {game.switchToScene(scene_num::level); });
+	btn_options.setFunction([]() {game.switchToScene(scene_num::options); });
+	btn_quit.setFunction([]() { game.quit(); } );
 }
 
 // LOAD ==================
-bool MainMenu::load() 
+bool MainMenu::load() {
+	if (!loadChildren()) return false;
+
+
+	//  COLORIZE BUTTON TEXTURES
+	SDL_SetRenderTarget(game.renderer,btn_start.textureNormal);
+	SDL_SetRenderDrawColor(game.renderer, 255, 0, 0, 0);
+	SDL_RenderClear(game.renderer);
+	SDL_SetRenderTarget(game.renderer, btn_start.textureHighlighted);
+	SDL_SetRenderDrawColor(game.renderer, 166, 0, 0, 0);
+	SDL_RenderClear(game.renderer);
+	SDL_SetRenderTarget(game.renderer, btn_start.texturePressed);
+	SDL_SetRenderDrawColor(game.renderer, 100, 0, 0, 0);
+	SDL_RenderClear(game.renderer);
+
+
+	SDL_SetRenderTarget(game.renderer, btn_options.textureNormal);
+	SDL_SetRenderDrawColor(game.renderer, 0, 255, 0, 0);
+	SDL_RenderClear(game.renderer);
+	SDL_SetRenderTarget(game.renderer, btn_options.textureHighlighted);
+	SDL_SetRenderDrawColor(game.renderer, 0, 166, 0, 0);
+	SDL_RenderClear(game.renderer);
+	SDL_SetRenderTarget(game.renderer, btn_options.texturePressed);
+	SDL_SetRenderDrawColor(game.renderer, 0, 100, 0, 0);
+	SDL_RenderClear(game.renderer);
+
+
+	SDL_SetRenderTarget(game.renderer, btn_quit.textureNormal);
+	SDL_SetRenderDrawColor(game.renderer, 0, 0, 100,0 );
+	SDL_RenderClear(game.renderer);
+	SDL_SetRenderTarget(game.renderer, btn_quit.textureHighlighted);
+	SDL_SetRenderDrawColor(game.renderer, 0, 0, 166, 0);
+	SDL_RenderClear(game.renderer);
+	SDL_SetRenderTarget(game.renderer, btn_quit.texturePressed);
+	SDL_SetRenderDrawColor(game.renderer, 0, 0, 255, 0);
+	SDL_RenderClear(game.renderer);
+
+
+	return true;
+}
+
+void MainMenu::input()
 {
-	loadButtons();
-
-	Player* player = new Player();
-	addInput(player);
-	addUpdate(player);
-	addRender(player);
-
-	loadChildren();
-	return true;
+	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
+		game.quit();
+	inputChildren();
 }
 
-
-
-
-
-bool MainMenu::loadButtons() {
-	int btn_w = 1920 / 6;
-	int btn_h = btn_w / 3;
-
-	SDL_Texture* texs[3];
-
-	for (int i = 0; i<3; ++i)
-		texs[i] = SDL_CreateTexture(game.renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, btn_w, btn_h);
-
-	for (int i = 0; i < 3; ++i) {
-		SDL_SetRenderTarget(game.renderer, texs[i]);
-		SDL_SetRenderDrawColor(game.renderer, 255 - (i * 50), 0, 0, 0);
-		SDL_RenderClear(game.renderer);
-	}
-
-
-	Button * Button_Start = new Button();//, Button_Settings, Button_Quit;
-
-	Button_Start->pos.x = 4;
-	Button_Start->pos.y = 3;
-	Button_Start->size.w = 2;
-	Button_Start->size.h = 2. / 3.;
-
-	Texture texx[3];
-	for (int i = 0; i < 3; ++i)
-		texx[i].texture = texs[i];
-
-	Button_Start->setTextures(texx[0], texx[1], texx[2]);
-
-	addRender(Button_Start);
-
-	return true;
-}

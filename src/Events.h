@@ -10,6 +10,7 @@ private:
 public:
 	Events();
 
+	virtual ~Events() {}
 	void pollEvents();
 	const std::vector<SDL_Event>& getPolledEvents() const;
 	//void executePolledEvents();

@@ -6,6 +6,7 @@ struct Position {
 	double x,y,z;
 	
 	Position();
+	virtual ~Position() {}
 	Position(double xx, double yy);
 	Position(double xx, double yy, double zz);
 

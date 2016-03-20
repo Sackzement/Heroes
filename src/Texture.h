@@ -16,10 +16,13 @@ struct Texture :virtual public Transform, virtual public Load, virtual public Re
 
 	SDL_Texture*  texture = nullptr;
 	const char* name = "";
-	int w = 0, h = 0;
 
 
 	Texture();
+	Texture(int w, int h);
+	Texture(const char* name);
+	virtual ~Texture() {}
+
 	operator SDL_Texture* ();
 
 	        bool load() override;

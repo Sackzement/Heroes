@@ -21,12 +21,17 @@ Transform &Transform:: operator<< (const Transform rhs) {
 }
 SDL_Rect Transform::toRect() const
 {
-	SDL_Rect ret = { static_cast<int>(pos.x),
-		static_cast<int>(pos.y),
-		static_cast<int>(size.w),
-		static_cast<int>(size.h) };
+	SDL_Rect ret = { (int)pos.x, (int)pos.y,
+		             (int)size.w,(int)size.h };
 
 	return ret;
+}
+
+SDL_bool Transform::checkCollision(Transform other)
+{
+	SDL_Rect rectA = toRect();
+	SDL_Rect rectB = other.toRect();
+	return SDL_HasIntersection(&rectA,&rectB);
 }
 
 

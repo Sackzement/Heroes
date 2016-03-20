@@ -28,6 +28,7 @@ void Object::render(Transform offset) const {
 
 	offset << *this;
 
+	SDL_SetRenderDrawColor(game.renderer, 255, 255, 255, 0);
 	SDL_RenderDrawPoint(game.renderer, (int)offset.pos.x, (int)offset.pos.y);
 
 	SDL_Rect rect = offset.toRect();
@@ -38,30 +39,25 @@ void Object::render(Transform offset) const {
 
 
 
-void Object::addChild(Object * ch) {
+void Object::addObject(Object * obj) {
 
-}
-void Object::addChild(Load   * lo) {
-
-}
-void Object::addChild(Input  * in) {
-
-}
-void Object::addChild(Update * up) {
-
-}
-void Object::addChild(Render * re) {
-
+	loads.push_back(obj);
+	inputs.push_back(obj);
+	updates.push_back(obj);
+	renders.push_back(obj);
 }
 
 void Object::addLoad(Load   * lo) {
-
+	if (lo != nullptr)
+		loads.push_back(lo);
 }
 void Object::addInput(Input  * in) {
-
+	if (in != nullptr)
+		inputs.push_back(in);
 }
 void Object::addUpdate(Update * up) {
-
+	if (up != nullptr)
+		updates.push_back(up);
 }
 void Object::addRender(Render * re) {
 	if (re != nullptr)

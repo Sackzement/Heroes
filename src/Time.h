@@ -18,6 +18,7 @@ private:
 public:
 
 	Time();
+	virtual ~Time() {}
 
 	void  setFps(Uint16 newFPS);
 	void  resetDelay();
