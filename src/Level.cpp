@@ -6,6 +6,34 @@ const char * filename_wall_img = "res\\wall.png";
 
 
 
+
+
+Level::Level() {
+	addObject(&walls);
+	addObject(&player);
+}
+
+void Level::input() {
+	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
+		game.switchToScene(scene_num::mainmenu);
+
+	inputChildren();
+}
+
+void Level::render() const {
+
+	SDL_Rect rect = { (int)pos.x,(int)pos.y,int(size.w*game.w),int(size.h*game.h) };
+	SDL_SetRenderDrawColor(game.renderer, 0xb4, 0xd4, 0xee, 0x0);
+	SDL_RenderFillRect(game.renderer, &rect);
+
+	renderChildren(*this);
+}
+
+
+
+
+
+
 struct Wall :virtual public Transform,virtual public Load,virtual public Render {
 	Texture tex;
 	Wall() { tex.name = filename_wall_img; }
@@ -21,7 +49,13 @@ struct Wall :virtual public Transform,virtual public Load,virtual public Render 
 		tex.render(offset);
 	}
 };
-Map::Map() {
+
+
+
+Walls::Walls() {
+
+
+
 	const int num_top = 28;
 	const int num_sides = 16 - 2;
 	const double wall_size = 9./16. - .06;
@@ -54,7 +88,7 @@ Map::Map() {
 	// generate right Walls
 }
 
-void Map::render(Transform offset) const
+void Walls::render(Transform offset) const
 {
 	offset << *this;
 	renderChildren(offset);
@@ -65,15 +99,3 @@ void Map::render(Transform offset) const
 
 
 
-Level::Level() {
-	addObject(&map);
-}
-
-
-
-void Level::input() {
-	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
-		game.switchToScene(scene_num::mainmenu);
-
-	inputChildren();
-}

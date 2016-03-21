@@ -16,6 +16,8 @@ struct Transform {
 	Transform(Position p, Size s, double r);
 	virtual ~Transform() {}
 
+	void set(double xx, double yy, double zz, double ww, double hh, double rr);
+
 	Transform & operator<< (const Transform rhs);
 	SDL_Rect toRect() const;
 

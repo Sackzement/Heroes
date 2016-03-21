@@ -6,8 +6,10 @@
 
 enum struct scene_num {
 	mainmenu,
+	level,
+	stats,
 	options,
-	level
+	credits,
 };
 
 
@@ -20,7 +22,7 @@ struct Scene : virtual public Object {
 	bool load() override;
 	double pixelToUnits(double pix);
 
-	void render() const;
+	virtual void render() const;
 	using Object::render;
 
 };

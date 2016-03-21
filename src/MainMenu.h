@@ -2,18 +2,35 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Button.h"
+#include "Text.h"
 
 class MainMenu : virtual public Scene {
 
 
 public:
+
+	Text title,
+		startgame, stats, options, credits, quit;
+	Uint8 selection;
+
+
+
+
+
+
 	MainMenu();
 	virtual ~MainMenu() {}
-	Player player;
-	Button btn_start, btn_options, btn_quit;
+
 
 	bool load() override;
 	void input() override;
+	void update() override;
+	void render() const override;
+
+
+
+protected:
+	void renderBG() const;
 
 
 };

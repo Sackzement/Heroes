@@ -13,6 +13,8 @@
 Game game;
 
 
+const char * filename_font_file = "res\\Zillah Modern Expanded.ttf";
+const int font_size = 128;
 
 
 
@@ -38,9 +40,15 @@ int Game::start(int argc, char** argv) {
 	window.create();
 	renderer.create();
 
+	// load font
+	string str = path + filename_font_file;
+	font = TTF_OpenFont(str.c_str(), font_size);
+
+
 	scene = new MainMenu();
 	scene->rescale();
 	scene->load();
+
 
 	time.resetDelay();
 

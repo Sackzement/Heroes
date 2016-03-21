@@ -22,6 +22,13 @@ void Button::setFunction(function<void()> func) {
 void Button::setState(bt_state st) {
 	state = st;
 }
+bool Button::isHighlighted()
+{
+	if (state == bt_state::highlighted)
+		return true;
+	else
+		return false;
+}
 void Button::highlight() {
 	state = bt_state::highlighted;
 }
@@ -52,8 +59,6 @@ void Button::input() {
 		}
 
 	}
-	else
-		state = bt_state::normal;
 }
 
 

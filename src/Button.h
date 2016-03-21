@@ -29,6 +29,7 @@ public:
 	void setTextures(Texture normal, Texture highlighted, Texture pressed);
 	void setFunction(function<void()> func);
 	void setState(bt_state st);
+	bool isHighlighted();
 	void highlight();
 	void unhighlight();
 	void press();

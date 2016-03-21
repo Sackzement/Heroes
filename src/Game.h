@@ -8,6 +8,7 @@ using namespace std;
 #include "Scene.h"
 #include "Texture.h"
 #include <functional>
+#include <SDL/SDL_ttf.h>
 
 
 
@@ -39,6 +40,8 @@ public:
 
 	 Window window;
 	 Renderer renderer;
+
+	 TTF_Font* font;
 
 	 std::map<const string,Texture> textures;
 

@@ -11,6 +11,13 @@
 Transform::Transform() :pos(), size(), rot(0.) {}
 Transform::Transform(Position p, Size s, double r) :pos(p), size(s), rot(r) {}
 
+void Transform::set(double xx, double yy, double zz, double ww, double hh, double rr)
+{
+	pos = Position(xx,yy,zz);
+	size = Size(ww, hh);
+	rot = rr;
+}
+
 Transform &Transform:: operator<< (const Transform rhs) {
 
 	pos += rhs.pos * size;
