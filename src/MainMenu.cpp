@@ -12,12 +12,12 @@ MainMenu::MainMenu() : selection(0) {
 	credits.text = "CREDITS";
 	quit.text = "QUIT";
 
-	title    .set(1. , 1. , 0.,14., 1.5, 0.);
-	startgame.set(3. , 3. , 0.,10., 1.5, 0.);
-	stats    .set(4. , 4. , 0., 8., 1.5, 0.);
-	options  .set(3.5, 5. , 0., 9., 1.5, 0.);
-	credits  .set(3.5, 6. , 0., 9., 1.5, 0.);
-	quit     .set(4. , 7. , 0., 8., 1.5, 0.);
+	title    .set(0. , -4.5 + 1.  , 0.,14., 1.5, 0.);
+	startgame.set(0. , -4.5 + 3.5 , 0.,10., 1.5, 0.);
+	stats    .set(0. , -4.5 + 4.5 , 0., 8., 1.5, 0.);
+	options  .set(0. , -4.5 + 5.5 , 0., 9., 1.5, 0.);
+	credits  .set(0. , -4.5 + 6.5 , 0., 9., 1.5, 0.);
+	quit     .set(0. , -4.5 + 7.5 , 0., 8., 1.5, 0.);
 
 	addLoad(&title);
 	addLoad(&startgame);
@@ -126,22 +126,6 @@ void MainMenu::input()
 			selection = 1;
 		else
 			++selection;
-
-		/*
-		if (btn_start.isHighlighted()) {
-			btn_start.unhighlight();
-			btn_options.highlight();
-		}
-		else if (btn_options.isHighlighted()) {
-			btn_options.unhighlight();
-			btn_quit.highlight();
-		}
-		else if (btn_quit.isHighlighted()) {
-			btn_quit.unhighlight();
-			btn_start.highlight();
-		}
-		else
-			btn_start.highlight();*/
 	}
 
 	else if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_UP)) {
@@ -150,27 +134,10 @@ void MainMenu::input()
 			selection = 5;
 		else
 			--selection;
-
-		/*
-		if (btn_start.isHighlighted()) {
-			btn_start.unhighlight();
-			btn_quit.highlight();
-		}
-		else if (btn_options.isHighlighted()) {
-			btn_options.unhighlight();
-			btn_start.highlight();
-		}
-		else if (btn_quit.isHighlighted()) {
-			btn_quit.unhighlight();
-			btn_options.highlight();
-		}
-		else
-			btn_quit.highlight();*/
 	}
 
 
 	inputChildren();
-
 
 }
 
@@ -183,29 +150,19 @@ void MainMenu::update()
 
 
 void renderRect(double xx, double yy, double ww, double hh, Uint8 r, Uint8 g, Uint8 b, Uint8 a ) {
-	/*  X        Y
-	0  =  0    0 = 0
-	16 = 1919  9 = 1079
-	*/
-	double window_ratio_x = game.window.w - 1;
-	double window_ratio_y = game.window.h - 1;
 
-	double pix_x = (xx / game.w) * window_ratio_x;
-	double pix_w = (ww / game.w) * window_ratio_x;
-	double pix_y = (yy / game.h) * window_ratio_y;
-	double pix_h = (hh / game.h) * window_ratio_y;
+	SDL_Rect rect = {	(int)xx + (game.window.w/2),
+						(int)yy + (game.window.h/2),
+						(int)ww,
+						(int)hh  };
+	rect.x -= rect.w / 2;
+	rect.y -= rect.h / 2;
 
-	pix_x = floor(pix_x);
-	pix_y = floor(pix_y);
-	pix_w = ceil(pix_w);
-	pix_h = ceil(pix_h);
-
-	SDL_Rect rect = {(int)pix_x,(int)pix_y,(int)pix_w,(int)pix_h};
-
-	Uint8 old_r = r,
-		old_g = g,
-		old_b = b,
-		old_a = a;
+	Uint8	old_r,
+			old_g,
+			old_b,
+			old_a;
+	SDL_GetRenderDrawColor(game.renderer, &old_r, &old_g, &old_b, &old_a);
 
 	SDL_SetRenderDrawColor(game.renderer, r, g, b, a);
 	SDL_RenderFillRect(game.renderer, &rect);
@@ -215,14 +172,30 @@ void renderRect(double xx, double yy, double ww, double hh, Uint8 r, Uint8 g, Ui
 void MainMenu::render() const
 {
 	// render BG color
-	SDL_Rect rect = { (int)pos.x,(int)pos.y,int(size.w*game.w),int(size.h*game.h) };
+	SDL_Rect rect = {	(int)pos.x + (game.window.w/2) ,
+						(int)pos.y + (game.window.h/2) ,
+						int(size.w*game.w),
+						int(size.h*game.h)  };
+	rect.x -= rect.w / 2;
+	rect.y -= rect.h / 2;
+
 	SDL_SetRenderDrawColor(game.renderer,0x3b,0x32, 0x24,0x0);
 	SDL_RenderFillRect(game.renderer, &rect);
 
 
 	// render selection
-	if (selection >= 1 && selection <= 5)
-		renderRect(0., 3. + ((selection - 1) * 1.), 16., 1.2, 0, 0, 0, 22);
+	if (selection >= 1 && selection <= 5) {
+
+		Transform offset = *this;
+		Transform sele;
+		sele.pos.y = -1. + double(selection - 1);
+		sele.size.w = 16.;
+		sele.size.h = 1.2;
+		offset << sele;
+
+		renderRect(offset.pos.x, offset.pos.y, offset.size.w, offset.size.h, 255, 0, 0, 0);
+	}
+
 
 
 	// render text

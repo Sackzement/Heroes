@@ -72,6 +72,18 @@
     <ClCompile Include="..\src\Text.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Credits.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Stats.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rect.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Line.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Game.h">
@@ -147,6 +159,18 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Text.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Credits.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Stats.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rect.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Line.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

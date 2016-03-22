@@ -100,14 +100,10 @@ void Texture::unload() {
 
 void Texture::render(Transform offset) const {
 
-	// transfer pixel to units
-	/*Transform scale = *this;
-	scale.size.w = game.scene->pixelToUnits((int)size.w);
-	scale.size.h = game.scene->pixelToUnits((int)size.h);
-
-	offset << *this;*/
-	
 	SDL_Rect dstRect = offset.toRect();
+
+	dstRect.x += (game.window.w / 2) - (dstRect.w / 2);
+	dstRect.y += (game.window.h / 2) - (dstRect.h / 2);
 	
 
 	SDL_RenderCopyEx(

@@ -22,7 +22,13 @@ void Level::input() {
 
 void Level::render() const {
 
-	SDL_Rect rect = { (int)pos.x,(int)pos.y,int(size.w*game.w),int(size.h*game.h) };
+	SDL_Rect rect = {	(int)pos.x + (game.window.w / 2),
+						(int)pos.y + (game.window.h / 2),
+						int(size.w*game.w),
+						int(size.h*game.h) };
+	rect.x -= rect.w / 2;
+	rect.y -= rect.h / 2;
+	
 	SDL_SetRenderDrawColor(game.renderer, 0xb4, 0xd4, 0xee, 0x0);
 	SDL_RenderFillRect(game.renderer, &rect);
 
@@ -60,14 +66,13 @@ Walls::Walls() {
 	const int num_sides = 16 - 2;
 	const double wall_size = 9./16. - .06;
 	const double left_offset = (game.w - (double(num_top)*wall_size)) / 2;
-		//(((16./9.)*16.) - double(num_top)) / 2.;
 
 	// generate top Walls
 	for (int i = 0; i < num_top; ++i) {
 		Wall* wall = new Wall();
 
-		wall->pos.x = (i*wall_size) + left_offset;
-		wall->pos.y = 0;
+		wall->pos.x = -8. + (wall_size / 2) + (i*wall_size) + left_offset;
+		wall->pos.y = -4.5 + (wall_size/2);
 		wall->size *= wall_size;
 		
 		addLoad(wall);
@@ -77,8 +82,8 @@ Walls::Walls() {
 	for (int i = 0; i < num_top; ++i) {
 		Wall* wall = new Wall();
 
-		wall->pos.x = (i*wall_size) + left_offset;
-		wall->pos.y = game.h - wall_size;
+		wall->pos.x = -8. + (wall_size / 2) + (i*wall_size) + left_offset;
+		wall->pos.y = 4.5 - (wall_size/2);
 		wall->size *= wall_size;
 
 		addLoad(wall);

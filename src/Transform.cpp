@@ -1,5 +1,5 @@
 #include "Transform.h"
-
+#include <cmath>
 
 
 
@@ -10,6 +10,13 @@
 
 Transform::Transform() :pos(), size(), rot(0.) {}
 Transform::Transform(Position p, Size s, double r) :pos(p), size(s), rot(r) {}
+
+Transform::Transform(double xx, double yy, double zz, double ww, double hh, double rr)
+	:	pos(xx,yy,zz),
+		size(ww,hh),
+		rot(rr)
+{
+}
 
 void Transform::set(double xx, double yy, double zz, double ww, double hh, double rr)
 {
@@ -29,7 +36,7 @@ Transform &Transform:: operator<< (const Transform rhs) {
 SDL_Rect Transform::toRect() const
 {
 	SDL_Rect ret = { (int)pos.x, (int)pos.y,
-		             (int)size.w,(int)size.h };
+		             (int)std::ceil(size.w),(int)std::ceil(size.h) };
 
 	return ret;
 }

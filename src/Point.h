@@ -9,4 +9,5 @@
 struct Point : virtual public Transform, virtual public Render {
 	virtual ~Point() {}
 	void render(Transform offset) const override;
+	static void renderStatic(Transform offset);
 };

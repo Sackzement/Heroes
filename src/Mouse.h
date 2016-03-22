@@ -17,12 +17,14 @@ const unsigned short num_buttons = 6;
 class Mouse {
 
 	Position2i m_pos;
+	bool m_moved;
 	bool buttonDownMask[num_buttons] = {};
 	bool buttonDownOnceMask[num_buttons] = {};
 	bool buttonUpOnceMask[num_buttons] = {};
 
 
 public:
+	Mouse();
 	virtual ~Mouse() {}
 
 	inline Position2i pos() const {
@@ -39,6 +41,7 @@ public:
 	bool isButtonUp(Uint8 btn);
 	bool isButtonDownOnce(Uint8 btn);
 	bool isButtonUpOnce(Uint8 btn);
+	bool moved();
 
 
 
@@ -48,5 +51,5 @@ public:
 
 
 
-	void resetOnceMasks();
+	void reset();
 };

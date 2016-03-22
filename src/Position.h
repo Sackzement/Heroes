@@ -11,6 +11,8 @@ struct Position {
 	Position(double xx, double yy, double zz);
 
 	Position & operator += (const Position rhs);
+	void set(double xx, double yy, double zz);
+	void floor();
 };
 
 

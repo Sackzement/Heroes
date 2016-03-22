@@ -28,10 +28,14 @@ void Object::render(Transform offset) const {
 
 	offset << *this;
 
+	SDL_Rect rect = offset.toRect();
+
 	SDL_SetRenderDrawColor(game.renderer, 255, 255, 255, 0);
 	SDL_RenderDrawPoint(game.renderer, (int)offset.pos.x, (int)offset.pos.y);
 
-	SDL_Rect rect = offset.toRect();
+	rect.x -= rect.w / 2;
+	rect.y -= rect.h / 2;
+
 	SDL_RenderDrawRect(game.renderer, &rect);
 
 	renderChildren(offset);

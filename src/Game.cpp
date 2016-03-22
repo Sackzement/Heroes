@@ -1,8 +1,10 @@
 #include "Game.h"
 #include "Libs.h"
 #include "MainMenu.h"
-#include "Options.h"
 #include "Level.h"
+#include "Stats.h"
+#include "Options.h"
+#include "Credits.h"
 //#include "HardwareInfo.h"
 
 #include "Scene.h"
@@ -89,17 +91,6 @@ void Game::switchToScene(scene_num num) {
 			scene->load();
 		});
 		break;
-	case scene_num::options:
-		addScript([&]() {
-			Scene* oldScene = scene;
-			// new thread
-			oldScene->unload();
-			delete oldScene;
-
-			scene = new Options();
-			scene->load();
-		});
-		break;
 	case scene_num::level:
 		addScript([&]() {
 			Scene* oldScene = scene;
@@ -111,6 +102,40 @@ void Game::switchToScene(scene_num num) {
 			scene->load();
 		});
 		break;
+	case scene_num::stats:
+		addScript([&]() {
+			Scene* oldScene = scene;
+			// new thread
+			oldScene->unload();
+			delete oldScene;
+
+			scene = new Stats();
+			scene->load();
+		});
+		break;
+	case scene_num::options:
+		addScript([&]() {
+			Scene* oldScene = scene;
+			// new thread
+			oldScene->unload();
+			delete oldScene;
+
+			scene = new Options();
+			scene->load();
+		});
+		break;
+	case scene_num::credits:
+		addScript([&]() {
+			Scene* oldScene = scene;
+			// new thread
+			oldScene->unload();
+			delete oldScene;
+
+			scene = new Credits();
+			scene->load();
+		});
+		break;
+	
 	}
 		
 }
@@ -143,7 +168,7 @@ void Game::exeScripts()
 void Game::input() {
 	
 	keyboard.resetOnceMasks();
-	mouse.resetOnceMasks();
+	mouse.reset();
 	SDL_Event ev;
 	while (SDL_PollEvent(&ev)) { switch (ev.type) {
 	case SDL_QUIT:         state = game_state::quitting;  break;

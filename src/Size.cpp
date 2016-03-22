@@ -1,5 +1,7 @@
 #include "Size.h"
 
+#include <cmath>
+
 
 
 Size::Size() :w(1.), h(1.) {}
@@ -25,4 +27,10 @@ Size & Size::operator = (const double rhs) {
 	h = rhs;
 
 	return *this;
+}
+
+void Size::ceil()  {
+
+	w = std::ceil(w);
+	h = std::ceil(h);
 }

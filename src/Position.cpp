@@ -1,4 +1,5 @@
 #include "Position.h"
+#include <cmath>
 
 
 
@@ -14,6 +15,20 @@ Position & Position::operator += (const Position rhs) {
 	z += rhs.z;
 
 	return *this;
+}
+
+void Position::set(double xx, double yy, double zz)
+{
+	x = xx;
+	y = yy;
+	z = zz;
+}
+
+void Position::floor()  {
+
+	x = std::floor(x);
+	y = std::floor(y);
+	z = std::floor(z);
 }
 
 
