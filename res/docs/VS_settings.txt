@@ -1,0 +1,23 @@
+
+
+output dir:
+..\build\$(PlatformTarget)\$(Configuration)\
+intermediate dir:
+..\build\$(PlatformTarget)\$(Configuration)\intermediate\
+
+include dirs:
+..\..\..\libs\includes
+Lib dirs:
+..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\
+
+
+
+
+
+Linker -> addtional dependencies:
+SDL2.lib
+SDL2main.lib
+SDL2_image.lib
+SDL2_ttf.lib
+SDL2_mixer.lib
+SDL2_net.lib

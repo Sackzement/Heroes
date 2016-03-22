@@ -35,4 +35,7 @@ public:
 	bool create();
 	void destroy();
 	operator SDL_Renderer* () const;
+
+	SDL_Color getColor();
+	void setColor(SDL_Color col);
 };

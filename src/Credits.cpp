@@ -24,16 +24,31 @@ void Credits::render() const
 
 	// render grid
 	SDL_SetRenderDrawColor(game.renderer,255,255,255,0);
-	for (double i = -8.; i <= 8.; ++i) {
+	for (double i = -8.; i <= 8.; ++i) { // vertical lines
 		Transform offset = *this;
-		offset << Transform(i, 0., 0., 9., 0., 90.);
+		offset << Transform(i, 0., 0., 0., 9., 90.);
 		Line::renderStatic(offset);
 	}
-	for (double i = -4.; i <= 4.; ++i) {
+	for (double i = -4.; i <= 4.; ++i) { // horizontal lines
 		Transform offset = *this;
 		offset << Transform(0., i, 0., 16., 0., 0.);
 		Line::renderStatic(offset);
 	}
+
+	SDL_Color old_color = game.renderer.getColor();
+	Transform offset;
+
+	offset = *this; // draw Y line
+	offset << Transform(0., 0., 0., 0., 9., 90.);
+	SDL_SetRenderDrawColor(game.renderer, 0, 255, 0, 0);
+	Line::renderStatic(offset);
+
+	offset = *this; // draw X line
+	offset << Transform(0., 0., 0., 0., 16., 0.);
+	SDL_SetRenderDrawColor(game.renderer, 255, 0, 0, 0);
+	Line::renderStatic(offset);
+
+	game.renderer.setColor(old_color);
 
 	renderChildren(*this);
 }

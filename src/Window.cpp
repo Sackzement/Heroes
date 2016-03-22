@@ -61,3 +61,14 @@ void Renderer::destroy() {
 Renderer::operator SDL_Renderer* () const {
 	return m_renderer;
 }
+
+SDL_Color Renderer::getColor()  {
+	SDL_Color c;
+	SDL_GetRenderDrawColor(m_renderer,&c.r,&c.g,&c.b,&c.a);
+	return c;
+}
+
+
+void Renderer::setColor(SDL_Color col)  {
+	SDL_SetRenderDrawColor(game.renderer, col.r, col.g, col.b, col.a);
+}
