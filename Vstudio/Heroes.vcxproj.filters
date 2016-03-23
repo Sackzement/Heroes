@@ -84,6 +84,9 @@
     <ClCompile Include="..\src\Line.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Editor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Game.h">
@@ -171,6 +174,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Line.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Editor.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

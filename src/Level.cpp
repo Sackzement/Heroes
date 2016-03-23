@@ -9,6 +9,8 @@ const char * filename_wall_img = "res\\wall.png";
 
 
 Level::Level() {
+	Object* wall = new Object();
+	wall->size = Size(wall_size)
 	addObject(&walls);
 	addObject(&player);
 }
@@ -99,8 +101,7 @@ void Walls::render(Transform offset) const
 	renderChildren(offset);
 }
 
-
-
-
-
-
+void Editor::input()
+{
+	game.keyboard.isKeyDownOnce(SDL_SCANCODE_0)
+}

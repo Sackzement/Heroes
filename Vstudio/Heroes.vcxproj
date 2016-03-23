@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\Button.cpp" />
     <ClCompile Include="..\src\Credits.cpp" />
+    <ClCompile Include="..\src\Editor.cpp" />
     <ClCompile Include="..\src\Events.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
     <ClCompile Include="..\src\Keyboard.cpp" />
@@ -192,6 +193,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\Button.h" />
     <ClInclude Include="..\src\Credits.h" />
+    <ClInclude Include="..\src\Editor.h" />
     <ClInclude Include="..\src\Events.h" />
     <ClInclude Include="..\src\Game.h" />
     <ClInclude Include="..\src\Input.h" />

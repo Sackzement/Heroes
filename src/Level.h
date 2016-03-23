@@ -4,22 +4,11 @@
 
 
 
-struct Walls : virtual public Object {
-
-	Walls();
-	~Walls() {}
-
-	void render(Transform offset) const override;
-};
-
-
-
-
 
 struct Level : virtual public Scene {
 
 	Player player;
-	Walls walls;
+	vector<Object*> walls;
 
 	Level();
 	virtual ~Level() {}
