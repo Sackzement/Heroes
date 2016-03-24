@@ -10,19 +10,41 @@ using std::vector;
 
 
 
+namespace obj_type {
 
-struct Object : virtual public Transform, virtual public Load, virtual public Input, virtual public Update, virtual public Render  {
+	static Uint8 const 
+		none = 0,
+		transform = 1,
+		load = 2,
+		input = 4,
+		update = 8,
+		render = 16;
+}
+
+
+
+
+struct Object : 
+	virtual public Transform, 
+	virtual public Load, 
+	virtual public Input, 
+	virtual public Update, 
+	virtual public Render  {
 
 	Object();
 	virtual ~Object() {}
 
+protected:
+	Uint8 m_type;
 	vector<Load*>  loads;
 	vector<Input*>  inputs;
 	vector<Update*> updates;
 	vector<Render*> renders;
 
-
-
+	// functions
+public:
+	Uint8 type() const;
+	void addType(Uint8 new_type);
 	bool load() override;
 	void unload() override;
 
@@ -30,14 +52,16 @@ struct Object : virtual public Transform, virtual public Load, virtual public In
 	void update() override;
     void render(Transform offset) const override;
 
-	void addObject(Object * ch);
+	bool addObject(Object * obj);
 
 	void addLoad  (Load   * lo);
 	void addInput (Input  * in);
 	void addUpdate(Update * up);
 	void addRender(Render * re);
 
+
 protected:
+
 	bool loadChildren(); 
 	void unloadChildren();
 	void inputChildren();

@@ -44,7 +44,16 @@ double Scene::pixelToUnits(double pix)
 	return pix / size.w;
 }
   
+Position Scene::pixelToPos(Position2i pos)
+{
+	Position ret;
+	ret.x = double(pos.x) - ((double)game.window.w / 2.);
+	ret.y = double(pos.y) - ((double)game.window.h / 2.);
+	ret.x /= size.w;
+	ret.y /= size.h;
 
+	return ret;
+}
 
 
 void Scene::render() const {

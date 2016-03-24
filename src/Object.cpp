@@ -4,10 +4,31 @@
 
 
 
+// CONSTRUCTOR
+Object:: Object()  :
 
-Object::Object() {}
+m_type(obj_type::transform),
+
+loads(),
+inputs(),
+updates(),
+renders()
+
+{}
 
 
+
+
+
+
+Uint8 Object::type() const
+{
+	return m_type;
+}
+
+void Object::addType(Uint8 new_type) {
+	m_type |= new_type;
+}
 
 bool Object::load() {
 	return loadChildren();
@@ -28,7 +49,7 @@ void Object::render(Transform offset) const {
 
 	offset << *this;
 
-	SDL_Rect rect = offset.toRect();
+	/* SDL_Rect rect = offset.toRect();
 
 	SDL_SetRenderDrawColor(game.renderer, 255, 255, 255, 0);
 	SDL_RenderDrawPoint(game.renderer, (int)offset.pos.x, (int)offset.pos.y);
@@ -36,19 +57,36 @@ void Object::render(Transform offset) const {
 	rect.x -= rect.w / 2;
 	rect.y -= rect.h / 2;
 
-	SDL_RenderDrawRect(game.renderer, &rect);
+	SDL_RenderDrawRect(game.renderer, &rect);*/
 
 	renderChildren(offset);
 }
 
 
 
-void Object::addObject(Object * obj) {
+bool Object::addObject(Object * obj) {
 
-	loads.push_back(obj);
-	inputs.push_back(obj);
-	updates.push_back(obj);
-	renders.push_back(obj);
+	if (obj == nullptr)
+		return false;
+
+	if (obj->type() | obj_type::load) {
+		loads.push_back(obj);
+		m_type |= obj_type::load;
+	}
+	if (obj->type() | obj_type::input) {
+		inputs.push_back(obj);
+		m_type |= obj_type::input;
+	}
+	if (obj->type() | obj_type::update)  {
+		updates.push_back(obj);
+		m_type |= obj_type::update;
+	}
+	if (obj->type() | obj_type::render)  {
+		renders.push_back(obj);
+		m_type |= obj_type::render;
+	}
+
+	return true;
 }
 
 void Object::addLoad(Load   * lo) {

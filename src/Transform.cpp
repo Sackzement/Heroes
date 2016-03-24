@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include "Game.h"
 #include <cmath>
 
 
@@ -39,6 +40,17 @@ SDL_Rect Transform::toRect() const
 		             (int)std::ceil(size.w),(int)std::ceil(size.h) };
 
 	return ret;
+}
+SDL_Rect Transform::toWindowRect() const
+{
+	SDL_Rect rect = { (int)pos.x + (game.window.w / 2),
+		(int)pos.y + (game.window.h / 2),
+		int(size.w*game.w),
+		int(size.h*game.h) };
+	rect.x -= rect.w / 2;
+	rect.y -= rect.h / 2;
+
+	return rect;
 }
 
 SDL_bool Transform::checkCollision(Transform other)

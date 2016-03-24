@@ -1,0 +1,14 @@
+#pragma once
+#include <SDL/SDL.h>
+
+
+namespace color {
+	static const SDL_Color  sky_brown      = { 0x3b, 0x32, 0x24, 0x00 };
+	static const SDL_Color  sky_blue       = { 0xb4, 0xd4, 0xee, 0x00 };
+	static const SDL_Color  structs_brown  = { 0x3a, 0x30, 0x22, 0x00 };
+	static const SDL_Color  clouds_brown   = { 0x46, 0x37, 0x25, 0x00 };
+	static const SDL_Color  fence1_brown   = { 0x38, 0x2c, 0x20, 0x00 };
+	static const SDL_Color  fence2_brown   = { 0x3a, 0x2d, 0x20, 0x00 };
+	static const SDL_Color  selection_dark = { 0x23, 0x1b, 0x12, 0x00 };
+	static const SDL_Color  text           = { 0xff, 0xff, 0xff, 0xff };
+};

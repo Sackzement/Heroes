@@ -89,7 +89,6 @@ bool Texture:: load (const char* name) {
 
 void Texture::unload() {
 
-	SDL_DestroyTexture(texture);
 	texture = nullptr;
 
 	name = "";
@@ -105,7 +104,6 @@ void Texture::render(Transform offset) const {
 	dstRect.x += (game.window.w / 2) - (dstRect.w / 2);
 	dstRect.y += (game.window.h / 2) - (dstRect.h / 2);
 	
-
 	SDL_RenderCopyEx(
 		game.renderer, // renderer
 		texture,       //         SDL_Texture*

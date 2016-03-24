@@ -192,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Button.h" />
+    <ClInclude Include="..\src\Color.h" />
     <ClInclude Include="..\src\Credits.h" />
     <ClInclude Include="..\src\Editor.h" />
     <ClInclude Include="..\src\Events.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="..\src\Player.h" />
     <ClInclude Include="..\src\Point.h" />
     <ClInclude Include="..\src\Position.h" />
+    <ClInclude Include="..\src\Position2i.h" />
     <ClInclude Include="..\src\Rect.h" />
     <ClInclude Include="..\src\Render.h" />
     <ClInclude Include="..\src\Scene.h" />

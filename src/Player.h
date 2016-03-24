@@ -6,7 +6,7 @@
 
 
 struct Player : virtual public Object {
-	double speed = 2.;
+	double speed = 5.;
 	virtual ~Player() {}
 	void update() override;
 };

@@ -179,5 +179,11 @@
     <ClInclude Include="..\src\Editor.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Color.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Position2i.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,11 +1,9 @@
 #pragma once
 #include <SDL/SDL_events.h>
+#include "Position2i.h"
 
 
 
-struct Position2i {
-	int x=0, y=0;
-};
 
 
 

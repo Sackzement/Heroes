@@ -1,8 +1,10 @@
 #include "MainMenu.h"
 #include "game.h"
 #include "Options.h"
+#include "Color.h"
+#include "Rect.h"
 
-MainMenu::MainMenu() : selection(0) {
+MainMenu::MainMenu() : selection(1) {
 
 	title.text = "SUPER CRATE BOX";
 
@@ -94,11 +96,31 @@ bool MainMenu::load() {
 
 void MainMenu::input()
 {
+	if (game.mouse.moved())
+	{
+		Position mouse_pos_scene = pixelToPos(game.mouse.pos());
+
+		if (mouse_pos_scene.y >= -1. - .75
+		  && mouse_pos_scene.y <= 3. + .75)
+		{
+			if (mouse_pos_scene.y < -1. + .75)
+				selection = 1;
+			else if (mouse_pos_scene.y < -1. + .75 + (1 * 1.5))
+				selection = 2;
+			else if (mouse_pos_scene.y < -1. + .75 + (2 * 1.5))
+				selection = 3;
+			else if (mouse_pos_scene.y < -1. + .75 + (3 * 1.5))
+				selection = 4;
+			else if (mouse_pos_scene.y < -1. + .75 + (4 * 1.5))
+				selection = 5;
+		}
+	}
+
 	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
 		game.quit();
 
 
-	else if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_SPACE))
+	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_SPACE))
 		switch (selection)
 		{
 		case 1:
@@ -121,14 +143,14 @@ void MainMenu::input()
 			break;
 		}
 
-	else if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_DOWN)) {
+	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_DOWN)) {
 		if (selection >= 5)
 			selection = 1;
 		else
 			++selection;
 	}
 
-	else if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_UP)) {
+	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_UP)) {
 		
 		if (selection <= 1)
 			selection = 5;
@@ -168,7 +190,9 @@ void renderRect(double xx, double yy, double ww, double hh, Uint8 r, Uint8 g, Ui
 	SDL_RenderFillRect(game.renderer, &rect);
 	SDL_SetRenderDrawColor(game.renderer, old_r, old_g, old_b, old_a);
 }
-
+void renderRect(double xx, double yy, double ww, double hh, SDL_Color cc) {
+	renderRect(xx,yy,ww,hh,cc.r,cc.g,cc.b,cc.a);
+}
 void MainMenu::render() const
 {
 	// render BG color
@@ -179,8 +203,8 @@ void MainMenu::render() const
 	rect.x -= rect.w / 2;
 	rect.y -= rect.h / 2;
 
-	SDL_SetRenderDrawColor(game.renderer,0x3b,0x32, 0x24,0x0);
-	SDL_RenderFillRect(game.renderer, &rect);
+	game.renderer.setColor(color::sky_brown);
+	Rect::renderStatic(*this);
 
 
 	// render selection
@@ -193,7 +217,7 @@ void MainMenu::render() const
 		sele.size.h = 1.2;
 		offset << sele;
 
-		renderRect(offset.pos.x, offset.pos.y, offset.size.w, offset.size.h, 255, 0, 0, 0);
+		renderRect(offset.pos.x, offset.pos.y, offset.size.w, offset.size.h, color::selection_dark);
 	}
 
 

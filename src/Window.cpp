@@ -8,7 +8,10 @@ bool Window::create() {
 	if (m_window)
 		SDL_DestroyWindow(m_window);
 
-	m_window = SDL_CreateWindow("Heroes", 100, 100, 800, 450, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+	// load settings from file
+	// ...
+	// else -> create default window
+	m_window = SDL_CreateWindow("Heroes", 0, 0, 1920, 1080, SDL_WINDOW_BORDERLESS);
 
 	if (!m_window) {
 		Log(std::string("\n") + SDL_GetError());

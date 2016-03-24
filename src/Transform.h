@@ -21,7 +21,7 @@ struct Transform {
 
 	Transform & operator<< (const Transform rhs);
 	SDL_Rect toRect() const;
-
+	SDL_Rect toWindowRect() const;
 	SDL_bool checkCollision(Transform other);
 
 };

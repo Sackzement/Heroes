@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Object.h"
+#include "Position2i.h"
 
 
 
@@ -21,6 +22,7 @@ struct Scene : virtual public Object {
 	void rescale();
 	bool load() override;
 	double pixelToUnits(double pix);
+	Position pixelToPos(Position2i pos);
 
 	virtual void render() const;
 	using Object::render;
