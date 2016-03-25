@@ -7,3 +7,12 @@ Options::Options()
 	btn_back.setFunction([]() {game.switchToScene(scene_num::mainmenu);});
 	addObject(&btn_back);
 }
+
+
+void Options::input() {
+
+	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
+		game.switchToScene(scene_num::mainmenu);
+
+	inputChildren();
+}

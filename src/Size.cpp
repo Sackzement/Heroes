@@ -29,6 +29,12 @@ Size & Size::operator = (const double rhs) {
 	return *this;
 }
 
+void Size::set(double w, double h)
+{
+	this->w = w;
+	this->h = h;
+}
+
 void Size::ceil()  {
 
 	w = std::ceil(w);

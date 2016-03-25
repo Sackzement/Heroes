@@ -48,10 +48,7 @@ void Text::render(Transform offset) const {
 
 	offset << *this;
 
-	SDL_Rect dstRect = offset.toRect();
-
-	dstRect.x += (game.window.w / 2) - (dstRect.w / 2);
-	dstRect.y += (game.window.h / 2) - (dstRect.h / 2);
+	SDL_Rect dstRect = offset.toWindowRect();
 
 	SDL_RenderCopyEx(
 		game.renderer, // renderer

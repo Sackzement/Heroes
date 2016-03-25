@@ -12,4 +12,6 @@ struct Options : virtual public Scene {
 
 	Options();
 	virtual ~Options() {}
+
+	void input() override;
 };

@@ -1,11 +1,13 @@
 #include "Scene.h"
 #include "game.h"
+#include "Rect.h"
 
 
 
 
 
 
+double Scene::scale = 120.;
 
 
 Scene::Scene() {
@@ -22,26 +24,16 @@ void Scene::rescale() {
 	double scaleW = double(game.window.w) / game.w;
 	double scaleH = double(game.window.h) / game.h;
 
-	if (scaleH < scaleW) {
+	if (scaleH < scaleW)
 		double scale = scaleH;
-		//pos.x = (game.window.w - (scale*game.w) ) / 2.;
-		//pos.y = 0.;
-		size.w = scale;
-		size.h = scale;
-	}
-	else {
+	else
 		double scale = scaleW;
-		//pos.x = 0.;
-		//pos.y = (game.window.h - (scale*game.h) ) / 2;
-		size.w = scale;
-		size.h = scale;
-	}
 
 }
 
 double Scene::pixelToUnits(double pix)
 {
-	return pix / size.w;
+	return pix / scale;
 }
   
 Position Scene::pixelToPos(Position2i pos)
@@ -49,25 +41,20 @@ Position Scene::pixelToPos(Position2i pos)
 	Position ret;
 	ret.x = double(pos.x) - ((double)game.window.w / 2.);
 	ret.y = double(pos.y) - ((double)game.window.h / 2.);
-	ret.x /= size.w;
-	ret.y /= size.h;
+	ret.x /= scale;
+	ret.y /= scale;
 
 	return ret;
 }
 
 
 void Scene::render() const {
-	
-	SDL_Rect rect = {	(int)pos.x + (game.window.w / 2),
-						(int)pos.y + (game.window.h / 2),
-						int(size.w*game.w),
-						int(size.h*game.h) };
-	rect.x -= rect.w / 2;
-	rect.y -= rect.h / 2;
 
-
-	SDL_SetRenderDrawColor(game.renderer,0x77,0x77,0x77,0x77);
-	SDL_RenderFillRect(game.renderer, &rect);
+	Transform scene_trans = *this;
+	scene_trans.size.w *= game.w;
+	scene_trans.size.h *= game.h;
+	SDL_SetRenderDrawColor(game.renderer, 0x77, 0x77, 0x77, 0x77);
+	Rect::renderStatic(scene_trans);
 
 	renderChildren(*this);
 }

@@ -14,12 +14,12 @@ MainMenu::MainMenu() : selection(1) {
 	credits.text = "CREDITS";
 	quit.text = "QUIT";
 
-	title    .set(0. , -4.5 + 1.  , 0.,14., 1.5, 0.);
-	startgame.set(0. , -4.5 + 3.5 , 0.,10., 1.5, 0.);
-	stats    .set(0. , -4.5 + 4.5 , 0., 8., 1.5, 0.);
-	options  .set(0. , -4.5 + 5.5 , 0., 9., 1.5, 0.);
-	credits  .set(0. , -4.5 + 6.5 , 0., 9., 1.5, 0.);
-	quit     .set(0. , -4.5 + 7.5 , 0., 8., 1.5, 0.);
+	title    .set(0. , -3.5 + (0.*1.2), 0.,14., 1.2, 0.);
+	startgame.set(0. , -3.5 + (2.*1.2), 0.,10., 1.2, 0.);
+	stats    .set(0. , -3.5 + (3.*1.2), 0., 8., 1.2, 0.);
+	options  .set(0. , -3.5 + (4.*1.2), 0., 9., 1.2, 0.);
+	credits  .set(0. , -3.5 + (5.*1.2), 0., 9., 1.2, 0.);
+	quit     .set(0. , -3.5 + (6.*1.2), 0., 8., 1.2, 0.);
 
 	addLoad(&title);
 	addLoad(&startgame);
@@ -100,20 +100,22 @@ void MainMenu::input()
 	{
 		Position mouse_pos_scene = pixelToPos(game.mouse.pos());
 
-		if (mouse_pos_scene.y >= -1. - .75
-		  && mouse_pos_scene.y <= 3. + .75)
+		if (mouse_pos_scene.y >= startgame.pos.y - .6
+			&& mouse_pos_scene.y <= startgame.pos.y + (4.*1.2) + .6)
 		{
 			if (mouse_pos_scene.y < -1. + .75)
 				selection = 1;
-			else if (mouse_pos_scene.y < -1. + .75 + (1 * 1.5))
+			else if (mouse_pos_scene.y < -1. + .6 + (1 * 1.2))
 				selection = 2;
-			else if (mouse_pos_scene.y < -1. + .75 + (2 * 1.5))
+			else if (mouse_pos_scene.y < -1. + .6 + (2 * 1.2))
 				selection = 3;
-			else if (mouse_pos_scene.y < -1. + .75 + (3 * 1.5))
+			else if (mouse_pos_scene.y < -1. + .6 + (3 * 1.2))
 				selection = 4;
-			else if (mouse_pos_scene.y < -1. + .75 + (4 * 1.5))
+			else if (mouse_pos_scene.y < -1. + .6 + (4 * 1.2))
 				selection = 5;
 		}
+		else
+			selection = 0;
 	}
 
 	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
@@ -171,7 +173,7 @@ void MainMenu::update()
 
 
 
-void renderRect(double xx, double yy, double ww, double hh, Uint8 r, Uint8 g, Uint8 b, Uint8 a ) {
+void renderRect(double xx, double yy, double ww, double hh, SDL_Color color ) {
 
 	SDL_Rect rect = {	(int)xx + (game.window.w/2),
 						(int)yy + (game.window.h/2),
@@ -180,31 +182,19 @@ void renderRect(double xx, double yy, double ww, double hh, Uint8 r, Uint8 g, Ui
 	rect.x -= rect.w / 2;
 	rect.y -= rect.h / 2;
 
-	Uint8	old_r,
-			old_g,
-			old_b,
-			old_a;
-	SDL_GetRenderDrawColor(game.renderer, &old_r, &old_g, &old_b, &old_a);
-
-	SDL_SetRenderDrawColor(game.renderer, r, g, b, a);
+	SDL_Color old_color = game.renderer.getColor();
+	game.renderer.setColor(color);
 	SDL_RenderFillRect(game.renderer, &rect);
-	SDL_SetRenderDrawColor(game.renderer, old_r, old_g, old_b, old_a);
-}
-void renderRect(double xx, double yy, double ww, double hh, SDL_Color cc) {
-	renderRect(xx,yy,ww,hh,cc.r,cc.g,cc.b,cc.a);
+	game.renderer.setColor(old_color);
 }
 void MainMenu::render() const
 {
 	// render BG color
-	SDL_Rect rect = {	(int)pos.x + (game.window.w/2) ,
-						(int)pos.y + (game.window.h/2) ,
-						int(size.w*game.w),
-						int(size.h*game.h)  };
-	rect.x -= rect.w / 2;
-	rect.y -= rect.h / 2;
-
+	Transform scene_trans = *this;
+	scene_trans.size.w *= game.w;
+	scene_trans.size.h *= game.h;
 	game.renderer.setColor(color::sky_brown);
-	Rect::renderStatic(*this);
+	Rect::renderStatic(scene_trans);
 
 
 	// render selection
@@ -212,12 +202,14 @@ void MainMenu::render() const
 
 		Transform offset = *this;
 		Transform sele;
-		sele.pos.y = -1. + double(selection - 1);
+		sele.pos.y = (startgame.pos.y - 1.2) + (1.2 * (double)selection);
 		sele.size.w = 16.;
 		sele.size.h = 1.2;
 		offset << sele;
 
-		renderRect(offset.pos.x, offset.pos.y, offset.size.w, offset.size.h, color::selection_dark);
+		game.renderer.setColor(color::selection_dark);
+		Rect::renderStatic(offset);
+		//renderRect(offset.pos.x, offset.pos.y, offset.size.w, offset.size.h, color::selection_dark);
 	}
 
 

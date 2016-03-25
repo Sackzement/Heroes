@@ -5,6 +5,7 @@
 #include "Stats.h"
 #include "Options.h"
 #include "Credits.h"
+#include "Color.h"
 //#include "HardwareInfo.h"
 
 #include "Scene.h"
@@ -195,7 +196,7 @@ void Game::update() {
 void Game::render() {
 
 	SDL_SetRenderTarget(game.renderer, nullptr);
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	renderer.setColor(color::black);
 	SDL_RenderClear(renderer);
 
 	scene->render();

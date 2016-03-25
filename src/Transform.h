@@ -16,6 +16,8 @@ struct Transform {
 	Transform(Position p, Size s, double r);
 	Transform(double xx, double yy, double zz, double ww, double hh, double rr);
 	virtual ~Transform() {}
+	void nullify();
+	void default();
 
 	void set(double xx, double yy, double zz, double ww, double hh, double rr);
 
@@ -25,3 +27,4 @@ struct Transform {
 	SDL_bool checkCollision(Transform other);
 
 };
+

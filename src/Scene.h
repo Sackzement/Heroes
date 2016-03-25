@@ -16,13 +16,20 @@ enum struct scene_num {
 
 struct Scene : virtual public Object {
 
+private:
+	static double scale;
+public:
+	inline static double getScale() { return scale; }
+	static void rescale();
+
+	static double pixelToUnits(double pix);
+	static Position pixelToPos(Position2i pos);
+
+
 	Scene();
 	virtual ~Scene() {}
 
-	void rescale();
 	bool load() override;
-	double pixelToUnits(double pix);
-	Position pixelToPos(Position2i pos);
 
 	virtual void render() const;
 	using Object::render;

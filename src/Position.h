@@ -11,6 +11,7 @@ struct Position {
 	Position(double xx, double yy, double zz);
 
 	Position & operator += (const Position rhs);
+	Position & operator *= (const double rhs);
 	void set(double xx, double yy, double zz);
 	void floor();
 };
@@ -19,3 +20,4 @@ struct Position {
 
 #include "Size.h"
 Position operator * (const Position lhs, const Size rhs);
+Position operator + (const Position lhs, const Size rhs);

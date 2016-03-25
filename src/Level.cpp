@@ -1,6 +1,7 @@
 #include "Level.h"
 #include "Game.h"
 #include "Rect.h"
+#include "Color.h"
 #include <time.h>
 
 
@@ -19,8 +20,7 @@ double random(double from, double to, Uint64 precision) {
 }
 
 
-Level::Level() 
-:bg_color({ 0xb4, 0xd4, 0xee, 0x0 })
+Level::Level()
 {
 	init_bg_clouds();
 	init_bg_walls();
@@ -58,8 +58,11 @@ void Level::render() const {
 
 void Level::renderBG() const {
 
-	game.renderer.setColor(bg_color);
-	Rect::renderStatic(*this);
+	game.renderer.setColor(color::sky_blue);
+	Transform scene_trans = *this;
+	scene_trans.size.w *= game.w;
+	scene_trans.size.h *= game.h;
+	Rect::renderStatic(scene_trans);
 }
 
 

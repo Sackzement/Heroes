@@ -19,6 +19,20 @@ Transform::Transform(double xx, double yy, double zz, double ww, double hh, doub
 {
 }
 
+void Transform::nullify()
+{
+	pos.set(0., 0., 0.);
+	size.set(0.,0.);
+	rot = 0.;
+}
+
+void Transform::default()
+{
+	pos.set(0., 0., 0.);
+	size.set(1., 1.);
+	rot = 0.;
+}
+
 void Transform::set(double xx, double yy, double zz, double ww, double hh, double rr)
 {
 	pos = Position(xx,yy,zz);
@@ -43,14 +57,15 @@ SDL_Rect Transform::toRect() const
 }
 SDL_Rect Transform::toWindowRect() const
 {
-	SDL_Rect rect = { (int)pos.x + (game.window.w / 2),
-		(int)pos.y + (game.window.h / 2),
-		int(size.w*game.w),
-		int(size.h*game.h) };
-	rect.x -= rect.w / 2;
-	rect.y -= rect.h / 2;
+	Transform trans = *this;
 
-	return rect;
+	trans.pos.x += (game.w / 2.) - (trans.size.w / 2.);
+	trans.pos.y += (game.h / 2.) - (trans.size.h / 2.);
+
+	trans.pos  *= Scene::getScale();
+	trans.size *= Scene::getScale();
+
+	return trans.toRect();
 }
 
 SDL_bool Transform::checkCollision(Transform other)
@@ -59,6 +74,5 @@ SDL_bool Transform::checkCollision(Transform other)
 	SDL_Rect rectB = other.toRect();
 	return SDL_HasIntersection(&rectA,&rectB);
 }
-
 
 

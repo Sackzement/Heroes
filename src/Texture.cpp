@@ -99,10 +99,9 @@ void Texture::unload() {
 
 void Texture::render(Transform offset) const {
 
-	SDL_Rect dstRect = offset.toRect();
+	SDL_Rect dstRect = offset.toWindowRect();
 
-	dstRect.x += (game.window.w / 2) - (dstRect.w / 2);
-	dstRect.y += (game.window.h / 2) - (dstRect.h / 2);
+
 	
 	SDL_RenderCopyEx(
 		game.renderer, // renderer

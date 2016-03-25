@@ -12,6 +12,7 @@ struct Size {
 	Size & operator *= (const Size rhs);
 	Size & operator *= (const double rhs);
 	Size & operator = (const double rhs);
+	void set(double w, double h);
 	void ceil();
 };
 

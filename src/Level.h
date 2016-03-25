@@ -11,7 +11,6 @@ struct Color {
 struct Level : virtual public Scene {
 
 	// BG
-	SDL_Color       bg_color;
 	vector<Object*> bg_clouds;
 	vector<Object*> bg_structures;
 	Object          bg_fence;

@@ -17,6 +17,15 @@ Position & Position::operator += (const Position rhs) {
 	return *this;
 }
 
+Position & Position::operator*=(const double rhs)
+{
+	x *= rhs;
+	y *= rhs;
+	z *= rhs;
+
+	return *this;
+}
+
 void Position::set(double xx, double yy, double zz)
 {
 	x = xx;
@@ -40,6 +49,16 @@ Position operator * (const Position lhs, const Size rhs) {
 
 	ret.x *= rhs.w;
 	ret.y *= rhs.h;
+
+	return ret;
+}
+
+Position operator+(const Position lhs, const Size rhs)
+{
+	Position ret(lhs);
+
+	ret.x += rhs.w;
+	ret.y += rhs.h;
 
 	return ret;
 }
