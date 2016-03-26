@@ -173,7 +173,7 @@ void MainMenu::update()
 
 
 
-void renderRect(double xx, double yy, double ww, double hh, SDL_Color color ) {
+/*void renderRect(double xx, double yy, double ww, double hh, SDL_Color color ) {
 
 	SDL_Rect rect = {	(int)xx + (game.window.w/2),
 						(int)yy + (game.window.h/2),
@@ -186,34 +186,40 @@ void renderRect(double xx, double yy, double ww, double hh, SDL_Color color ) {
 	game.renderer.setColor(color);
 	SDL_RenderFillRect(game.renderer, &rect);
 	game.renderer.setColor(old_color);
-}
+}*/
 void MainMenu::render() const
 {
+	Transform offset = *this;
+	offset.pos *= getScale();
+	offset.size *= getScale();
+
 	// render BG color
-	Transform scene_trans = *this;
-	scene_trans.size.w *= game.w;
-	scene_trans.size.h *= game.h;
+	Transform bg_trans = offset;
+	bg_trans.size.w *= game.w;
+	bg_trans.size.h *= game.h;
 	game.renderer.setColor(color::sky_brown);
-	Rect::renderStatic(scene_trans);
+	Rect::renderStatic(bg_trans);
 
 
 	// render selection
 	if (selection >= 1 && selection <= 5) {
 
-		Transform offset = *this;
+		Transform off_sele = *this;
 		Transform sele;
 		sele.pos.y = (startgame.pos.y - 1.2) + (1.2 * (double)selection);
 		sele.size.w = 16.;
 		sele.size.h = 1.2;
-		offset << sele;
+		off_sele << sele;
 
+		off_sele.pos *= getScale();
+		off_sele.size *= getScale();
 		game.renderer.setColor(color::selection_dark);
-		Rect::renderStatic(offset);
+		Rect::renderStatic(off_sele);
 		//renderRect(offset.pos.x, offset.pos.y, offset.size.w, offset.size.h, color::selection_dark);
 	}
 
 
 
 	// render text
-	renderChildren(*this);
+	renderChildren(offset);
 }

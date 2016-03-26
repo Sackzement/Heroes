@@ -99,7 +99,7 @@ void Texture::unload() {
 
 void Texture::render(Transform offset) const {
 
-	SDL_Rect dstRect = offset.toWindowRect();
+	SDL_Rect dstRect = offset.toRect();
 
 
 	

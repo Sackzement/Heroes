@@ -1,6 +1,8 @@
 #include "Object.h"
 #include "game.h"
-
+#include "Color.h"
+#include "Point.h"
+#include "Rect.h"
 
 
 
@@ -49,15 +51,9 @@ void Object::render(Transform offset) const {
 
 	offset << *this;
 
-	/* SDL_Rect rect = offset.toRect();
-
-	SDL_SetRenderDrawColor(game.renderer, 255, 255, 255, 0);
-	SDL_RenderDrawPoint(game.renderer, (int)offset.pos.x, (int)offset.pos.y);
-
-	rect.x -= rect.w / 2;
-	rect.y -= rect.h / 2;
-
-	SDL_RenderDrawRect(game.renderer, &rect);*/
+	//game.renderer.setColor(color::white);
+	//Point::renderStatic(offset);
+	//Rect::renderStatic(offset);
 
 	renderChildren(offset);
 }

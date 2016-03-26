@@ -15,24 +15,28 @@ void Credits::input() {
 
 void Credits::render() const
 {
-	// render bg
-	Transform scene_trans = *this;
-	scene_trans.size.w *= game.w;
-	scene_trans.size.h *= game.h;
-	game.renderer.setColor(color::sky_brown);
-	Rect::renderStatic(scene_trans);
+	renderBG(color::sky_brown);
 
 
 	// render grid
 	game.renderer.setColor(color::white);
 	for (double i = -8.; i <= 8.; ++i) { // vertical lines
 		Transform offset = *this;
-		offset << Transform(i, -4.5, 0., 0., 9., 0.);
+		offset.pos *= getScale();
+		offset.size *= getScale();
+
+		offset << Transform(i, -4.5, 0.,
+							0., 9.,
+							0.);
 		Line::renderStatic(offset);
 	}
 	for (double i = -4.; i <= 4.; ++i) { // horizontal lines
 		Transform offset = *this;
-		offset << Transform(-8., i, 0., 16., 0., 0.);
+		offset.pos *= getScale();
+		offset.size *= getScale();
+		offset << Transform(-8., i, 0.,
+							16., 0.,
+			0.);
 		Line::renderStatic(offset);
 	}
 
@@ -40,16 +44,27 @@ void Credits::render() const
 	Transform offset;
 
 	offset = *this; // draw Y line
-	offset << Transform(0., 0., 0., 0., 9., 90.);
+	offset.pos  *= getScale();
+	offset.size *= getScale();
+	offset << Transform(0.,-4.5, 0., 
+						0., 9. , 
+						0.);
 	game.renderer.setColor(color::green);
 	Line::renderStatic(offset);
 
 	offset = *this; // draw X line
-	offset << Transform(0., 0., 0., 0., 16., 0.);
+	offset.pos  *= getScale();
+	offset.size *= getScale();
+	offset << Transform(-8., 0., 0., 
+						16., 0., 
+						0.);
 	game.renderer.setColor(color::red);
 	Line::renderStatic(offset);
 
-	game.renderer.setColor(old_color);
 
-	renderChildren(*this);
+	game.renderer.setColor(old_color);
+	offset = *this; 
+	offset.pos *= getScale();
+	offset.size *= getScale();
+	renderChildren(offset);
 }

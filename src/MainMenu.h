@@ -30,7 +30,6 @@ public:
 
 
 protected:
-	void renderBG() const;
 
 
 };

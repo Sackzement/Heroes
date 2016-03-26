@@ -39,7 +39,8 @@ void Level::update() {
 
 	// move clouds
 	size_t len = bg_clouds.size();
-	for (size_t i = 0; i < len; ++i) {
+
+	for (size_t i = 0; i < len; ++i)  {
 		Object* cloud = bg_clouds[i];
 		cloud->pos.x -= 1. * game.time.getDelta();
 		if (cloud->pos.x < -10.)
@@ -51,19 +52,16 @@ void Level::update() {
 
 void Level::render() const {
 
-	renderBG();
+	renderBG(color::sky_blue);
 
-	renderChildren(*this);
+	Transform offset = *this;
+	offset.pos *= getScale();
+	offset.size *= getScale();
+
+	renderChildren(offset);
 }
 
-void Level::renderBG() const {
 
-	game.renderer.setColor(color::sky_blue);
-	Transform scene_trans = *this;
-	scene_trans.size.w *= game.w;
-	scene_trans.size.h *= game.h;
-	Rect::renderStatic(scene_trans);
-}
 
 
 

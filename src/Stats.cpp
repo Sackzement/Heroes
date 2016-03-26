@@ -1,4 +1,5 @@
 #include "Stats.h"
+#include "Color.h"
 
 #include "Game.h"
 #include "Rect.h"
@@ -17,21 +18,21 @@ void Stats::input() {
 
 void Stats::render() const
 {
-	// render bg
-	Transform scene_trans = *this;
-	scene_trans.size.w *= game.w;
-	scene_trans.size.h *= game.h;
-	SDL_SetRenderDrawColor(game.renderer, 0xff, 0x00, 0xff, 0x00);
-	Rect::renderStatic(scene_trans);
+	renderBG(color::sky_blue);
 
+	Transform offset = *this;
+	offset.pos *= getScale();
+	offset.size *= getScale();
 
-	renderChildren(*this);
+	renderChildren(offset);
 	
 	Transform cube;
 	cube.pos.set(-8.,0.,0.);
 	for (int i = 0; i < 10; ++i) {
 		Transform offset = *this;
 		offset << cube;
+		offset.pos *= getScale();
+		offset.size *= getScale();
 		SDL_SetRenderDrawColor(game.renderer, 0x44, 0x44, 0x44, 0x00);
 		Rect::renderStatic(offset);
 		cube.pos.x += 2.;
@@ -42,6 +43,8 @@ void Stats::render() const
 	for (int i = 0; i < 10; ++i) {
 		Transform offset = *this;
 		offset << cube;
+		offset.pos *= getScale();
+		offset.size *= getScale();
 		SDL_SetRenderDrawColor(game.renderer, 0x44, 0x44, 0x44, 0x00);
 		Rect::renderStatic(offset);
 		cube.pos.x += 2.;

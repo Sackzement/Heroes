@@ -22,7 +22,7 @@ Transform::Transform(double xx, double yy, double zz, double ww, double hh, doub
 void Transform::nullify()
 {
 	pos.set(0., 0., 0.);
-	size.set(0.,0.);
+	size.nullify();
 	rot = 0.;
 }
 
@@ -50,12 +50,18 @@ Transform &Transform:: operator<< (const Transform rhs) {
 }
 SDL_Rect Transform::toRect() const
 {
-	SDL_Rect ret = { (int)pos.x, (int)pos.y,
-		             (int)std::ceil(size.w),(int)std::ceil(size.h) };
+	Transform rect_trans = *this;
+	rect_trans.pos.x -= size.w / 2;
+	rect_trans.pos.y -= size.h / 2;
+
+	SDL_Rect ret = {(int)rect_trans.pos.x,
+					(int)rect_trans.pos.y,
+		            (int)std::ceil(rect_trans.size.w),
+					(int)std::ceil(rect_trans.size.h) };
 
 	return ret;
 }
-SDL_Rect Transform::toWindowRect() const
+/*SDL_Rect Transform::toWindowRect() const
 {
 	Transform trans = *this;
 
@@ -66,7 +72,7 @@ SDL_Rect Transform::toWindowRect() const
 	trans.size *= Scene::getScale();
 
 	return trans.toRect();
-}
+}*/
 
 SDL_bool Transform::checkCollision(Transform other)
 {

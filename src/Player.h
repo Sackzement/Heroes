@@ -9,4 +9,5 @@ struct Player : virtual public Object {
 	double speed = 5.;
 	virtual ~Player() {}
 	void update() override;
+	void render(Transform offset) const override;
 };

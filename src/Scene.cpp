@@ -11,6 +11,8 @@ double Scene::scale = 120.;
 
 
 Scene::Scene() {
+	pos.x = game.w / 2.;
+	pos.y = game.h / 2.;
 	rescale();
 }
 
@@ -50,11 +52,30 @@ Position Scene::pixelToPos(Position2i pos)
 
 void Scene::render() const {
 
-	Transform scene_trans = *this;
-	scene_trans.size.w *= game.w;
-	scene_trans.size.h *= game.h;
-	SDL_SetRenderDrawColor(game.renderer, 0x77, 0x77, 0x77, 0x77);
-	Rect::renderStatic(scene_trans);
+	Transform offset = *this;
+	offset.pos  *= getScale();
+	offset.size *= getScale();
 
-	renderChildren(*this);
+
+	Transform bg_trans = offset;
+	bg_trans.size.w *= game.w;
+	bg_trans.size.h *= game.h;
+	SDL_SetRenderDrawColor(game.renderer, 0x77, 0x77, 0x77, 0x77);
+	Rect::renderStatic(bg_trans);
+
+	renderChildren(offset);
+}
+
+
+void Scene::renderBG(SDL_Color col) const {
+
+	Transform offset = *this;
+
+	offset.pos *= getScale();
+	offset.size *= getScale();
+	offset.size.w *= game.w;
+	offset.size.h *= game.h;
+	game.renderer.setColor(col);
+	Rect::renderStatic(offset);
+
 }

@@ -10,6 +10,11 @@ using namespace std;
 #include <functional>
 #include <SDL/SDL_ttf.h>
 
+#include "Color.h"
+#include "Point.h"
+#include "Line.h"
+#include "Rect.h"
+
 
 
 

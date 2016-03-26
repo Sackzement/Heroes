@@ -35,7 +35,6 @@ struct Level : virtual public Scene {
 	void render() const override;
 
 protected:
-	void renderBG() const;
 	bool init_bg_clouds();
 	bool init_bg_structures();
 	bool init_bg_walls();

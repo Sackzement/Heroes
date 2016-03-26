@@ -33,6 +33,7 @@ public:
 
 	virtual void render() const;
 	using Object::render;
+	void         renderBG(SDL_Color col) const;
 
 };
 
