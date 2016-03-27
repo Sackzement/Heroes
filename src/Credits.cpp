@@ -11,60 +11,54 @@ void Credits::input() {
 	
 	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
 		game.switchToScene(scene_num::mainmenu);
+	if (game.mouse.isButtonDownOnce(SDL_BUTTON_RIGHT))
+		game.switchToScene(scene_num::mainmenu);
 }
 
-void Credits::render() const
+void Credits::render(Transform offset) const
 {
-	renderBG(color::sky_brown);
+	offset << *this;
+
+	renderBG(color::sky_brown, offset);
 
 
 	// render grid
 	game.renderer.setColor(color::white);
 	for (double i = -8.; i <= 8.; ++i) { // vertical lines
-		Transform offset = *this;
-		offset.pos *= getScale();
-		offset.size *= getScale();
+		Transform off = offset;
 
-		offset << Transform(i, -4.5, 0.,
+		off << Transform(i, -4.5, 0.,
 							0., 9.,
 							0.);
-		Line::renderStatic(offset);
+		Line::renderStatic(off);
 	}
 	for (double i = -4.; i <= 4.; ++i) { // horizontal lines
-		Transform offset = *this;
-		offset.pos *= getScale();
-		offset.size *= getScale();
-		offset << Transform(-8., i, 0.,
+		Transform off = offset;
+		off << Transform(-8., i, 0.,
 							16., 0.,
 			0.);
-		Line::renderStatic(offset);
+		Line::renderStatic(off);
 	}
 
 	SDL_Color old_color = game.renderer.getColor();
-	Transform offset;
 
-	offset = *this; // draw Y line
-	offset.pos  *= getScale();
-	offset.size *= getScale();
-	offset << Transform(0.,-4.5, 0., 
+	
+	Transform off = offset; // draw Y line
+	off << Transform(0.,-4.5, 0.,
 						0., 9. , 
 						0.);
 	game.renderer.setColor(color::green);
-	Line::renderStatic(offset);
+	Line::renderStatic(off);
 
-	offset = *this; // draw X line
-	offset.pos  *= getScale();
-	offset.size *= getScale();
-	offset << Transform(-8., 0., 0., 
+	off = offset; // draw X line
+	off << Transform(-8., 0., 0.,
 						16., 0., 
 						0.);
 	game.renderer.setColor(color::red);
-	Line::renderStatic(offset);
+	Line::renderStatic(off);
 
 
 	game.renderer.setColor(old_color);
-	offset = *this; 
-	offset.pos *= getScale();
-	offset.size *= getScale();
+
 	renderChildren(offset);
 }

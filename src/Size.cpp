@@ -27,6 +27,13 @@ Size & Size::operator *= (const double rhs) {
 
 	return *this;
 }
+Size & Size::operator+=(const double rhs)
+{
+	w += rhs;
+	h += rhs;
+
+	return *this;
+}
 Size & Size::operator = (const double rhs) {
 
 	w = rhs;

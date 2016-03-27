@@ -16,24 +16,19 @@ enum struct scene_num {
 
 struct Scene : virtual public Object {
 
-private:
-	static double scale;
-public:
-	inline static double getScale() { return scale; }
-	static void rescale();
 
 	static double pixelToUnits(double pix);
 	static Position pixelToPos(Position2i pos);
 
 
-	Scene();
 	virtual ~Scene() {}
 
 	bool load() override;
 
-	virtual void render() const;
+	virtual void render(Transform offset) const override;
 	using Object::render;
-	void         renderBG(SDL_Color col) const;
+protected:
+	void renderBG(SDL_Color col, Transform offset) const;
 
 };
 

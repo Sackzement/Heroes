@@ -2,40 +2,23 @@
 #include "game.h"
 #include "Rect.h"
 
+#include <SDL/SDL_assert.h>
 
 
 
 
 
-double Scene::scale = 120.;
 
-
-Scene::Scene() {
-	pos.x = game.w / 2.;
-	pos.y = game.h / 2.;
-	rescale();
-}
 
 bool Scene::load() {
-	rescale();
 	return loadChildren();
 }
 
 
-void Scene::rescale() {
-	double scaleW = double(game.window.w) / game.w;
-	double scaleH = double(game.window.h) / game.h;
-
-	if (scaleH < scaleW)
-		double scale = scaleH;
-	else
-		double scale = scaleW;
-
-}
 
 double Scene::pixelToUnits(double pix)
 {
-	return pix / scale;
+	return pix;// / scale;
 }
   
 Position Scene::pixelToPos(Position2i pos)
@@ -43,18 +26,17 @@ Position Scene::pixelToPos(Position2i pos)
 	Position ret;
 	ret.x = double(pos.x) - ((double)game.window.w / 2.);
 	ret.y = double(pos.y) - ((double)game.window.h / 2.);
-	ret.x /= scale;
-	ret.y /= scale;
+	//ret.x /= scale;
+	//ret.y /= scale;
+	SDL_assert(false); // replace / delete ?
 
 	return ret;
 }
 
 
-void Scene::render() const {
+void Scene::render(Transform offset) const {
 
-	Transform offset = *this;
-	offset.pos  *= getScale();
-	offset.size *= getScale();
+	offset << *this;
 
 
 	Transform bg_trans = offset;
@@ -67,14 +49,11 @@ void Scene::render() const {
 }
 
 
-void Scene::renderBG(SDL_Color col) const {
+void Scene::renderBG(SDL_Color col, Transform offset) const {
 
-	Transform offset = *this;
-
-	offset.pos *= getScale();
-	offset.size *= getScale();
 	offset.size.w *= game.w;
 	offset.size.h *= game.h;
+
 	game.renderer.setColor(col);
 	Rect::renderStatic(offset);
 

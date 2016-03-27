@@ -98,7 +98,18 @@ void MainMenu::input()
 {
 	if (game.mouse.moved())
 	{
-		Position mouse_pos_scene = pixelToPos(game.mouse.pos());
+		// mouse to scene
+		Transform offset = *this;
+
+		Transform mouse_trans = game.mouse.pos();
+		mouse_trans.pos /= game.getScale();
+		mouse_trans.pos.x -= game.w * .5;
+		mouse_trans.pos.y -= game.h * .5;
+
+		offset << mouse_trans;
+		offset << mouse_trans;
+		// ------------- mouse to scene   end
+		Position mouse_pos_scene = offset.pos;
 
 		if (mouse_pos_scene.y >= startgame.pos.y - .6
 			&& mouse_pos_scene.y <= startgame.pos.y + (4.*1.2) + .6)
@@ -113,6 +124,48 @@ void MainMenu::input()
 				selection = 4;
 			else if (mouse_pos_scene.y < -1. + .6 + (4 * 1.2))
 				selection = 5;
+		}
+		else
+			selection = 0;
+	}
+	if (game.mouse.isButtonDownOnce(SDL_BUTTON_LEFT)) {
+
+		Transform offset = *this;
+
+		Transform mouse_trans = game.mouse.pos();
+		mouse_trans.pos /= game.getScale();
+		mouse_trans.pos.x -= game.w * .5;
+		mouse_trans.pos.y -= game.h * .5;
+
+		offset << mouse_trans;
+		offset << mouse_trans;
+
+		Position mouse_pos_scene = offset.pos;
+
+		if (mouse_pos_scene.y >= startgame.pos.y - .6
+			&& mouse_pos_scene.y <= startgame.pos.y + (4.*1.2) + .6)
+		{
+			switch (selection)
+			{
+			case 1:
+				game.switchToScene(scene_num::level);
+				break;
+			case 2:
+				game.switchToScene(scene_num::stats);
+				break;
+			case 3:
+				game.switchToScene(scene_num::options);
+				break;
+			case 4:
+				game.switchToScene(scene_num::credits);
+				break;
+			case 5:
+				game.quit();
+				break;
+			default:
+				selection = 1;
+				break;
+			}
 		}
 		else
 			selection = 0;
@@ -187,11 +240,10 @@ void MainMenu::update()
 	SDL_RenderFillRect(game.renderer, &rect);
 	game.renderer.setColor(old_color);
 }*/
-void MainMenu::render() const
+void MainMenu::render(Transform offset) const
 {
-	Transform offset = *this;
-	offset.pos *= getScale();
-	offset.size *= getScale();
+	offset << *this;
+
 
 	// render BG color
 	Transform bg_trans = offset;
@@ -204,15 +256,15 @@ void MainMenu::render() const
 	// render selection
 	if (selection >= 1 && selection <= 5) {
 
-		Transform off_sele = *this;
+		Transform off_sele = offset;
 		Transform sele;
 		sele.pos.y = (startgame.pos.y - 1.2) + (1.2 * (double)selection);
 		sele.size.w = 16.;
 		sele.size.h = 1.2;
 		off_sele << sele;
 
-		off_sele.pos *= getScale();
-		off_sele.size *= getScale();
+
+
 		game.renderer.setColor(color::selection_dark);
 		Rect::renderStatic(off_sele);
 		//renderRect(offset.pos.x, offset.pos.y, offset.size.w, offset.size.h, color::selection_dark);

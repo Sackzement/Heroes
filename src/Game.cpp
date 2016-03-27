@@ -49,7 +49,6 @@ int Game::start(int argc, char** argv) {
 
 
 	scene = new MainMenu();
-	scene->rescale();
 	scene->load();
 
 
@@ -172,16 +171,19 @@ void Game::input() {
 	mouse.reset();
 	SDL_Event ev;
 	while (SDL_PollEvent(&ev)) { switch (ev.type) {
+
 	case SDL_QUIT:         state = game_state::quitting;  break;
 	case SDL_WINDOWEVENT:  if (ev.window.event == SDL_WINDOWEVENT_RESIZED) { 
 		window.pullSize();
-		scene->rescale(); 
+		window.update_offset(); 
 	}  break;
 	case SDL_KEYDOWN:      keyboard.processKeyDownEvent(ev.key);  break;
 	case SDL_KEYUP:        keyboard.processKeyUpEvent(ev.key);    break;
+
 	case SDL_MOUSEMOTION:      mouse.processMouseMoveEvent(ev.motion);        break;
 	case SDL_MOUSEBUTTONDOWN:  mouse.processMouseButtonDownEvent(ev.button);  break;
 	case SDL_MOUSEBUTTONUP:    mouse.processMouseButtonUpEvent(ev.button);    break;
+	case SDL_MOUSEWHEEL:    mouse.processMouseWheelEvent(ev.wheel);           break;
 	}}
 	
 	scene->input();
@@ -199,7 +201,7 @@ void Game::render() {
 	renderer.setColor(color::black);
 	SDL_RenderClear(renderer);
 
-	scene->render();
+	scene->render(window.offset);
 
 	SDL_RenderPresent(renderer);
 }

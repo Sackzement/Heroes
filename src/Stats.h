@@ -9,5 +9,5 @@ struct Stats : virtual public Scene {
 	virtual ~Stats() {}
 
 	void input() override;
-	void render() const override;
+	void render(Transform offset) const override;
 };

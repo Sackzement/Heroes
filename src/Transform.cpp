@@ -74,11 +74,26 @@ SDL_Rect Transform::toRect() const
 	return trans.toRect();
 }*/
 
-SDL_bool Transform::checkCollision(Transform other)
+bool Transform::checkCollision(Transform other)
 {
-	SDL_Rect rectA = toRect();
-	SDL_Rect rectB = other.toRect();
-	return SDL_HasIntersection(&rectA,&rectB);
+	double other_right = other.pos.x + (other.size.w * .5);
+	double other_left  = other.pos.x - (other.size.w * .5);
+	double other_up    = other.pos.y - (other.size.h * .5);
+	double other_down  = other.pos.y + (other.size.h * .5);
+
+	double this_right  = pos.x + (size.w * .5);
+	double this_left   = pos.x - (size.w * .5);
+	double this_up     = pos.y - (size.h * .5);
+	double this_down   = pos.y + (size.h * .5);
+
+	if (other_right >= this_left
+		&& other_left <= this_right
+		&& other_down >= this_up
+		&& other_up <= this_down)
+		return true;
+	else
+		return false;
+
 }
 
 

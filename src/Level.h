@@ -23,6 +23,8 @@ struct Level : virtual public Scene {
 	Player          player; // + weapon
 	vector<Object*> bullets;
 
+	// selection
+	Render* selected = nullptr;
 
 
 
@@ -32,7 +34,7 @@ struct Level : virtual public Scene {
 
 	void input() override;
 	void update() override;
-	void render() const override;
+	void render(Transform offset) const override;
 
 protected:
 	bool init_bg_clouds();

@@ -25,7 +25,7 @@ public:
 	bool load() override;
 	void input() override;
 	void update() override;
-	void render() const override;
+	void render(Transform offset) const override;
 
 
 

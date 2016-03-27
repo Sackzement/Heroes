@@ -31,6 +31,62 @@ Level::Level()
 void Level::input() {
 	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
 		game.switchToScene(scene_num::mainmenu);
+	if (game.mouse.isButtonDownOnce(SDL_BUTTON_RIGHT))
+		game.switchToScene(scene_num::mainmenu);
+
+	if ( selected &&
+	     game.mouse.isButtonDown(SDL_BUTTON_LEFT)  )  {
+		
+		Position2i pixel_offset = game.mouse.dist_moved();
+		Position   unit_offset  = Position( pixel_offset.x,
+								     		pixel_offset.y);
+
+		unit_offset /= game.window.offset.size.w;
+		selected->pos += unit_offset;
+	}
+
+	// select obj with mouse
+	if (game.mouse.isButtonDownOnce(SDL_BUTTON_LEFT)) {
+
+		selected = nullptr;
+
+		Transform mouse_trans = game.mouse.pos();
+		mouse_trans.pos /= game.getScale();
+		mouse_trans.pos.x -= game.w * .5;
+		mouse_trans.pos.y -= game.h * .5;
+
+		Transform mouse_trans_scene = mouse_trans;
+		mouse_trans_scene << *this;
+
+		// check coll  mouse -> child objs
+		size_t len = renders.size();
+		for (size_t i = 0; i < len; ++i) {
+			Transform off = *this;  
+			off << *renders[i];
+			if (mouse_trans_scene.checkCollision(off)) {
+				selected = renders[i];
+				break;
+			}
+		}
+
+		// check coll with scene
+		if (!selected) {
+			Transform mouse_trans = game.mouse.pos();
+			mouse_trans.pos /= game.getScale();
+			mouse_trans.pos.x -= game.w * .5;
+			mouse_trans.pos.y -= game.h * .5;
+
+			if (mouse_trans.checkCollision(*this))
+				selected = this;
+		}
+	}
+
+	// mausrad scrollen
+	if (selected) {
+		selected->size += double(game.mouse.getWheelMoved())*.1;
+		if (selected->size.w <= .1) selected->size.w = .1;
+		if (selected->size.h <= .1) selected->size.h = .1;
+	}
 
 	inputChildren();
 }
@@ -50,13 +106,13 @@ void Level::update() {
 	updateChildren();
 }
 
-void Level::render() const {
+void Level::render(Transform offset) const {
 
-	renderBG(color::sky_blue);
+	offset << *this;
 
-	Transform offset = *this;
-	offset.pos *= getScale();
-	offset.size *= getScale();
+	renderBG(color::sky_blue, offset);
+
+
 
 	renderChildren(offset);
 }

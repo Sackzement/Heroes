@@ -1,6 +1,7 @@
 #include "Window.h"
 #include <string>
 #include "Log.h"
+#include "Game.h"
 
 
 bool Window::create() {
@@ -19,6 +20,7 @@ bool Window::create() {
 	}
 
 	pullSize();
+	update_offset();
 
 	return true;
 }
@@ -34,6 +36,20 @@ Window::operator SDL_Window* () const {
 
 void Window::pullSize() {
 	SDL_GetWindowSize(m_window, &w, &h);
+}
+
+void Window::update_offset()
+{
+	offset.pos.x = double(w) * .5;
+	offset.pos.y = double(h) * .5;
+
+	offset.size.w = double(w) / game.w;
+	offset.size.h = double(h) / game.h;
+
+	if (offset.size.h < offset.size.w)
+		offset.size.w = offset.size.h;
+	else
+		offset.size.h = offset.size.w;
 }
  
 

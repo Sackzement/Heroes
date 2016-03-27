@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL/SDL_video.h>
 #include <SDL/SDL_render.h>
+#include "Transform.h"
 
 
 
@@ -8,18 +9,17 @@ class Window {
 	SDL_Window*  m_window;
 public:
 
-
-	virtual ~Window() {}
 	int w, h;
+	Transform offset;
 
 
+	operator SDL_Window* () const;
+	virtual ~Window() {}
 	bool create();
 	void destroy();
 
-	operator SDL_Window* () const;
-
 	void pullSize();
-
+	void update_offset();
 
 
 };

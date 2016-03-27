@@ -46,6 +46,8 @@ public:
 	 Window window;
 	 Renderer renderer;
 
+	 inline double getScale() { return window.offset.size.w; }
+
 	 TTF_Font* font;
 
 	 std::map<const string,Texture> textures;

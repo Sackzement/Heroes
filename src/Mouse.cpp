@@ -32,6 +32,9 @@ void Mouse::processMouseMoveEvent(SDL_MouseMotionEvent ev) {
 	m_pos.y = ev.y;
 
 	m_moved = true;
+
+	m_dist_moved.x = ev.xrel;
+	m_dist_moved.y = ev.yrel;
 }
 
 
@@ -48,6 +51,11 @@ void Mouse::processMouseButtonUpEvent(SDL_MouseButtonEvent ev)
 	buttonDownMask[ev.button] = false;
 }
 
+void Mouse::processMouseWheelEvent(SDL_MouseWheelEvent ev)
+{
+	m_wheel_moved = ev.y;
+}
+
 
 
 void Mouse::reset()
@@ -58,5 +66,9 @@ void Mouse::reset()
 	}
 
 	m_moved = false;
+
+	m_wheel_moved = 0;
+	m_dist_moved.x = 0;
+	m_dist_moved.y = 0;
 
 }

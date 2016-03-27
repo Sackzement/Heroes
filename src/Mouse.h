@@ -16,9 +16,11 @@ class Mouse {
 
 	Position2i m_pos;
 	bool m_moved;
+	Position2i m_dist_moved;
 	bool buttonDownMask[num_buttons] = {};
 	bool buttonDownOnceMask[num_buttons] = {};
 	bool buttonUpOnceMask[num_buttons] = {};
+	int m_wheel_moved;
 
 
 public:
@@ -27,6 +29,12 @@ public:
 
 	inline Position2i pos() const {
 		return m_pos;
+	}
+	inline Position2i dist_moved() const {
+		return m_dist_moved;
+	}
+	inline int getWheelMoved() const {
+		return m_wheel_moved;
 	}
 	inline int x() const {
 		return m_pos.x;
@@ -46,6 +54,7 @@ public:
 	void processMouseMoveEvent(SDL_MouseMotionEvent ev);
 	void processMouseButtonDownEvent(SDL_MouseButtonEvent ev);
 	void processMouseButtonUpEvent(SDL_MouseButtonEvent ev);
+	void processMouseWheelEvent(SDL_MouseWheelEvent ev);
 
 
 

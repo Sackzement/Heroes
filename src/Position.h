@@ -12,8 +12,11 @@ struct Position {
 
 	Position & operator += (const Position rhs);
 	Position & operator *= (const double rhs);
+	Position & operator /= (const double rhs);
 	void set(double xx, double yy, double zz);
 	void floor();
+
+	void nullify();
 };
 
 
