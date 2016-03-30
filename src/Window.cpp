@@ -4,54 +4,169 @@
 #include "Game.h"
 
 
+Window::Window()
+	: pointer(nullptr),
+	position(),
+	size(),
+	transform()
+{
+}
+
 bool Window::create() {
 
-	if (m_window)
-		SDL_DestroyWindow(m_window);
+	if (pointer) {
+		Log("\nWindow already exists, destroy first");
+		return false;
+	}
 
 	// load settings from file
 	// ...
 	// else -> create default window
-	m_window = SDL_CreateWindow("Heroes", 0, 0, 1920, 1080, SDL_WINDOW_BORDERLESS);
+	pointer = SDL_CreateWindow("Heroes", 0, 200, 1920, 1080, SDL_WINDOW_SHOWN);// RESIZABLE);
 
-	if (!m_window) {
+	if (!pointer) {
 		Log(std::string("\n") + SDL_GetError());
 		return false;
 	}
 
-	pullSize();
-	update_offset();
+	updateAll();
 
 	return true;
 }
 void Window::destroy() {
-	SDL_DestroyWindow(m_window);
-	m_window = nullptr;
-	w = h = 0;
+	SDL_DestroyWindow(pointer);  pointer = nullptr;
+
+	position.nullify();
+	size.nullify();
+	flag = 0;
+
+	transform.nullify();
 }
 
-Window::operator SDL_Window* () const {
-	return m_window;
+SDL_Window* Window::getPointer() const {
+	return pointer;
 }
 
-void Window::pullSize() {
-	SDL_GetWindowSize(m_window, &w, &h);
-}
-
-void Window::update_offset()
+double Window::getScale() const
 {
-	offset.pos.x = double(w) * .5;
-	offset.pos.y = double(h) * .5;
-
-	offset.size.w = double(w) / game.w;
-	offset.size.h = double(h) / game.h;
-
-	if (offset.size.h < offset.size.w)
-		offset.size.w = offset.size.h;
-	else
-		offset.size.h = offset.size.w;
+	return transform.scale.x;
 }
- 
+
+Position2i Window::getPosition() const
+{
+	return position;
+}
+
+Size2i Window::getSize() const
+{
+	return size;
+}
+
+Uint32 Window::getFlag() const
+{
+	return flag;
+}
+
+void Window::updatePosition()
+{
+	int x, y;
+	SDL_GetWindowPosition(pointer, &x, &y);
+
+	position.set(x, y);
+}
+
+void Window::updateSize()
+{
+	int w, h;
+	SDL_GetWindowSize(pointer, &w, &h);
+
+	size.set(w, h);
+
+	updateTransform();
+}
+
+void Window::updateFlag()
+{
+	Uint32 flag = SDL_GetWindowFlags(pointer);
+
+	this->flag = flag;
+}
+
+void Window::updateAll()
+{
+	updatePosition();
+	updateSize();
+	updateFlag();
+}
+
+void Window::setPosition(int x, int y)
+{
+	SDL_SetWindowPosition(pointer, x, y);
+	updateAll();
+}
+
+void Window::setSize(int w, int h)
+{
+	SDL_SetWindowSize(pointer, w, h);
+	updateAll();
+}
+
+bool Window::isFullscreen() const
+{
+	return isFullscreenNormal() || isFullscreenFake();
+}
+
+bool Window::isFullscreenNormal() const
+{
+	return (flag & Fullscreen::normal) != 0;
+}
+
+bool Window::isFullscreenFake() const
+{
+	return (flag & Fullscreen::fake) != 0;
+}
+
+bool Window::setFullscreen(Fullscreen var)
+{
+	bool ret = true;
+
+	if (var == Fullscreen::window) {
+		SDL_SetWindowBordered(pointer, SDL_FALSE);
+		setPosition(game.hardware.displays[0].bounds.x, game.hardware.displays[0].bounds.y);
+		setSize(game.hardware.displays[0].bounds.w, game.hardware.displays[0].bounds.h);
+	}
+	else if (SDL_SetWindowFullscreen(pointer, var) != 0) {
+		Log(string("\n") + SDL_GetError());
+		ret = false;
+	}
+
+	updateAll();
+
+	return ret;
+}
+
+Transform Window::getTransform() const
+{
+	return transform;
+}
+
+void Window::updateTransform()
+{
+	transform.pos.x = double(size.w) * .5;
+	transform.pos.y = double(size.h) * .5;
+
+	transform.scale.x = double(size.w) / game.w;
+	transform.scale.y = double(size.h) / game.h;
+
+	if (transform.scale.x < transform.scale.y)
+		transform.scale.y = transform.scale.x;
+	else
+		transform.scale.x = transform.scale.y;
+
+}
+
+
+
 
 
 #include"game.h"
@@ -60,10 +175,10 @@ bool Renderer::create() {
 
 	SDL_DestroyRenderer(m_renderer);
 
-	m_renderer = SDL_GetRenderer(game.window);
+	m_renderer = SDL_GetRenderer(game.window.getPointer());
 	SDL_DestroyRenderer(m_renderer);
 
-	m_renderer = SDL_CreateRenderer(game.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+	m_renderer = SDL_CreateRenderer(game.window.getPointer(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 
 	if (!m_renderer) {
 		Log(std::string("\n") + SDL_GetError());

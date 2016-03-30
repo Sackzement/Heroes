@@ -13,7 +13,7 @@ void Point::render(Transform offset) const {
 
 void Point::renderStatic(Transform offset)
 {
-	offset.size.nullify();
+	offset.scale.nullify();
 	SDL_Rect rect = offset.toRect();
 
 

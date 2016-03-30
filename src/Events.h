@@ -5,13 +5,20 @@
 
 
 struct Events {
+
 private:
-	std::vector<SDL_Event> m_polledEvents;
+	std::vector<SDL_Event> list;
+	size_t                  num;
+
+
+
 public:
 	Events();
 
-	virtual ~Events() {}
-	void pollEvents();
-	const std::vector<SDL_Event>& getPolledEvents() const;
+	void updateList();
+	const std::vector<SDL_Event>& getList() const;
+	void checkEvents();
+	void executeEvents();
+	size_t getNum() const;
 	//void executePolledEvents();
 };

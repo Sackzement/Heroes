@@ -39,9 +39,6 @@
     <ClCompile Include="..\src\Position.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Size.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Point.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -87,6 +84,18 @@
     <ClCompile Include="..\src\Editor.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Size2i.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scale.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Hardware.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Collision.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Game.h">
@@ -129,9 +138,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Position.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Size.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Point.h">
@@ -183,6 +189,27 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Position2i.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Size2i.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Scale.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Key.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Fullscreen.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Hardware.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Collision.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Nullify.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

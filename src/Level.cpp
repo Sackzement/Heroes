@@ -3,6 +3,7 @@
 #include "Rect.h"
 #include "Color.h"
 #include <time.h>
+#include "Collision.h"
 
 
 const char * filename_wall_img = "res\\wall.png";
@@ -29,7 +30,7 @@ Level::Level()
 }
 
 void Level::input() {
-	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
+	if (game.keyboard.isKeyDownOnce(Key::Q))
 		game.switchToScene(scene_num::mainmenu);
 	if (game.mouse.isButtonDownOnce(SDL_BUTTON_RIGHT))
 		game.switchToScene(scene_num::mainmenu);
@@ -41,7 +42,7 @@ void Level::input() {
 		Position   unit_offset  = Position( pixel_offset.x,
 								     		pixel_offset.y);
 
-		unit_offset /= game.window.offset.size.w;
+		unit_offset /= game.window.getScale();
 		selected->pos += unit_offset;
 	}
 
@@ -50,8 +51,8 @@ void Level::input() {
 
 		selected = nullptr;
 
-		Transform mouse_trans = game.mouse.pos();
-		mouse_trans.pos /= game.getScale();
+		Transform mouse_trans = game.mouse.pos().to_Transform();
+		mouse_trans.pos /= game.window.getScale();
 		mouse_trans.pos.x -= game.w * .5;
 		mouse_trans.pos.y -= game.h * .5;
 
@@ -63,7 +64,7 @@ void Level::input() {
 		for (size_t i = 0; i < len; ++i) {
 			Transform off = *this;  
 			off << *renders[i];
-			if (mouse_trans_scene.checkCollision(off)) {
+			if ( mouse_trans_scene.checkCollision(off).type == coll_type::intersect )  {
 				selected = renders[i];
 				break;
 			}
@@ -71,21 +72,21 @@ void Level::input() {
 
 		// check coll with scene
 		if (!selected) {
-			Transform mouse_trans = game.mouse.pos();
-			mouse_trans.pos /= game.getScale();
+			Transform mouse_trans = game.mouse.pos().to_Transform();
+			mouse_trans.pos /= game.window.getScale();
 			mouse_trans.pos.x -= game.w * .5;
 			mouse_trans.pos.y -= game.h * .5;
 
-			if (mouse_trans.checkCollision(*this))
+			if (mouse_trans.checkCollision(*this).type == coll_type::intersect)
 				selected = this;
 		}
 	}
 
 	// mausrad scrollen
 	if (selected) {
-		selected->size += double(game.mouse.getWheelMoved())*.1;
-		if (selected->size.w <= .1) selected->size.w = .1;
-		if (selected->size.h <= .1) selected->size.h = .1;
+		selected->scale += double(game.mouse.getWheelMoved())*.1;
+		if (selected->scale.x <= .1) selected->scale.x = .1;
+		if (selected->scale.y <= .1) selected->scale.y = .1;
 	}
 
 	inputChildren();
@@ -104,6 +105,40 @@ void Level::update() {
 	}
 
 	updateChildren();
+
+	checkCollision();
+}
+
+void Level::checkCollision()
+{
+	size_t len = walls.size();
+
+	for (size_t i = 0; i < len; ++i) {
+
+		Collision coll = player.checkCollision(*walls[i]);
+
+		if ( coll.type == coll_type::intersect )  {
+
+
+			// which side is smallest
+
+			if (coll.scale.x < coll.scale.y) {// resolve left / right
+				if (player.pos.x < coll.pos.x) // left
+					player.pos.x -= coll.scale.x;
+				else // right
+					player.pos.x += coll.scale.x;
+			}
+			else { // resolve up down
+				if (player.pos.y < coll.pos.y) {// up + reset fall speed
+					player.pos.y -= coll.scale.y;
+					player.trans_update.pos.y = 0;	}
+				else // down
+					player.pos.y += coll.scale.y;
+			}
+
+
+		}
+	}
 }
 
 void Level::render(Transform offset) const {
@@ -122,7 +157,7 @@ void Level::render(Transform offset) const {
 
 
 
-struct Wall :virtual public Transform,virtual public Load,virtual public Render {
+struct Wall :virtual public Object {
 	Texture tex;
 	Wall() { tex.name = filename_wall_img; }
 	~Wall() {}
@@ -154,8 +189,8 @@ bool Level::init_bg_clouds()
 
 		cloud->pos.x  = random(-10. ,10.);
 		cloud->pos.y  = random(-3.5,1.5);
-		cloud->size.w = random( 2. ,4. );
-		cloud->size.h = random( 1. ,2. );
+		cloud->scale.x = random( 2. ,4. );
+		cloud->scale.y = random( 1. ,2. );
 
 		cloud->addType(obj_type::load | obj_type::render);
 		bg_clouds.push_back(cloud);
@@ -179,8 +214,10 @@ bool Level::init_bg_walls() {
 
 		wall->pos.x = -8. + (wall_size / 2) + (i*wall_size) + left_offset;
 		wall->pos.y = -4.5 + (wall_size/2);
-		wall->size *= wall_size;
+		wall->scale *= wall_size;
 		
+		walls.push_back(wall);
+
 		addLoad(wall);
 		addRender(wall);
 	}
@@ -190,7 +227,9 @@ bool Level::init_bg_walls() {
 
 		wall->pos.x = -8. + (wall_size / 2) + (i*wall_size) + left_offset;
 		wall->pos.y = 4.5 - (wall_size/2);
-		wall->size *= wall_size;
+		wall->scale *= wall_size;
+
+		walls.push_back(wall);
 
 		addLoad(wall);
 		addRender(wall);

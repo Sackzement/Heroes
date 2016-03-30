@@ -1,15 +1,14 @@
 #pragma once
 #include <SDL/SDL_scancode.h>
 #include <SDL/SDL_events.h>
+#include "Key.h"
 
-typedef SDL_Scancode Key;
-const unsigned short num_keys = 512;
 
 class Keyboard {
 
-	bool keyDownMask[num_keys] = {};
-	bool keyDownOnceMask[num_keys] = {};
-	bool keyUpOnceMask[num_keys] = {};
+	bool keyDownMask[Key::num_keys] = {};
+	bool keyDownOnceMask[Key::num_keys] = {};
+	bool keyUpOnceMask[Key::num_keys] = {};
 
 
 

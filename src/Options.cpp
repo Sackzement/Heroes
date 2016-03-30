@@ -11,7 +11,7 @@ Options::Options()
 
 void Options::input() {
 
-	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
+	if (game.keyboard.isKeyDownOnce(Key::Q))
 		game.switchToScene(scene_num::mainmenu);
 
 	if (game.mouse.isButtonDownOnce(SDL_BUTTON_RIGHT))

@@ -14,8 +14,8 @@ Texture::Texture(int w, int h)
 	: texture(nullptr),
 	name("")
 {
-	size.w = w;
-	size.h = h;
+	scale.x = w;
+	scale.y = h;
 }
 Texture::Texture(const char* name)
 	: texture(nullptr),
@@ -43,12 +43,12 @@ bool Texture:: load (const char* name) {
 
 	// CREATE NEW FROM SIZE
 	if (name == "") {
-		if ( size.w < 1 || size.h < 1 )   {
+		if ( scale.x < 1 || scale.y < 1 )   {
 			cout << endl << "Texture Size too small";
 			return false;
 		}
 
-    SDL_Texture* createdTexture=SDL_CreateTexture(game.renderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,(int)size.w,(int)size.h);
+    SDL_Texture* createdTexture=SDL_CreateTexture(game.renderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,(int)scale.x,(int)scale.y);
 		if (createdTexture == nullptr) { cout << endl << SDL_GetError();  return false; }
 
 		texture = createdTexture;
@@ -75,8 +75,8 @@ bool Texture:: load (const char* name) {
 
 			texture = loadedTexture;
 			this->name = name;
-			size.w = width;
-			size.h = height;
+			scale.x = width;
+			scale.y = height;
 
 			game.textures[name] = *this;
 		}

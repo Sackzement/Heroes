@@ -26,7 +26,7 @@ void Line::render(Transform offset) const  {
 
 	 // place
 	 trans_a.pos = offset.pos;
-	 trans_b.pos = offset.pos + offset.size;
+	 trans_b.pos = offset.pos + offset.scale;
 
 
 	 // rotate

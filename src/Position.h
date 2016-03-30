@@ -7,20 +7,22 @@ struct Position {
 	
 	Position();
 	virtual ~Position() {}
-	Position(double xx, double yy);
-	Position(double xx, double yy, double zz);
+	Position(double x, double y);
+	Position(double x, double y, double z);
 
-	Position & operator += (const Position rhs);
-	Position & operator *= (const double rhs);
-	Position & operator /= (const double rhs);
-	void set(double xx, double yy, double zz);
+	Position & operator += (const Position p);
+	Position & operator *= (const double d);
+	Position & operator /= (const double d);
+	void set(double x, double y, double z);
+	void set(double x, double y);
 	void floor();
 
 	void nullify();
+	void default();
 };
 
 
 
-#include "Size.h"
-Position operator * (const Position lhs, const Size rhs);
-Position operator + (const Position lhs, const Size rhs);
+#include "Scale.h"
+Position operator * (const Position p, const Scale s);
+Position operator + (const Position p, const Scale s);

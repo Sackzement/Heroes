@@ -5,41 +5,47 @@
 
 
 Position::Position() :x(0.), y(0.), z(0.) {}
-Position::Position(double xx, double yy) :x(xx), y(yy), z(0.) {}
-Position::Position(double xx, double yy, double zz) :x(xx), y(yy), z(zz) {}
+Position::Position(double x, double y) :x(x), y(y), z(0.) {}
+Position::Position(double x, double y, double z) :x(x), y(y), z(z) {}
 
-Position & Position::operator += (const Position rhs) {
+Position & Position::operator += (const Position p) {
 
-	x += rhs.x;
-	y += rhs.y;
-	z += rhs.z;
-
-	return *this;
-}
-
-Position & Position::operator*=(const double rhs)
-{
-	x *= rhs;
-	y *= rhs;
-	z *= rhs;
+	x += p.x;
+	y += p.y;
+	z += p.z;
 
 	return *this;
 }
 
-Position & Position::operator/=(const double rhs)
+Position & Position::operator*=(const double d)
 {
-	x /= rhs;
-	y /= rhs;
-	z /= rhs;
+	x *= d;
+	y *= d;
+	z *= d;
 
 	return *this;
 }
 
-void Position::set(double xx, double yy, double zz)
+Position & Position::operator/=(const double d)
 {
-	x = xx;
-	y = yy;
-	z = zz;
+	x /= d;
+	y /= d;
+	z /= d;
+
+	return *this;
+}
+
+void Position::set(double x, double y, double z)
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+}
+
+void Position::set(double x, double y)
+{
+	this->x = x;
+	this->y = y;
 }
 
 void Position::floor()  {
@@ -56,25 +62,30 @@ void Position::nullify()
 	z = 0;
 }
 
+void Position::default()
+{
+	nullify();
+}
 
 
 
-Position operator * (const Position lhs, const Size rhs) {
 
-	Position ret(lhs);
+Position operator * (const Position pos, const Scale s) {
 
-	ret.x *= rhs.w;
-	ret.y *= rhs.h;
+	Position ret(pos);
+
+	ret.x *= s.x;
+	ret.y *= s.y;
 
 	return ret;
 }
 
-Position operator+(const Position lhs, const Size rhs)
+Position operator+(const Position pos, const Scale s)
 {
-	Position ret(lhs);
+	Position ret(pos);
 
-	ret.x += rhs.w;
-	ret.y += rhs.h;
+	ret.x += s.x;
+	ret.y += s.y;
 
 	return ret;
 }

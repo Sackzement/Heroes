@@ -1,6 +1,7 @@
 #include "Transform.h"
 #include "Game.h"
 #include <cmath>
+#include "Collision.h"
 
 
 
@@ -9,55 +10,63 @@
 
 
 
-Transform::Transform() :pos(), size(), rot(0.) {}
-Transform::Transform(Position p, Size s, double r) :pos(p), size(s), rot(r) {}
+Transform::Transform() :pos(), scale(), rot(0.) {}
+Transform::Transform(Position p, Scale s, double r) :pos(p), scale(s), rot(r) {}
 
 Transform::Transform(double xx, double yy, double zz, double ww, double hh, double rr)
 	:	pos(xx,yy,zz),
-		size(ww,hh),
+	    scale(ww,hh),
 		rot(rr)
 {
 }
 
 void Transform::nullify()
 {
-	pos.set(0., 0., 0.);
-	size.nullify();
+	pos.nullify();
+	scale.nullify();
 	rot = 0.;
 }
 
 void Transform::default()
 {
-	pos.set(0., 0., 0.);
-	size.set(1., 1.);
+	pos.default();
+	scale.default();
 	rot = 0.;
 }
 
 void Transform::set(double xx, double yy, double zz, double ww, double hh, double rr)
 {
 	pos = Position(xx,yy,zz);
-	size = Size(ww, hh);
+	scale = Scale(ww, hh);
 	rot = rr;
 }
 
 Transform &Transform:: operator<< (const Transform rhs) {
 
-	pos += rhs.pos * size;
-	size *= rhs.size;
+	pos += rhs.pos * scale;
+	scale *= rhs.scale;
 	rot += rhs.rot;
+
+	return *this;
+}
+Transform & Transform::operator +=(const Transform t)
+{
+	pos += t.pos;
+	scale += t.scale;
+	rot += t.rot;
 
 	return *this;
 }
 SDL_Rect Transform::toRect() const
 {
 	Transform rect_trans = *this;
-	rect_trans.pos.x -= size.w / 2;
-	rect_trans.pos.y -= size.h / 2;
+	rect_trans.pos.x -= scale.x / 2;
+	rect_trans.pos.y -= scale.y / 2;
 
 	SDL_Rect ret = {(int)rect_trans.pos.x,
 					(int)rect_trans.pos.y,
-		            (int)std::ceil(rect_trans.size.w),
-					(int)std::ceil(rect_trans.size.h) };
+		            (int)std::ceil(rect_trans.scale.x),
+					(int)std::ceil(rect_trans.scale.y) };
 
 	return ret;
 }
@@ -74,26 +83,72 @@ SDL_Rect Transform::toRect() const
 	return trans.toRect();
 }*/
 
-bool Transform::checkCollision(Transform other)
+Collision Transform::checkCollision(Transform other) const
 {
-	double other_right = other.pos.x + (other.size.w * .5);
-	double other_left  = other.pos.x - (other.size.w * .5);
-	double other_up    = other.pos.y - (other.size.h * .5);
-	double other_down  = other.pos.y + (other.size.h * .5);
+	Collision coll;
+	coll.nullify();
 
-	double this_right  = pos.x + (size.w * .5);
-	double this_left   = pos.x - (size.w * .5);
-	double this_up     = pos.y - (size.h * .5);
-	double this_down   = pos.y + (size.h * .5);
 
-	if (other_right >= this_left
-		&& other_left <= this_right
-		&& other_down >= this_up
-		&& other_up <= this_down)
-		return true;
+	if (other.right() >= this->left()
+		&& other.left() <= this->right()
+		&& other.bottom() >= this->top()
+		&& other.top() <= this->bottom() )
+	{
+		// generate collision trans
+		double
+			top    = (other.top()    > this->top())    ? other.top()    : this->top(),
+			left   = (other.left()   > this->left())   ? other.left()   : this->left(),
+
+			bottom = (other.bottom() < this->bottom()) ? other.bottom() : this->bottom(),
+			right  = (other.right()  < this->right())  ? other.right()  : this->right();
+
+		coll.scale.set(right - left, bottom - top);
+		coll.pos.set(left + (coll.scale.x * .5),
+			         top  + (coll.scale.y * .5) );
+
+		// check if touch
+		if (other.right() == this->left()
+			|| other.left() == this->right()
+			|| other.bottom() == this->top()
+			|| other.top() == this->bottom() )
+			coll.type = coll_type::touch;
+		else 
+			coll.type = coll_type::intersect;
+	}
 	else
-		return false;
+		coll.type = coll_type::none;
 
+
+	return coll;
 }
 
+double Transform::top() const
+{
+	return pos.y - (scale.y * .5);
+}
 
+double Transform::bottom() const
+{
+	return pos.y + (scale.y * .5);
+}
+
+double Transform::left() const
+{
+	return pos.x - (scale.x * .5);
+}
+
+double Transform::right() const
+{
+	return pos.x + (scale.x * .5);
+}
+
+Transform operator*(const Transform t, const double d)
+{
+	Transform ret(t);
+
+	ret.pos   *= d;
+	ret.scale *= d;
+	ret.rot   *= d;
+
+	return ret;
+}

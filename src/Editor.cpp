@@ -17,7 +17,7 @@ Editor::Editor() :
 
 void Editor::input()
 {
-	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_E))
+	if (game.keyboard.isKeyDownOnce(Key::E))
 		visible = !visible;
 }
 

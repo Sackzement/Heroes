@@ -163,10 +163,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Button.cpp" />
+    <ClCompile Include="..\src\Collision.cpp" />
     <ClCompile Include="..\src\Credits.cpp" />
     <ClCompile Include="..\src\Editor.cpp" />
     <ClCompile Include="..\src\Events.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
+    <ClCompile Include="..\src\Hardware.cpp" />
     <ClCompile Include="..\src\Keyboard.cpp" />
     <ClCompile Include="..\src\Level.cpp" />
     <ClCompile Include="..\src\Libs.cpp" />
@@ -182,7 +184,8 @@
     <ClCompile Include="..\src\Position.cpp" />
     <ClCompile Include="..\src\Rect.cpp" />
     <ClCompile Include="..\src\Scene.cpp" />
-    <ClCompile Include="..\src\Size.cpp" />
+    <ClCompile Include="..\src\Scale.cpp" />
+    <ClCompile Include="..\src\Size2i.cpp" />
     <ClCompile Include="..\src\Stats.cpp" />
     <ClCompile Include="..\src\Text.cpp" />
     <ClCompile Include="..\src\Texture.cpp" />
@@ -192,12 +195,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Button.h" />
+    <ClInclude Include="..\src\Collision.h" />
     <ClInclude Include="..\src\Color.h" />
     <ClInclude Include="..\src\Credits.h" />
     <ClInclude Include="..\src\Editor.h" />
     <ClInclude Include="..\src\Events.h" />
+    <ClInclude Include="..\src\Fullscreen.h" />
     <ClInclude Include="..\src\Game.h" />
+    <ClInclude Include="..\src\Hardware.h" />
     <ClInclude Include="..\src\Input.h" />
+    <ClInclude Include="..\src\Key.h" />
     <ClInclude Include="..\src\Keyboard.h" />
     <ClInclude Include="..\src\Level.h" />
     <ClInclude Include="..\src\Libs.h" />
@@ -206,6 +213,7 @@
     <ClInclude Include="..\src\Log.h" />
     <ClInclude Include="..\src\MainMenu.h" />
     <ClInclude Include="..\src\Mouse.h" />
+    <ClInclude Include="..\src\Nullify.h" />
     <ClInclude Include="..\src\Object.h" />
     <ClInclude Include="..\src\Options.h" />
     <ClInclude Include="..\src\Player.h" />
@@ -215,7 +223,8 @@
     <ClInclude Include="..\src\Rect.h" />
     <ClInclude Include="..\src\Render.h" />
     <ClInclude Include="..\src\Scene.h" />
-    <ClInclude Include="..\src\Size.h" />
+    <ClInclude Include="..\src\Scale.h" />
+    <ClInclude Include="..\src\Size2i.h" />
     <ClInclude Include="..\src\Stats.h" />
     <ClInclude Include="..\src\Text.h" />
     <ClInclude Include="..\src\Texture.h" />

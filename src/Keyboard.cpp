@@ -25,13 +25,13 @@ void Keyboard::processKeyUpEvent(SDL_KeyboardEvent keyEvent) {
 }
 
 void Keyboard::resetOnceMasks() {
-	for (Uint32 i = 0; i < num_keys; ++i) {
+	for (Uint32 i = 0; i < Key::num_keys; ++i) {
 		keyDownOnceMask[i] = false;
 		keyUpOnceMask[i] = false;
 	}
 }
 void Keyboard::resetAll() {
 	resetOnceMasks();
-	for (Uint32 i = 0; i < num_keys; ++i)
+	for (Uint32 i = 0; i < Key::num_keys; ++i)
 		keyDownMask[i] = false;
 }

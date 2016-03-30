@@ -40,6 +40,7 @@ int Game::start(int argc, char** argv) {
 	generatePath();
 
 	Libs::init();
+	hardware.update();
 	window.create();
 	renderer.create();
 
@@ -169,23 +170,41 @@ void Game::input() {
 	
 	keyboard.resetOnceMasks();
 	mouse.reset();
+
+
 	SDL_Event ev;
 	while (SDL_PollEvent(&ev)) { switch (ev.type) {
 
 	case SDL_QUIT:         state = game_state::quitting;  break;
-	case SDL_WINDOWEVENT:  if (ev.window.event == SDL_WINDOWEVENT_RESIZED) { 
-		window.pullSize();
-		window.update_offset(); 
-	}  break;
+	case SDL_WINDOWEVENT:  
+		switch (ev.window.event) 
+		{
+		case SDL_WINDOWEVENT_RESIZED: window.updateAll(); break;
+		case SDL_WINDOWEVENT_MOVED:   window.updateAll(); break;
+		}
+		break;
 	case SDL_KEYDOWN:      keyboard.processKeyDownEvent(ev.key);  break;
 	case SDL_KEYUP:        keyboard.processKeyUpEvent(ev.key);    break;
 
 	case SDL_MOUSEMOTION:      mouse.processMouseMoveEvent(ev.motion);        break;
 	case SDL_MOUSEBUTTONDOWN:  mouse.processMouseButtonDownEvent(ev.button);  break;
 	case SDL_MOUSEBUTTONUP:    mouse.processMouseButtonUpEvent(ev.button);    break;
-	case SDL_MOUSEWHEEL:    mouse.processMouseWheelEvent(ev.wheel);           break;
+	case SDL_MOUSEWHEEL:       mouse.processMouseWheelEvent(ev.wheel);        break;
 	}}
 	
+
+	// GLOBAL
+	if (keyboard.isKeyDownOnce(Key::KP_1))
+		window.setFullscreen(Fullscreen::normal);
+	if (keyboard.isKeyDownOnce(Key::KP_2))
+		window.setFullscreen(Fullscreen::fake);
+	if (keyboard.isKeyDownOnce(Key::KP_0))
+		window.setFullscreen(Fullscreen::off);
+	if (keyboard.isKeyDownOnce(Key::KP_3))
+		window.setFullscreen(Fullscreen::window);
+
+
+
 	scene->input();
 
 }
@@ -201,7 +220,7 @@ void Game::render() {
 	renderer.setColor(color::black);
 	SDL_RenderClear(renderer);
 
-	scene->render(window.offset);
+	scene->render(window.getTransform());
 
 	SDL_RenderPresent(renderer);
 }

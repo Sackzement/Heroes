@@ -2,24 +2,60 @@
 #include <SDL/SDL_video.h>
 #include <SDL/SDL_render.h>
 #include "Transform.h"
+#include "Size2i.h"
+#include "Position2i.h"
+#include "Fullscreen.h"
 
 
 
 class Window {
-	SDL_Window*  m_window;
+
+
+	SDL_Window*  pointer;
+
+	Position2i   position;
+	Size2i       size;
+	Uint32       flag;
+
+	Transform    transform;
+
+
+
 public:
+	            Window();
 
-	int w, h;
-	Transform offset;
+	bool        create();
+	void        destroy();
 
 
-	operator SDL_Window* () const;
-	virtual ~Window() {}
-	bool create();
-	void destroy();
+	SDL_Window* getPointer() const;
 
-	void pullSize();
-	void update_offset();
+	Position2i  getPosition() const;
+	Size2i      getSize() const;
+	Uint32      getFlag() const;
+
+	void        updatePosition();
+	void        updateSize();
+
+	void        setPosition(int x, int y);
+	void        setSize(int w, int h);
+
+	bool        isFullscreen() const;
+	bool        isFullscreenNormal() const;
+	bool        isFullscreenFake() const;
+
+	bool        setFullscreen(Fullscreen var);
+
+	void        updateFlag();
+
+	void        updateAll();
+
+
+	// trans
+	double      getScale() const;
+	Transform   getTransform() const;
+protected:
+	void        updateTransform();
 
 
 };

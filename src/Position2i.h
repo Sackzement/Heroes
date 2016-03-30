@@ -3,11 +3,28 @@
 
 
 struct Position2i {
-	int x = 0, y = 0;
 
-	operator Transform () {
+	int  x, y;
 
-		Transform ret;  ret.nullify();
+
+
+	Position2i()              :  x(0), y(0)  {}
+	Position2i(int x, int y)  :  x(x), y(y)  {}
+
+	void set(int x, int y) {
+
+		this->x = x;
+		this->y = y;
+	}
+	void nullify()
+	{
+		x = 0;
+		y = 0;
+	}
+
+	Transform to_Transform() {
+
+		Transform ret;  ret.nullify(); // why null?
 
 		ret.pos.x = double(x);
 		ret.pos.y = double(y);

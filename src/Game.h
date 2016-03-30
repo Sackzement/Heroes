@@ -9,8 +9,9 @@ using namespace std;
 #include "Texture.h"
 #include <functional>
 #include <SDL/SDL_ttf.h>
+#include "Hardware.h"
 
-#include "Color.h"
+#include "Color.h" 
 #include "Point.h"
 #include "Line.h"
 #include "Rect.h"
@@ -43,10 +44,11 @@ public:
 	 Keyboard keyboard;
 	 Mouse mouse;
 
+	 Hardware hardware;
+
 	 Window window;
 	 Renderer renderer;
 
-	 inline double getScale() { return window.offset.size.w; }
 
 	 TTF_Font* font;
 

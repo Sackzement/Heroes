@@ -7,23 +7,32 @@
 
 
 Events::Events() :
-	m_polledEvents(std::vector<SDL_Event>())
+list(),
+num(0)
 {}
 
 
 
-void Events::pollEvents() {
+void Events::updateList() {
+
+	// if cycle counter diferent
+	list.clear();
 
 	SDL_Event ev;
-
-	m_polledEvents.clear();
 	while (SDL_PollEvent(&ev))
-		m_polledEvents.push_back(ev);
+		list.push_back(ev);
+
+	num = list.size();
 }
 
-const std::vector<SDL_Event>& Events::getPolledEvents() const
+const std::vector<SDL_Event>& Events::getList() const
 {
-	return m_polledEvents;
+	return list;
+}
+
+size_t Events::getNum() const
+{
+	return num;
 }
 
 

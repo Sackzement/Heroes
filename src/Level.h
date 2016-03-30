@@ -34,6 +34,7 @@ struct Level : virtual public Scene {
 
 	void input() override;
 	void update() override;
+	void checkCollision();
 	void render(Transform offset) const override;
 
 protected:

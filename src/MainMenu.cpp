@@ -101,8 +101,8 @@ void MainMenu::input()
 		// mouse to scene
 		Transform offset = *this;
 
-		Transform mouse_trans = game.mouse.pos();
-		mouse_trans.pos /= game.getScale();
+		Transform mouse_trans = game.mouse.pos().to_Transform();
+		mouse_trans.pos /= game.window.getScale();
 		mouse_trans.pos.x -= game.w * .5;
 		mouse_trans.pos.y -= game.h * .5;
 
@@ -132,8 +132,8 @@ void MainMenu::input()
 
 		Transform offset = *this;
 
-		Transform mouse_trans = game.mouse.pos();
-		mouse_trans.pos /= game.getScale();
+		Transform mouse_trans = game.mouse.pos().to_Transform();
+		mouse_trans.pos /= game.window.getScale();
 		mouse_trans.pos.x -= game.w * .5;
 		mouse_trans.pos.y -= game.h * .5;
 
@@ -171,11 +171,11 @@ void MainMenu::input()
 			selection = 0;
 	}
 
-	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_Q))
+	if (game.keyboard.isKeyDownOnce(Key::Q))
 		game.quit();
 
 
-	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_SPACE))
+	if (game.keyboard.isKeyDownOnce(Key::SPACE))
 		switch (selection)
 		{
 		case 1:
@@ -198,14 +198,14 @@ void MainMenu::input()
 			break;
 		}
 
-	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_DOWN)) {
+	if (game.keyboard.isKeyDownOnce(Key::DOWN)) {
 		if (selection >= 5)
 			selection = 1;
 		else
 			++selection;
 	}
 
-	if (game.keyboard.isKeyDownOnce(SDL_SCANCODE_UP)) {
+	if (game.keyboard.isKeyDownOnce(Key::UP)) {
 		
 		if (selection <= 1)
 			selection = 5;
@@ -247,8 +247,8 @@ void MainMenu::render(Transform offset) const
 
 	// render BG color
 	Transform bg_trans = offset;
-	bg_trans.size.w *= game.w;
-	bg_trans.size.h *= game.h;
+	bg_trans.scale.x *= game.w;
+	bg_trans.scale.y *= game.h;
 	game.renderer.setColor(color::sky_brown);
 	Rect::renderStatic(bg_trans);
 
@@ -259,8 +259,8 @@ void MainMenu::render(Transform offset) const
 		Transform off_sele = offset;
 		Transform sele;
 		sele.pos.y = (startgame.pos.y - 1.2) + (1.2 * (double)selection);
-		sele.size.w = 16.;
-		sele.size.h = 1.2;
+		sele.scale.x = 16.;
+		sele.scale.y = 1.2;
 		off_sele << sele;
 
 
