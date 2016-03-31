@@ -171,6 +171,8 @@ void MainMenu::input()
 			selection = 0;
 	}
 
+	if (game.mouse.isButtonDownOnce(SDL_BUTTON_RIGHT))
+		game.quit();
 	if (game.keyboard.isKeyDownOnce(Key::Q))
 		game.quit();
 
