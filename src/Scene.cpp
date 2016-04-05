@@ -18,6 +18,7 @@ bool Scene::load() {
 
 double Scene::pixelToUnits(double pix)
 {
+	SDL_assert("pixelToUnits" && 0); // replace / delete ?
 	return pix;// / scale;
 }
   
@@ -28,7 +29,7 @@ Position Scene::pixelToPos(Position2i pos)
 	ret.y = double(pos.y) - ((double)game.window.getSize().h / 2.);
 	//ret.x /= scale;
 	//ret.y /= scale;
-	SDL_assert(false); // replace / delete ?
+	SDL_assert("pixelToPos" && 0); // replace / delete ?
 
 	return ret;
 }
@@ -46,6 +47,13 @@ void Scene::render(Transform offset) const {
 	Rect::renderStatic(bg_trans);
 
 	renderChildren(offset);
+}
+
+void Scene::setCamera(Transform camera_trans)
+{
+	pos   = camera_trans.pos * -1.;
+	scale = camera_trans.scale;
+	rot   = camera_trans.rot;
 }
 
 

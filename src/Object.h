@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Update.h"
 #include "Render.h"
+
 #include <vector>
 using std::vector;
 
@@ -24,12 +25,21 @@ namespace obj_type {
 
 
 
+
+
+
+
 struct Object : 
 	virtual public Transform, 
 	virtual public Load, 
 	virtual public Input, 
 	virtual public Update, 
 	virtual public Render  {
+
+
+
+
+
 
 	Object();
 	virtual ~Object() {}
@@ -39,7 +49,11 @@ protected:
 	vector<Load*>  loads;
 	vector<Input*>  inputs;
 	vector<Update*> updates;
-	vector<Render*> renders;
+	vector<Transform*> renders;
+
+
+
+
 
 	// functions
 public:
@@ -57,7 +71,7 @@ public:
 	void addLoad  (Load   * lo);
 	void addInput (Input  * in);
 	void addUpdate(Update * up);
-	void addRender(Render * re);
+	void addRender(Transform * re);
 
 
 protected:

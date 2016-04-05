@@ -10,7 +10,7 @@ class MainMenu : virtual public Scene {
 public:
 
 	Text title,
-		startgame, stats, options, credits, quit;
+		startgame, stats, options, credits, leveleditor,quit;
 	Uint8 selection;
 
 

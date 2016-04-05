@@ -4,6 +4,14 @@
 #include "Color.h"
 #include "Rect.h"
 
+
+
+const double btn_height = 1.;
+const double half_btn_height = btn_height * .5;
+const int num_btns = 6;
+
+
+
 MainMenu::MainMenu() : selection(1) {
 
 	title.text = "SUPER CRATE BOX";
@@ -12,20 +20,23 @@ MainMenu::MainMenu() : selection(1) {
 	stats.text = "STATS";
 	options.text = "OPTIONS";
 	credits.text = "CREDITS";
+	leveleditor.text = "LEVEL EDITOR";
 	quit.text = "QUIT";
 
-	title    .set(0. , -3.5 + (0.*1.2), 0.,14., 1.2, 0.);
-	startgame.set(0. , -3.5 + (2.*1.2), 0.,10., 1.2, 0.);
-	stats    .set(0. , -3.5 + (3.*1.2), 0., 8., 1.2, 0.);
-	options  .set(0. , -3.5 + (4.*1.2), 0., 9., 1.2, 0.);
-	credits  .set(0. , -3.5 + (5.*1.2), 0., 9., 1.2, 0.);
-	quit     .set(0. , -3.5 + (6.*1.2), 0., 8., 1.2, 0.);
+	title    .set(0. , -3.5 + (0.*btn_height), 0.,14., btn_height, 0.);
+	startgame.set(0. , -3.5 + (2.*btn_height), 0.,10., btn_height, 0.);
+	stats    .set(0. , -3.5 + (3.*btn_height), 0., 8., btn_height, 0.);
+	options  .set(0. , -3.5 + (4.*btn_height), 0., 9., btn_height, 0.);
+	credits  .set(0. , -3.5 + (5.*btn_height), 0., 9., btn_height, 0.);
+  leveleditor.set(0. , -3.5 + (6.*btn_height), 0.,11., btn_height, 0.);
+	quit     .set(0. , -3.5 + (7.*btn_height), 0., 8., btn_height, 0.);
 
 	addLoad(&title);
 	addLoad(&startgame);
 	addLoad(&stats);
 	addLoad(&options);
 	addLoad(&credits);
+	addLoad(&leveleditor);
 	addLoad(&quit);
 
 	addRender(&title);
@@ -33,6 +44,7 @@ MainMenu::MainMenu() : selection(1) {
 	addRender(&stats);
 	addRender(&options);
 	addRender(&credits);
+	addRender(&leveleditor);
 	addRender(&quit);
 
 
@@ -94,8 +106,16 @@ bool MainMenu::load() {
 	return true;
 }
 
+
+
 void MainMenu::input()
 {
+
+	const double first_btn_top = startgame.pos.y - half_btn_height;
+	const double first_btn_bot = startgame.pos.y + half_btn_height;
+	const double last_btn_bot = quit.pos.y + half_btn_height;
+
+
 	if (game.mouse.moved())
 	{
 		// mouse to scene
@@ -111,40 +131,25 @@ void MainMenu::input()
 		// ------------- mouse to scene   end
 		Position mouse_pos_scene = offset.pos;
 
-		if (mouse_pos_scene.y >= startgame.pos.y - .6
-			&& mouse_pos_scene.y <= startgame.pos.y + (4.*1.2) + .6)
+
+		if (mouse_pos_scene.y >= first_btn_top  &&  mouse_pos_scene.y <= last_btn_bot)
 		{
-			if (mouse_pos_scene.y < -1. + .75)
-				selection = 1;
-			else if (mouse_pos_scene.y < -1. + .6 + (1 * 1.2))
-				selection = 2;
-			else if (mouse_pos_scene.y < -1. + .6 + (2 * 1.2))
-				selection = 3;
-			else if (mouse_pos_scene.y < -1. + .6 + (3 * 1.2))
-				selection = 4;
-			else if (mouse_pos_scene.y < -1. + .6 + (4 * 1.2))
-				selection = 5;
+			for (int i = 0; i < num_btns; ++i)
+
+				if (mouse_pos_scene.y <= first_btn_bot + (double(i) * btn_height)) {
+					selection = i + 1;
+					break;
+				}
+
 		}
 		else
 			selection = 0;
 	}
+
+
+
 	if (game.mouse.isButtonDownOnce(SDL_BUTTON_LEFT)) {
 
-		Transform offset = *this;
-
-		Transform mouse_trans = game.mouse.pos().to_Transform();
-		mouse_trans.pos /= game.window.getScale();
-		mouse_trans.pos.x -= game.w * .5;
-		mouse_trans.pos.y -= game.h * .5;
-
-		offset << mouse_trans;
-		offset << mouse_trans;
-
-		Position mouse_pos_scene = offset.pos;
-
-		if (mouse_pos_scene.y >= startgame.pos.y - .6
-			&& mouse_pos_scene.y <= startgame.pos.y + (4.*1.2) + .6)
-		{
 			switch (selection)
 			{
 			case 1:
@@ -160,15 +165,15 @@ void MainMenu::input()
 				game.switchToScene(scene_num::credits);
 				break;
 			case 5:
+				game.switchToScene(scene_num::leveleditor);
+				break;
+			case 6:
 				game.quit();
 				break;
 			default:
 				selection = 1;
 				break;
 			}
-		}
-		else
-			selection = 0;
 	}
 
 	if (game.mouse.isButtonDownOnce(SDL_BUTTON_RIGHT))
@@ -193,6 +198,9 @@ void MainMenu::input()
 			game.switchToScene(scene_num::credits);
 			break;
 		case 5:
+			game.switchToScene(scene_num::leveleditor);
+			break;
+		case 6:
 			game.quit();
 			break;
 		default:
@@ -201,7 +209,7 @@ void MainMenu::input()
 		}
 
 	if (game.keyboard.isKeyDownOnce(Key::DOWN)) {
-		if (selection >= 5)
+		if (selection >= 6)
 			selection = 1;
 		else
 			++selection;
@@ -210,7 +218,7 @@ void MainMenu::input()
 	if (game.keyboard.isKeyDownOnce(Key::UP)) {
 		
 		if (selection <= 1)
-			selection = 5;
+			selection = 6;
 		else
 			--selection;
 	}
@@ -242,9 +250,12 @@ void MainMenu::update()
 	SDL_RenderFillRect(game.renderer, &rect);
 	game.renderer.setColor(old_color);
 }*/
+
 void MainMenu::render(Transform offset) const
 {
 	offset << *this;
+
+	
 
 
 	// render BG color
@@ -256,13 +267,13 @@ void MainMenu::render(Transform offset) const
 
 
 	// render selection
-	if (selection >= 1 && selection <= 5) {
+	if (selection >= 1 && selection <= 6) {
 
 		Transform off_sele = offset;
 		Transform sele;
-		sele.pos.y = (startgame.pos.y - 1.2) + (1.2 * (double)selection);
+		sele.pos.y = (startgame.pos.y - btn_height) + (btn_height * (double)selection);
 		sele.scale.x = 16.;
-		sele.scale.y = 1.2;
+		sele.scale.y = btn_height;
 		off_sele << sele;
 
 
@@ -276,4 +287,11 @@ void MainMenu::render(Transform offset) const
 
 	// render text
 	renderChildren(offset);
+
+	// test
+	SDL_Color old_col = game.renderer.getColor(); game.renderer.setColor(color::black);
+	Transform oo = offset, tt;
+	tt.pos.set(-7, -3.5);
+	tt.render(oo);
+	game.renderer.setColor(old_col);
 }

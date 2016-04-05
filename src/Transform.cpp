@@ -13,10 +13,17 @@
 Transform::Transform() :pos(), scale(), rot(0.) {}
 Transform::Transform(Position p, Scale s, double r) :pos(p), scale(s), rot(r) {}
 
-Transform::Transform(double xx, double yy, double zz, double ww, double hh, double rr)
-	:	pos(xx,yy,zz),
-	    scale(ww,hh),
-		rot(rr)
+Transform::Transform(double x, double y, double z, double w, double h, double r)
+	:	pos(x,y,z),
+	    scale(w,h),
+		rot(r)
+{
+}
+
+Transform::Transform(double x, double y, double z, double w, double h)
+	: pos(x, y, z),
+	scale(w, h),
+	rot(0.)
 {
 }
 
@@ -43,9 +50,27 @@ void Transform::set(double xx, double yy, double zz, double ww, double hh, doubl
 
 Transform &Transform:: operator<< (const Transform rhs) {
 
-	pos += rhs.pos * scale;
-	scale *= rhs.scale;
-	rot += rhs.rot;
+	const Transform parent = *this, child = rhs;
+
+	// rot
+	const double initX = rhs.pos.x,
+         		 initY = rhs.pos.y,
+
+		cos_rot = cos(game.scene->rot*(pi / 180.)),
+		sin_rot = sin(game.scene->rot*(pi / 180.));
+
+	pos.x = (cos_rot*child.pos.x) - (sin_rot*child.pos.y);
+	pos.y = (cos_rot*child.pos.y) + (sin_rot*child.pos.x);
+	//newTrans.pos.y *= -1.;
+	rot += child.rot;
+
+	// scale
+	pos *= parent.scale;
+	scale *= child.scale;
+
+	// offset
+	pos += parent.pos;
+
 
 	return *this;
 }
@@ -141,6 +166,42 @@ double Transform::right() const
 {
 	return pos.x + (scale.x * .5);
 }
+
+void Transform::render(Transform offset) const
+{
+	offset << *this;
+	// render rect
+	SDL_Rect rect = offset.toRect();
+	SDL_RenderDrawRect(game.renderer, &rect);
+
+
+
+	// render 2 lines    X
+	Transform trans;   trans.nullify();
+
+	trans.pos.set( offset.left(), offset.top() );
+	trans.scale.x = offset.right()  - offset.left();
+	trans.scale.y = offset.bottom() - offset.top();
+	
+	Line::renderStatic(trans);
+	 
+	
+	trans.nullify();
+
+	trans.pos.set(offset.left(), offset.bottom());
+	trans.scale.x = offset.right() - offset.left();
+	trans.scale.y = offset.top() - offset.bottom();
+
+	Line::renderStatic(trans);
+}
+
+
+
+
+
+
+
+
 
 Transform operator*(const Transform t, const double d)
 {

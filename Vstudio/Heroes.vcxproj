@@ -165,7 +165,7 @@
     <ClCompile Include="..\src\Button.cpp" />
     <ClCompile Include="..\src\Collision.cpp" />
     <ClCompile Include="..\src\Credits.cpp" />
-    <ClCompile Include="..\src\Editor.cpp" />
+    <ClCompile Include="..\src\LevelEditor.cpp" />
     <ClCompile Include="..\src\Events.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
     <ClCompile Include="..\src\Hardware.cpp" />
@@ -198,7 +198,7 @@
     <ClInclude Include="..\src\Collision.h" />
     <ClInclude Include="..\src\Color.h" />
     <ClInclude Include="..\src\Credits.h" />
-    <ClInclude Include="..\src\Editor.h" />
+    <ClInclude Include="..\src\LevelEditor.h" />
     <ClInclude Include="..\src\Events.h" />
     <ClInclude Include="..\src\Fullscreen.h" />
     <ClInclude Include="..\src\Game.h" />

@@ -2,7 +2,6 @@
 #include "Game.h"
 
 
-const double pi = 3.14159265359;
 
 
 void Line::render(Transform offset) const  {

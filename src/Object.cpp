@@ -97,7 +97,7 @@ void Object::addUpdate(Update * up) {
 	if (up != nullptr)
 		updates.push_back(up);
 }
-void Object::addRender(Render * re) {
+void Object::addRender(Transform * re) {
 	if (re != nullptr)
 		renders.push_back(re);
 }

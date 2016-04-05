@@ -74,4 +74,9 @@ public:
 
 	SDL_Color getColor();
 	void setColor(SDL_Color col);
+
+	void clear();
+
+	SDL_Texture* getTarget() const;
+	void         setTarget(SDL_Texture* tex);
 };

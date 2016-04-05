@@ -15,6 +15,6 @@ void Log(const std::string & str) {
 			std::cout << str;
 		SDL_RWclose(rw);
 	}
-	else
-		std::cout << str;
+
+	std::cout << str;
 }

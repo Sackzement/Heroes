@@ -1,7 +1,7 @@
 #pragma once
-#include "Transform.h"
+struct Transform;
 
-struct Render : virtual public Transform{
+struct Render {
 	virtual ~Render() {}
 	virtual void render(Transform offset) const = 0;
 };

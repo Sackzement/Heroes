@@ -29,6 +29,9 @@ bool Text::load() {
 
 	if (font == nullptr)  font = game.font;
 
+	if (font == nullptr) { cout << endl << "Font == NULL,  can not create text surface";  return false; }
+
+
 	SDL_Surface* surf = TTF_RenderText_Solid(
 		font,
 		text.c_str(),

@@ -5,10 +5,16 @@
 #include "Stats.h"
 #include "Options.h"
 #include "Credits.h"
+#include "LevelEditor.h"
 #include "Color.h"
 //#include "HardwareInfo.h"
 
 #include "Scene.h"
+
+#include <sstream>
+using std::ostringstream;
+#include <iomanip>
+using std::setprecision;
 
 
 
@@ -19,6 +25,85 @@ Game game;
 const char * filename_font_file = "res\\Zillah Modern Expanded.ttf";
 const int font_size = 128;
 
+
+
+
+
+
+Position pixelsToScenePos(Position2i pixels) {
+
+	Transform units; units.nullify();
+	units.pos = pixels;
+	const Transform win_trans = game.window.getTransform();
+	units.pos /= win_trans.scale.x;
+	units.pos.x -= game.w * .5;
+	units.pos.y -= game.h * .5;
+
+	units << *game.scene;
+
+	return units.pos;
+}
+
+Position pixelToScreenUnits(Position2i pixels) {
+
+	Position unit; unit.nullify();
+	unit = pixels;
+
+	unit /= game.window.getScale();
+
+	unit.x -= game.w * .5;
+	unit.y -= game.h * .5;
+
+	return unit;
+}
+Position screenUnitsToScene(Position p) {
+
+	/*
+	// rot
+	const double initX = p.x,
+		initY = p.y,
+
+		cos_rot = cos(game.scene->rot*(pi / 180.)),
+		sin_rot = sin(game.scene->rot*(pi / 180.));
+
+	p.x = (cos_rot*initX) + (sin_rot*initY);
+	p.y = (cos_rot*initY) + (sin_rot*initX);
+	//p.y *= -1.;
+	*/
+
+	// scale & offset
+	p -= game.scene->pos;
+	// rotate
+	const double initX = p.x,
+		initY = p.y,
+
+		cos_rot = cos(game.scene->rot*(pi / 180.)),
+		sin_rot = sin(game.scene->rot*(pi / 180.));
+
+	p.x = (cos_rot*initX) + (sin_rot*initY);
+	p.y = (cos_rot*initY) - (sin_rot*initX);
+	// scale
+	p /= game.scene->scale;
+	return p;
+}
+
+Position pixelDistToSceneDist(Position2i pixels)
+{
+	Position start, end;
+	start = pixelToScreenUnits(Position2i(0,0));
+	start = screenUnitsToScene(start);
+	end   = pixelToScreenUnits(pixels);
+	end   = screenUnitsToScene(end);
+
+	return end - start;
+}
+
+std::string to_string_prec(const double num, const int prec)
+{
+	ostringstream out;
+	out << fixed << setprecision(prec) << num;
+	return out.str();
+}
 
 
 
@@ -136,7 +221,17 @@ void Game::switchToScene(scene_num num) {
 			scene->load();
 		});
 		break;
-	
+	case scene_num::leveleditor:
+		addScript([&]() {
+			Scene* oldScene = scene;
+			// new thread
+			oldScene->unload();
+			delete oldScene;
+
+			scene = new LevelEditor();
+			scene->load();
+		});
+		break;
 	}
 		
 }

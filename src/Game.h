@@ -18,6 +18,20 @@ using namespace std;
 
 
 
+const double pi = 3.14159265359;
+
+
+
+Position pixelsToScenePos(Position2i pixels);
+
+Position pixelToScreenUnits(Position2i pixels);
+Position screenUnitsToScene(Position p);
+Position pixelDistToSceneDist(Position2i pixels);
+
+std::string to_string_prec(const double d, const int prec = 2);
+
+
+
 
 #include <map>
 struct Game {

@@ -11,14 +11,19 @@ enum struct scene_num {
 	stats,
 	options,
 	credits,
+	leveleditor,
 };
+
+
+
+
+
+
 
 
 struct Scene : virtual public Object {
 
 
-	static double pixelToUnits(double pix);
-	static Position pixelToPos(Position2i pos);
 
 
 	virtual ~Scene() {}
@@ -26,10 +31,18 @@ struct Scene : virtual public Object {
 	bool load() override;
 
 	virtual void render(Transform offset) const override;
-	using Object::render;
+
+	void setCamera(Transform camera_trans);
+
 protected:
 	void renderBG(SDL_Color col, Transform offset) const;
 
+
+
+
+public:
+	static double pixelToUnits(double pix);
+	static Position pixelToPos(Position2i pos);
 };
 
 

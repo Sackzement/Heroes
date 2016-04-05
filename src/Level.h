@@ -24,7 +24,7 @@ struct Level : virtual public Scene {
 	vector<Object*> bullets;
 
 	// selection
-	Render* selected = nullptr;
+	Transform* selected = nullptr;
 
 
 
@@ -36,6 +36,9 @@ struct Level : virtual public Scene {
 	void update() override;
 	void checkCollision();
 	void render(Transform offset) const override;
+
+
+
 
 protected:
 	bool init_bg_clouds();

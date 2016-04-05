@@ -81,9 +81,6 @@
     <ClCompile Include="..\src\Line.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Editor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Size2i.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -94,6 +91,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Collision.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LevelEditor.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,9 +182,6 @@
     <ClInclude Include="..\src\Line.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Editor.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Color.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -210,6 +207,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Nullify.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LevelEditor.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

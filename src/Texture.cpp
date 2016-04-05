@@ -1,8 +1,10 @@
 #include "Texture.h"
 #include <SDL/SDL_image.h>
 #include "game.h"
-#include <iostream>
 
+#include <iostream>
+using std::cout;
+using std::endl;
 
 
 

@@ -206,3 +206,19 @@ SDL_Color Renderer::getColor()  {
 void Renderer::setColor(SDL_Color col)  {
 	SDL_SetRenderDrawColor(game.renderer, col.r, col.g, col.b, col.a);
 }
+
+void Renderer::clear()
+{
+	SDL_RenderClear(m_renderer);
+}
+
+SDL_Texture * Renderer::getTarget() const
+{
+	return SDL_GetRenderTarget(m_renderer);
+}
+
+void Renderer::setTarget(SDL_Texture * tex)
+{
+	if (SDL_SetRenderTarget(m_renderer,tex) != 0)
+		Log(std::string("\n") + SDL_GetError());
+}

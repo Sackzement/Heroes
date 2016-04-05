@@ -4,6 +4,15 @@
 #include "Color.h"
 #include <time.h>
 #include "Collision.h"
+#include "Text.h"
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
+#include <string>
+using std::string;
+using std::to_string;
 
 
 const char * filename_wall_img = "res\\wall.png";
@@ -29,12 +38,25 @@ Level::Level()
 
 }
 
+
+
 void Level::input() {
+
+	//if (game.mouse.moved() && game.mouse.isButtonDown(SDL_BUTTON_MIDDLE))
+
+
+
+	// return to main menu
 	if (game.keyboard.isKeyDownOnce(Key::Q))
 		game.switchToScene(scene_num::mainmenu);
 	if (game.mouse.isButtonDownOnce(SDL_BUTTON_RIGHT))
 		game.switchToScene(scene_num::mainmenu);
 
+
+	// move selected
+	if (game.mouse.moved() && selected && game.mouse.isButtonDown(SDL_BUTTON_LEFT))
+		selected->pos += pixelDistToSceneDist(game.mouse.dist_moved());
+	/*// OLD move selected
 	if ( selected &&
 	     game.mouse.isButtonDown(SDL_BUTTON_LEFT)  )  {
 		
@@ -44,7 +66,7 @@ void Level::input() {
 
 		unit_offset /= game.window.getScale();
 		selected->pos += unit_offset;
-	}
+	}*/
 
 	// select obj with mouse
 	if (game.mouse.isButtonDownOnce(SDL_BUTTON_LEFT)) {
@@ -88,6 +110,16 @@ void Level::input() {
 		if (selected->scale.x <= .1) selected->scale.x = .1;
 		if (selected->scale.y <= .1) selected->scale.y = .1;
 	}
+
+
+	// rotate selection N M
+	if (selected) {
+		if (game.keyboard.isKeyDownOnce(Key::N))
+			selected->rot += 10.;
+		if (game.keyboard.isKeyDownOnce(Key::M))
+			selected->rot -= 10.;
+	}
+
 
 	inputChildren();
 }
@@ -147,9 +179,30 @@ void Level::render(Transform offset) const {
 
 	renderBG(color::sky_blue, offset);
 
-
+	
 
 	renderChildren(offset);
+
+	// print mouse pos
+	Position2i mouse_pos = game.mouse.pos();
+	cout << "\nMouse pixel pos:  " << mouse_pos.x << "  " << mouse_pos.y;
+	Position mouse_pos_screen = pixelToScreenUnits(mouse_pos);
+	cout << "\nMouse scene pos:  " << mouse_pos_screen.x << "  " << mouse_pos_screen.y;
+	Position mouse_pos_scene = screenUnitsToScene(mouse_pos_screen);
+	cout << "\nMouse scene pos:  " << mouse_pos_scene.x << "  " << mouse_pos_scene.y;
+
+	// render text mouse pos
+	Text mouse_text;
+	mouse_text.pos.set(-7., -3.5);
+	mouse_text.scale.set(2., .5);
+	//Transform oo = offset;
+	//oo << mouse_text;
+	// offset << m;
+	mouse_text.color = color::red;
+	mouse_text.text = string() + "Mouse pos:  " + to_string_prec(mouse_pos_scene.x) + "  " + to_string_prec(mouse_pos_scene.y);
+	mouse_text.load();
+	mouse_text.render(offset);
+	mouse_text.unload();
 }
 
 

@@ -67,7 +67,7 @@ void Player::update()  {
 void Player::render(Transform offset) const
 {
 	offset << *this;
-	game.renderer.setColor(color::black);
+	game.renderer.setColor(color::green);
 	Rect::renderStatic(offset);
 	renderChildren(offset);
 }
