@@ -34,10 +34,10 @@ void Transform::nullify()
 	rot = 0.;
 }
 
-void Transform::default()
+void Transform::defaultify()
 {
-	pos.default();
-	scale.default();
+	pos.defaultify();
+	scale.defaultify();
 	rot = 0.;
 }
 
@@ -53,9 +53,7 @@ Transform &Transform:: operator<< (const Transform rhs) {
 	const Transform parent = *this, child = rhs;
 
 	// rot
-	const double initX = rhs.pos.x,
-         		 initY = rhs.pos.y,
-
+	const double
 		cos_rot = cos(game.scene->rot*(pi / 180.)),
 		sin_rot = sin(game.scene->rot*(pi / 180.));
 

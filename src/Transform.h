@@ -34,7 +34,7 @@ struct Transform : virtual public Nullify, virtual public Render {
 	virtual ~Transform() {}
 
 	void nullify() override;
-	void default();
+	void defaultify();
 
 	void set(double xx, double yy, double zz, double ww, double hh, double rr);
 

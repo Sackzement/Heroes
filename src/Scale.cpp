@@ -13,7 +13,7 @@ Scale::Scale(double x, double y) :x(x), y(y)
 }
 
 
-void Scale::default()
+void Scale::defaultify()
 {
 	x = 1.;
 	y = 1.;

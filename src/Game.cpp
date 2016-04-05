@@ -21,8 +21,7 @@ using std::setprecision;
 
 Game game;
 
-
-const char * filename_font_file = "res\\Zillah Modern Expanded.ttf";
+const char * filename_font_file = "Zillah Modern Expanded.ttf";
 const int font_size = 128;
 
 
@@ -111,11 +110,19 @@ std::string to_string_prec(const double num, const int prec)
 void Game::generatePath() {
 	string str = string(argv[0]);
 	size_t len = str.size();
-	for (size_t i = len - 1; i >= 0;--i) {
-		if (str[i] == '\\')  break;
+	for (long long i = len - 1; i >= 0;--i) {
+		if (str[i] == '\\' || str[i] == '/')  break;
 		else str.pop_back();
 	}
 	path = str;
+    
+    path_res = path;
+    
+#ifdef __WINDOWS__
+    path_res += "res\\";
+#else
+    path_res += "res/";
+#endif
 }
 
 int Game::start(int argc, char** argv) {
@@ -130,7 +137,7 @@ int Game::start(int argc, char** argv) {
 	renderer.create();
 
 	// load font
-	string str = path + filename_font_file;
+	string str = path_res + filename_font_file;
 	font = TTF_OpenFont(str.c_str(), font_size);
 
 

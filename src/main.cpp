@@ -1,8 +1,6 @@
 #include <SDL/SDL_platform.h>
 #include "Game.h"
-#include <iostream>
-using std::cout;
-using std::endl;
+#include "Log.h"
 
 
 #if defined(__WINDOWS__) && (_WINDOWS)
@@ -12,7 +10,9 @@ int main
 #endif
 
 (int argc, char** argv) {
-	cout << endl << argv[0];
-	return game.start(argc,argv);
+    
+    Log(argv[0]);
+	
+    return game.start(argc,argv);
 }
 

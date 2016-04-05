@@ -8,7 +8,7 @@ struct Scale {
 	Scale();
 	Scale(double x, double y);
 
-	void default();
+	void defaultify();
 	void nullify();
 
 	Scale & operator *= (const Scale s);

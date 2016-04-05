@@ -46,8 +46,9 @@ protected:
 public:
 	// vars
 	int argc;
-	char** argv;
-	string path;
+    char** argv;
+    string path;
+    string path_res;
 
 	const double 
 		w = 16., 

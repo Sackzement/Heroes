@@ -25,7 +25,7 @@ bool Window::create() {
 	pointer = SDL_CreateWindow("Heroes", 0, 200, 1920, 1080, SDL_WINDOW_SHOWN);// RESIZABLE);
 
 	if (!pointer) {
-		Log(std::string("\n") + SDL_GetError());
+		Log(SDL_GetError());
 		return false;
 	}
 
@@ -136,7 +136,7 @@ bool Window::setFullscreen(Fullscreen var)
 		setSize(game.hardware.displays[0].bounds.w, game.hardware.displays[0].bounds.h);
 	}
 	else if (SDL_SetWindowFullscreen(pointer, var) != 0) {
-		Log(string("\n") + SDL_GetError());
+		Log(SDL_GetError());
 		ret = false;
 	}
 
@@ -181,7 +181,7 @@ bool Renderer::create() {
 	m_renderer = SDL_CreateRenderer(game.window.getPointer(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 
 	if (!m_renderer) {
-		Log(std::string("\n") + SDL_GetError());
+		Log(SDL_GetError());
 		return false;
 	}
 	
@@ -220,5 +220,5 @@ SDL_Texture * Renderer::getTarget() const
 void Renderer::setTarget(SDL_Texture * tex)
 {
 	if (SDL_SetRenderTarget(m_renderer,tex) != 0)
-		Log(std::string("\n") + SDL_GetError());
+		Log(SDL_GetError());
 }

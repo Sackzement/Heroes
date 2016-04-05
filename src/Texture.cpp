@@ -44,7 +44,7 @@ bool Texture::load() {
 bool Texture:: load (const char* name) {
 
 	// CREATE NEW FROM SIZE
-	if (name == "") {
+	if ( strcmp(name, "") == 0 ) {
 		if ( scale.x < 1 || scale.y < 1 )   {
 			cout << endl << "Texture Size too small";
 			return false;
@@ -64,7 +64,7 @@ bool Texture:: load (const char* name) {
 		}
 		catch (out_of_range ex) {
 			// load surface
-			string str = game.path + name;
+			string str = game.path_res + name;
 			SDL_Surface* loadedSurf = IMG_Load(str.c_str());
 			if (loadedSurf == nullptr) { cout << endl << SDL_GetError(); return false; }
 			

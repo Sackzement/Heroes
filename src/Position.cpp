@@ -91,7 +91,7 @@ void Position::nullify()
 	z = 0;
 }
 
-void Position::default()
+void Position::defaultify()
 {
 	nullify();
 }

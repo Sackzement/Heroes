@@ -28,7 +28,7 @@ struct Position {
 	void set(double x, double y);
 	void floor();
 	void nullify();
-	void default();
+	void defaultify();
 };
 
 

@@ -14,9 +14,8 @@ using std::endl;
 using std::string;
 using std::to_string;
 
-
-const char * filename_wall_img = "res\\wall.png";
-const char * filename_circle_img = "res\\cloud_circle.png";
+const char * filename_wall_img = "wall.png";
+const char * filename_circle_img = "cloud_circle.png";
 
 
 double random(double from, double to) {
@@ -257,7 +256,7 @@ bool Level::init_bg_clouds()
 
 bool Level::init_bg_walls() {
 	const int num_top = 28;
-	const int num_sides = 16 - 2;
+	//const int num_walls_sides = 16 - 2;
 	const double wall_size = 9./16. - .06;
 	const double left_offset = (game.w - (double(num_top)*wall_size)) / 2;
 
