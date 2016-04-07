@@ -97,6 +97,15 @@ Position pixelDistToSceneDist(Position2i pixels)
 	return end - start;
 }
 
+Position pixelDistToScreenDist(Position2i pixels)
+{
+	Position start, end;
+	start = pixelToScreenUnits(Position2i(0, 0));
+	end = pixelToScreenUnits(pixels);
+
+	return end - start;
+}
+
 std::string to_string_prec(const double num, const int prec)
 {
 	ostringstream out;

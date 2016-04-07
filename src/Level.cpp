@@ -52,8 +52,19 @@ void Level::input() {
 		game.switchToScene(scene_num::mainmenu);
 
 
+	// SPCE -> create transform on mouse pos
+	if (game.keyboard.isKeyDownOnce(Key::SPACE)) {
+
+		Transform* trans = new Transform();
+		trans->pos = pixelsToScenePos( game.mouse.getPos() );
+		addRender(trans);
+	}
+
+
+
+
 	// move selected
-	if (game.mouse.moved() && selected && game.mouse.isButtonDown(SDL_BUTTON_LEFT))
+	if (game.mouse.did_move() && selected && game.mouse.isButtonDown(SDL_BUTTON_LEFT))
 		selected->pos += pixelDistToSceneDist(game.mouse.dist_moved());
 	/*// OLD move selected
 	if ( selected &&
@@ -67,12 +78,19 @@ void Level::input() {
 		selected->pos += unit_offset;
 	}*/
 
+
+	// + MMB down -> move scene
+	if (game.mouse.did_move() && game.mouse.isButtonDown(SDL_BUTTON_MIDDLE))
+		this->pos += pixelDistToScreenDist( game.mouse.dist_moved() );
+
+
+
 	// select obj with mouse
 	if (game.mouse.isButtonDownOnce(SDL_BUTTON_LEFT)) {
 
 		selected = nullptr;
 
-		Transform mouse_trans = game.mouse.pos().to_Transform();
+		Transform mouse_trans = game.mouse.getPos().to_Transform();
 		mouse_trans.pos /= game.window.getScale();
 		mouse_trans.pos.x -= game.w * .5;
 		mouse_trans.pos.y -= game.h * .5;
@@ -93,7 +111,7 @@ void Level::input() {
 
 		// check coll with scene
 		if (!selected) {
-			Transform mouse_trans = game.mouse.pos().to_Transform();
+			Transform mouse_trans = game.mouse.getPos().to_Transform();
 			mouse_trans.pos /= game.window.getScale();
 			mouse_trans.pos.x -= game.w * .5;
 			mouse_trans.pos.y -= game.h * .5;
@@ -104,10 +122,17 @@ void Level::input() {
 	}
 
 	// mausrad scrollen
-	if (selected) {
-		selected->scale += double(game.mouse.getWheelMoved())*.1;
-		if (selected->scale.x <= .1) selected->scale.x = .1;
-		if (selected->scale.y <= .1) selected->scale.y = .1;
+	if (game.mouse.did_wheel_move()) {
+		if (selected) {
+			selected->scale += double(game.mouse.dist_wheel_moved())*.1;
+			if (selected->scale.x <= .1) selected->scale.x = .1;
+			if (selected->scale.y <= .1) selected->scale.y = .1;
+		}
+		else {
+			this->scale += double(game.mouse.dist_wheel_moved())*.1;
+			if (this->scale.x <= .1) this->scale.x = .1;
+			if (this->scale.y <= .1) this->scale.y = .1;
+		}
 	}
 
 
@@ -183,7 +208,7 @@ void Level::render(Transform offset) const {
 	renderChildren(offset);
 
 	// print mouse pos
-	Position2i mouse_pos = game.mouse.pos();
+	Position2i mouse_pos = game.mouse.getPos();
 	cout << "\nMouse pixel pos:  " << mouse_pos.x << "  " << mouse_pos.y;
 	Position mouse_pos_screen = pixelToScreenUnits(mouse_pos);
 	cout << "\nMouse scene pos:  " << mouse_pos_screen.x << "  " << mouse_pos_screen.y;
@@ -194,13 +219,10 @@ void Level::render(Transform offset) const {
 	Text mouse_text;
 	mouse_text.pos.set(-7., -3.5);
 	mouse_text.scale.set(2., .5);
-	//Transform oo = offset;
-	//oo << mouse_text;
-	// offset << m;
 	mouse_text.color = color::red;
 	mouse_text.text = string() + "Mouse pos:  " + to_string_prec(mouse_pos_scene.x) + "  " + to_string_prec(mouse_pos_scene.y);
 	mouse_text.load();
-	mouse_text.render(offset);
+	mouse_text.render(game.window.getTransform());
 	mouse_text.unload();
 }
 

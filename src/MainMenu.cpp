@@ -116,12 +116,12 @@ void MainMenu::input()
 	const double last_btn_bot = quit.pos.y + half_btn_height;
 
 
-	if (game.mouse.moved())
+	if (game.mouse.did_move())
 	{
 		// mouse to scene
 		Transform offset = *this;
 
-		Transform mouse_trans = game.mouse.pos().to_Transform();
+		Transform mouse_trans = game.mouse.getPos().to_Transform();
 		mouse_trans.pos /= game.window.getScale();
 		mouse_trans.pos.x -= game.w * .5;
 		mouse_trans.pos.y -= game.h * .5;

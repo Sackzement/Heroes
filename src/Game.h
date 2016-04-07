@@ -27,6 +27,7 @@ Position pixelsToScenePos(Position2i pixels);
 Position pixelToScreenUnits(Position2i pixels);
 Position screenUnitsToScene(Position p);
 Position pixelDistToSceneDist(Position2i pixels);
+Position pixelDistToScreenDist(Position2i pixels);
 
 std::string to_string_prec(const double d, const int prec = 2);
 

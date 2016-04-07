@@ -2,7 +2,12 @@
 
 
 
-Mouse::Mouse() : m_pos(), m_moved(false)
+Mouse::Mouse() : 
+	m_pos(),
+	m_did_move(false),
+	m_dist_moved(),
+	m_did_wheel_move(false),
+	m_dist_wheel_moved(0)
 {
 }
 
@@ -22,16 +27,13 @@ bool Mouse::isButtonUpOnce(Uint8 btn) {
 	return buttonUpOnceMask[btn];
 }
 
-bool Mouse::moved()
-{
-	return m_moved;
-}
+
 
 void Mouse::processMouseMoveEvent(SDL_MouseMotionEvent ev) {
 	m_pos.x = ev.x;
 	m_pos.y = ev.y;
 
-	m_moved = true;
+	m_did_move = true;
 
 	m_dist_moved.x = ev.xrel;
 	m_dist_moved.y = ev.yrel;
@@ -53,7 +55,8 @@ void Mouse::processMouseButtonUpEvent(SDL_MouseButtonEvent ev)
 
 void Mouse::processMouseWheelEvent(SDL_MouseWheelEvent ev)
 {
-	m_wheel_moved = ev.y;
+	m_did_wheel_move = true;
+	m_dist_wheel_moved = ev.y;
 }
 
 
@@ -65,10 +68,12 @@ void Mouse::reset()
 		buttonUpOnceMask[i] = false;
 	}
 
-	m_moved = false;
-
-	m_wheel_moved = 0;
+	m_did_move = false;
 	m_dist_moved.x = 0;
 	m_dist_moved.y = 0;
+
+	m_did_wheel_move = false;
+	m_dist_wheel_moved = 0;
+
 
 }

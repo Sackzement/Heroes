@@ -46,7 +46,7 @@ void Button::input() {
 	Transform offset = *(game.scene);
 	offset << *this;
 	SDL_Rect rect = offset.toRect();
-	SDL_Point point = { game.mouse.x(), game.mouse.y() };
+	SDL_Point point = { game.mouse.getX(), game.mouse.getY() };
 
 	SDL_bool res = SDL_PointInRect(&point, &rect);
 	if (res) {
