@@ -10,7 +10,10 @@
 
 class Window {
 
-
+public:
+    constexpr static const double default_win_screen_frac = 2./3.;
+    
+private:
 	SDL_Window*  pointer;
 
 	Position2i   position;
@@ -44,7 +47,7 @@ public:
 	bool        isFullscreenNormal() const;
 	bool        isFullscreenFake() const;
 
-	bool        setFullscreen(Fullscreen var);
+	void        setFullscreen(Fullscreen var);
 
 	void        updateFlag();
 
@@ -58,6 +61,14 @@ protected:
 	void        updateTransform();
 
 
+private:
+    SDL_Rect m_defaultPosSize;
+    void updateDefaultPosSize();
+public:
+    inline SDL_Rect getDefaultPosSize() const {
+        return m_defaultPosSize;
+    }
+    
 };
 
 

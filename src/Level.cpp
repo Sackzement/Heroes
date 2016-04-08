@@ -41,8 +41,6 @@ Level::Level()
 
 void Level::input() {
 
-	//if (game.mouse.moved() && game.mouse.isButtonDown(SDL_BUTTON_MIDDLE))
-
 
 
 	// return to main menu
@@ -86,7 +84,7 @@ void Level::input() {
 
 
 	// select obj with mouse
-	if (game.mouse.isButtonDownOnce(SDL_BUTTON_LEFT)) {
+	if (game.mouse.isButtonUpOnce(SDL_BUTTON_LEFT)) {
 
 		selected = nullptr;
 
@@ -204,6 +202,16 @@ void Level::render(Transform offset) const {
 	renderBG(color::sky_blue, offset);
 
 	
+    // render selection-bg
+    if (selected) {
+        Rect bg_rect;
+        bg_rect.Transform::operator=(*selected);
+        bg_rect.scale += .1;
+        game.renderer.setColor(color::green);
+        bg_rect.render(offset);
+    }
+    
+    
 
 	renderChildren(offset);
 
@@ -215,15 +223,31 @@ void Level::render(Transform offset) const {
 	Position mouse_pos_scene = screenUnitsToScene(mouse_pos_screen);
 	cout << "\nMouse scene pos:  " << mouse_pos_scene.x << "  " << mouse_pos_scene.y;
 
-	// render text mouse pos
-	Text mouse_text;
-	mouse_text.pos.set(-7., -3.5);
-	mouse_text.scale.set(2., .5);
-	mouse_text.color = color::red;
-	mouse_text.text = string() + "Mouse pos:  " + to_string_prec(mouse_pos_scene.x) + "  " + to_string_prec(mouse_pos_scene.y);
-	mouse_text.load();
-	mouse_text.render(game.window.getTransform());
-	mouse_text.unload();
+    {
+		// render mouse pos scene
+		Text mouse_text;
+		mouse_text.pos.set(-7., -3.5);
+		mouse_text.scale.set(2., .5);
+		mouse_text.color = color::red;
+		mouse_text.text = string() + "Mouse pos scene:  " + to_string_prec(mouse_pos_scene.x) + "  " + to_string_prec(mouse_pos_scene.y);
+		mouse_text.load();
+		mouse_text.render(game.window.getTransform());
+		mouse_text.unload();
+	}
+
+    {
+    	// render mouse pos screen
+    	Text mouse_text2;
+    	mouse_text2.pos.set(-7., -4.);
+    	mouse_text2.scale.set(2., .5);
+    	mouse_text2.color = color::red;
+    	mouse_text2.text = string() + "Mouse pos screen:  " + to_string_prec(mouse_pos.x) + "  " + to_string_prec(mouse_pos.y);
+    	mouse_text2.load();
+    	mouse_text2.render(game.window.getTransform());
+    	mouse_text2.unload();
+	}
+    
+    
 }
 
 

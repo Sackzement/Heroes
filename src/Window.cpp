@@ -4,6 +4,25 @@
 #include "Game.h"
 
 
+int getNearestFactor(double aspX,double aspY, double w,double h){
+    
+    const double specified_size = w * h;
+    
+    int   i = 0;
+    int ixi = 0;
+    
+    while (ixi < specified_size) {
+        ++i; ixi = (aspX*double(i)) * (aspY*double(i)); }
+    
+    if ( ixi - specified_size < specified_size - ((aspX*double(i-1)) * (aspY*double(i-1))) )
+        return i;
+    else
+        return i-1;
+    
+    
+    
+}
+
 Window::Window()
 	: pointer(nullptr),
 	position(),
@@ -21,8 +40,19 @@ bool Window::create() {
 
 	// load settings from file
 	// ...
-	// else -> create default window
-	pointer = SDL_CreateWindow("Heroes", 0, 200, 1920, 1080, SDL_WINDOW_SHOWN);// RESIZABLE);
+	// else -> create default window with 2/3 screen size
+    const double   win_frac       = 2./3.;
+          SDL_Rect display = game.hardware.displays[0].bounds;
+    
+    int factor = getNearestFactor(game.w,game.h,double(display.w) * win_frac, double(display.w) * win_frac);
+    
+    SDL_Rect win;
+    win.w = game.w * factor;
+    win.h = game.h * factor;
+    win.x = (display.w - win.w) / 2;
+    win.y = (display.h - win.h) / 2;
+    
+	pointer = SDL_CreateWindow("Heroes", win.x, win.x, win.w, win.h, SDL_WINDOW_SHOWN);
 
 	if (!pointer) {
 		Log(SDL_GetError());
@@ -126,23 +156,29 @@ bool Window::isFullscreenFake() const
 	return (flag & Fullscreen::fake) != 0;
 }
 
-bool Window::setFullscreen(Fullscreen var)
+void Window::setFullscreen(Fullscreen var)
 {
-	bool ret = true;
-
-	if (var == Fullscreen::window) {
-		SDL_SetWindowBordered(pointer, SDL_FALSE);
-		setPosition(game.hardware.displays[0].bounds.x, game.hardware.displays[0].bounds.y);
-		setSize(game.hardware.displays[0].bounds.w, game.hardware.displays[0].bounds.h);
-	}
-	else if (SDL_SetWindowFullscreen(pointer, var) != 0) {
-		Log(SDL_GetError());
-		ret = false;
-	}
-
+    switch (var) {
+        case Fullscreen::off :
+            SDL_SetWindowFullscreen(pointer, 0);
+            SDL_SetWindowBordered(pointer, SDL_TRUE);
+            setPosition(m_defaultPosSize.x, m_defaultPosSize.y);
+            setSize(m_defaultPosSize.w, m_defaultPosSize.h);
+            break;
+        case Fullscreen::normal :
+        case Fullscreen::fake :
+            if (SDL_SetWindowFullscreen(pointer, var) != 0)
+                Log(SDL_GetError());
+            break;
+        case Fullscreen::window :
+            SDL_SetWindowFullscreen(pointer, 0);
+            SDL_SetWindowBordered(pointer, SDL_FALSE);
+            setPosition(0,0);
+            setSize(game.hardware.displays[0].bounds.w, game.hardware.displays[0].bounds.h);
+            break;
+    }
+    
 	updateAll();
-
-	return ret;
 }
 
 Transform Window::getTransform() const
@@ -164,6 +200,24 @@ void Window::updateTransform()
 		transform.scale.x = transform.scale.y;
 
 }
+
+
+
+void Window::updateDefaultPosSize() {
+    
+    SDL_Rect display = game.hardware.displays[0].bounds;
+    
+    int factor = getNearestFactor(game.w,game.h,double(display.w) * default_win_screen_frac, double(display.w) * default_win_screen_frac);
+    
+    m_defaultPosSize.w = game.w * factor;
+    m_defaultPosSize.h = game.h * factor;
+    m_defaultPosSize.x = (display.w - m_defaultPosSize.w) / 2;
+    m_defaultPosSize.y = (display.h - m_defaultPosSize.h) / 2;
+}
+
+
+
+
 
 
 

@@ -305,13 +305,13 @@ void Game::input() {
 	
 
 	// GLOBAL
-	if (keyboard.isKeyDownOnce(Key::KP_1))
+    if (keyboard.isKeyDownOnce(Key::KP_1) || keyboard.isKeyDownOnce(Key::I) )
 		window.setFullscreen(Fullscreen::normal);
-	if (keyboard.isKeyDownOnce(Key::KP_2))
+	if (keyboard.isKeyDownOnce(Key::KP_2) || keyboard.isKeyDownOnce(Key::O) )
 		window.setFullscreen(Fullscreen::fake);
-	if (keyboard.isKeyDownOnce(Key::KP_0))
-		window.setFullscreen(Fullscreen::off);
-	if (keyboard.isKeyDownOnce(Key::KP_3))
+	if (keyboard.isKeyDownOnce(Key::KP_0) || keyboard.isKeyDownOnce(Key::L) )
+		window.setFullscreen(Fullscreen::off );
+	if (keyboard.isKeyDownOnce(Key::KP_3) || keyboard.isKeyDownOnce(Key::P) )
 		window.setFullscreen(Fullscreen::window);
 
 
