@@ -1,8 +1,13 @@
 #pragma once
 #include "Scene.h"
 #include "Player.h"
+#include "Key.h"
 
-
+struct Controls {
+    Key pause;
+    Controls();
+};
+extern Controls controls;
 
 struct Color {
 	Uint8 r, g, b, a;

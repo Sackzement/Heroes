@@ -7,6 +7,7 @@
 #include "Credits.h"
 #include "LevelEditor.h"
 #include "Color.h"
+#include "Log.h"
 //#include "HardwareInfo.h"
 
 #include "Scene.h"
@@ -148,6 +149,8 @@ int Game::start(int argc, char** argv) {
 	// load font
 	string str = path_res + filename_font_file;
 	font = TTF_OpenFont(str.c_str(), font_size);
+    
+    loadCharTextures();
 
 
 	scene = new MainMenu();
@@ -168,14 +171,21 @@ int Game::start(int argc, char** argv) {
 }
 
 void Game::pause() {
-	state = game_state::paused;
+	state = game_states::paused;
 }
 void Game::unpause() {
-	state = game_state::running;
+	state = game_states::running;
+}
+void Game::togglePause() {
+    
+    if ( state != game_states::paused )
+    state = game_states::paused;
+else
+    state = game_states::running;
 }
 
 void Game::quit() {
-	state = game_state::quitting;
+	state = game_states::quitting;
 }
 
 void Game::switchToScene(scene_num num) {
@@ -256,11 +266,42 @@ void Game::addScript(function<void()> func) {
 	scripts.push_back(func);
 }
 
-void Game::mainloop() { while (state != game_state::quitting) {
+
+void Game::loadCharTextures() {
+    
+    /*if (font == nullptr) { Log("Font == NULL,  can not create loadCharTexture surfaces");  return; }
+    
+    // creating all
+    
+    const char* prefix = "char_";
+    
+    char zero = '0';
+    
+    SDL_Surface* surf = TTF_RenderText_Solid( font, &zero, color::white);
+    
+    if (surf == nullptr) { Log(SDL_GetError());  continue; }
+    
+    SDL_Texture* sdlTex = SDL_CreateTextureFromSurface(game.renderer, surf);
+    SDL_FreeSurface(surf);
+    if (sdlTex == nullptr) { Log(SDL_GetError());  continue; }
+    
+    Texture tex;
+    tex.texture = sdlTex;
+    this->name = name; // need to prepare array with all texture names
+    scale.x = width;
+    scale.y = height;
+    
+    game.textures[name] = *this;
+    */
+    
+}
+
+
+void Game::mainloop() { while (state != game_states::quitting) {
 	time.update();
 	exeScripts();
 	input();
-	if (state != game_state::paused)
+	if (state != game_states::paused)
 		update();
 	render();
 	time.delay();
@@ -286,7 +327,7 @@ void Game::input() {
 	SDL_Event ev;
 	while (SDL_PollEvent(&ev)) { switch (ev.type) {
 
-	case SDL_QUIT:         state = game_state::quitting;  break;
+	case SDL_QUIT:         state = game_states::quitting;  break;
 	case SDL_WINDOWEVENT:  
 		switch (ev.window.event) 
 		{

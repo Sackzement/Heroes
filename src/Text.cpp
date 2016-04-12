@@ -2,6 +2,7 @@
 #include <iostream>
 using std::cout;  using std::endl;
 #include "Game.h"
+#include "Log.h"
 
 
 
@@ -29,18 +30,18 @@ bool Text::load() {
 
 	if (font == nullptr)  font = game.font;
 
-	if (font == nullptr) { cout << endl << "Font == NULL,  can not create text surface";  return false; }
+	if (font == nullptr) { Log("Font == NULL,  can not create text surface");  return false; }
 
 
 	SDL_Surface* surf = TTF_RenderText_Solid(
 		font,
 		text.c_str(),
 		color);
-	if (surf == nullptr) { cout << endl << SDL_GetError();  return false; }
+	if (surf == nullptr) { Log(SDL_GetError());  return false; }
 
 	texture = SDL_CreateTextureFromSurface(game.renderer, surf);
 	SDL_FreeSurface(surf);
-	if (texture == nullptr) { cout << endl << SDL_GetError();  return false; }
+	if (texture == nullptr) { Log(SDL_GetError());  return false; }
 
 
 	return true;

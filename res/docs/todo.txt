@@ -1,0 +1,6 @@
+multi select
+save load
+text alignment -> vertical horizontal
+
+show selected obj-values
++edit them with kb

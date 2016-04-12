@@ -18,6 +18,22 @@ const char * filename_wall_img = "wall.png";
 const char * filename_circle_img = "cloud_circle.png";
 
 
+Controls::Controls() :
+// default keys
+pause(Key::P)
+{}
+
+Controls controls;
+
+
+
+
+
+
+
+
+
+
 double random(double from, double to) {
 	double d = (double)rand() / (double)RAND_MAX;
 	return from + (d * (to - from));
@@ -42,6 +58,9 @@ Level::Level()
 void Level::input() {
 
 
+    
+    if (game.keyboard.isKeyDownOnce(controls.pause))
+        game.togglePause();
 
 	// return to main menu
 	if (game.keyboard.isKeyDownOnce(Key::Q))

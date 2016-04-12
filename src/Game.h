@@ -32,18 +32,17 @@ Position pixelDistToScreenDist(Position2i pixels);
 std::string to_string_prec(const double d, const int prec = 2);
 
 
-
-
 #include <map>
+
+
+
 struct Game {
-
-protected:
-	enum class game_state {
-		running,
-		paused,
-		quitting,
-	};
-
+private:
+    enum class game_states {
+        running,
+        paused,
+        quitting,
+    };
 public:
 	// vars
 	int argc;
@@ -71,7 +70,7 @@ public:
 	 std::map<const string,Texture> textures;
 
 	 Scene* scene;
-	 game_state state;
+	 game_states state;
 
 protected:
 	 vector <function<void()>> scripts;
@@ -81,11 +80,14 @@ public:
 
 	 // functions
 	int start(int argc,char** argv);
+    
 	void pause();
 	void unpause();
+    void togglePause();
 	void quit();
 	void switchToScene(scene_num num);
 	void addScript(function<void()>func);
+    void loadCharTextures();
 private:
 	void mainloop();
 	void exeScripts();

@@ -55,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		A7179BD71CB3ECD800268198 /* Heroes */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Heroes; sourceTree = BUILT_PRODUCTS_DIR; };
+		A76192ED1CB8009A00C85AB1 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = docs; path = ../res/docs; sourceTree = "<group>"; };
 		A7848D861CB3EDA5008768B4 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		A7848D871CB3EDA5008768B4 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		A7848D881CB3EDA5008768B4 /* Collision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Collision.cpp; sourceTree = "<group>"; };
@@ -140,6 +141,7 @@
 		A7179BCE1CB3ECD800268198 = {
 			isa = PBXGroup;
 			children = (
+				A76192ED1CB8009A00C85AB1 /* docs */,
 				A7848DE81CB3F320008768B4 /* res */,
 				A7848D851CB3EDA5008768B4 /* src */,
 				A7179BD81CB3ECD800268198 /* Products */,
