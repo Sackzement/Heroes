@@ -12,7 +12,7 @@ int getNearestFactor(double aspX,double aspY, double w,double h){
     int ixi = 0;
     
     while (ixi < specified_size) {
-        ++i; ixi = (aspX*double(i)) * (aspY*double(i)); }
+        ++i; ixi = int((aspX*double(i)) * (aspY*double(i))); }
     
     if ( ixi - specified_size < specified_size - ((aspX*double(i-1)) * (aspY*double(i-1))) )
         return i;
@@ -47,8 +47,8 @@ bool Window::create() {
     int factor = getNearestFactor(game.w,game.h,double(display.w) * win_frac, double(display.w) * win_frac);
     
     SDL_Rect win;
-    win.w = game.w * factor;
-    win.h = game.h * factor;
+    win.w = int(game.w * factor);
+    win.h = int(game.h * factor);
     win.x = (display.w - win.w) / 2;
     win.y = (display.h - win.h) / 2;
     
@@ -209,8 +209,8 @@ void Window::updateDefaultPosSize() {
     
     int factor = getNearestFactor(game.w,game.h,double(display.w) * default_win_screen_frac, double(display.w) * default_win_screen_frac);
     
-    m_defaultPosSize.w = game.w * factor;
-    m_defaultPosSize.h = game.h * factor;
+    m_defaultPosSize.w = int(game.w * factor);
+    m_defaultPosSize.h = int(game.h * factor);
     m_defaultPosSize.x = (display.w - m_defaultPosSize.w) / 2;
     m_defaultPosSize.y = (display.h - m_defaultPosSize.h) / 2;
 }
