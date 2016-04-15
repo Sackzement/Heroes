@@ -6,3 +6,7 @@ C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
 C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
 C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
 C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe

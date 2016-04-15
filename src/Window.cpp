@@ -40,19 +40,11 @@ bool Window::create() {
 
 	// load settings from file
 	// ...
-	// else -> create default window with 2/3 screen size
-    const double   win_frac       = 2./3.;
-          SDL_Rect display = game.hardware.displays[0].bounds;
+	// else -> create default window with default settings
+
+	updateDefaultPosSize();
     
-    int factor = getNearestFactor(game.w,game.h,double(display.w) * win_frac, double(display.w) * win_frac);
-    
-    SDL_Rect win;
-    win.w = int(game.w * factor);
-    win.h = int(game.h * factor);
-    win.x = (display.w - win.w) / 2;
-    win.y = (display.h - win.h) / 2;
-    
-	pointer = SDL_CreateWindow("Heroes", win.x, win.x, win.w, win.h, SDL_WINDOW_SHOWN);
+	pointer = SDL_CreateWindow("Heroes", m_defaultPosSize.x, m_defaultPosSize.y, m_defaultPosSize.w, m_defaultPosSize.h, SDL_WINDOW_SHOWN);
 
 	if (!pointer) {
 		Log(SDL_GetError());
@@ -164,17 +156,20 @@ void Window::setFullscreen(Fullscreen var)
             SDL_SetWindowBordered(pointer, SDL_TRUE);
             setPosition(m_defaultPosSize.x, m_defaultPosSize.y);
             setSize(m_defaultPosSize.w, m_defaultPosSize.h);
+			updateAll();
             break;
         case Fullscreen::normal :
         case Fullscreen::fake :
             if (SDL_SetWindowFullscreen(pointer, var) != 0)
                 Log(SDL_GetError());
+			updateAll();
             break;
         case Fullscreen::window :
             SDL_SetWindowFullscreen(pointer, 0);
             SDL_SetWindowBordered(pointer, SDL_FALSE);
             setPosition(0,0);
             setSize(game.hardware.displays[0].bounds.w, game.hardware.displays[0].bounds.h);
+			updateAll();
             break;
     }
     
@@ -207,7 +202,7 @@ void Window::updateDefaultPosSize() {
     
     SDL_Rect display = game.hardware.displays[0].bounds;
     
-    int factor = getNearestFactor(game.w,game.h,double(display.w) * default_win_screen_frac, double(display.w) * default_win_screen_frac);
+    int factor = getNearestFactor(game.w,game.h,double(display.w) * default_win_screen_frac, double(display.h) * default_win_screen_frac);
     
     m_defaultPosSize.w = int(game.w * factor);
     m_defaultPosSize.h = int(game.h * factor);
