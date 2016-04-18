@@ -73,29 +73,29 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\build\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>..\build\$(PlatformTarget)\$(Configuration)\intermediate\</IntDir>
-    <IncludePath>C:\dev\libs\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\libs\lib_files\$(PlatformTarget)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\libs\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\SDL;..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\boost;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\build\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>..\build\$(PlatformTarget)\$(Configuration)\intermediate\</IntDir>
     <IncludePath>..\..\..\libs\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\SDL;..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\boost;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\build\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>..\build\$(PlatformTarget)\$(Configuration)\intermediate\</IntDir>
-    <IncludePath>C:\dev\libs\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\libs\lib_files\$(PlatformTarget)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\libs\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\SDL;..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\boost;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\build\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>..\build\$(PlatformTarget)\$(Configuration)\intermediate\</IntDir>
-    <IncludePath>C:\dev\libs\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\libs\lib_files\$(PlatformTarget)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\libs\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\SDL;..\..\..\libs\lib_files\$(PlatformTarget)\$(Configuration)\boost;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -188,7 +188,8 @@
     <ClCompile Include="..\src\Size2i.cpp" />
     <ClCompile Include="..\src\Stats.cpp" />
     <ClCompile Include="..\src\Text.cpp" />
-    <ClCompile Include="..\src\Texture.cpp" />
+    <ClCompile Include="..\src\TextureDraw.cpp" />
+    <ClCompile Include="..\src\TextureInfo.cpp" />
     <ClCompile Include="..\src\Time.cpp" />
     <ClCompile Include="..\src\Transform.cpp" />
     <ClCompile Include="..\src\Window.cpp" />
@@ -227,11 +228,71 @@
     <ClInclude Include="..\src\Size2i.h" />
     <ClInclude Include="..\src\Stats.h" />
     <ClInclude Include="..\src\Text.h" />
-    <ClInclude Include="..\src\Texture.h" />
+    <ClInclude Include="..\src\TextureDraw.h" />
+    <ClInclude Include="..\src\TextureInfo.h" />
     <ClInclude Include="..\src\Time.h" />
     <ClInclude Include="..\src\Transform.h" />
     <ClInclude Include="..\src\Update.h" />
     <ClInclude Include="..\src\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\res\App-Store.png" />
+    <Image Include="..\res\bg_color.png" />
+    <Image Include="..\res\cloud_circle.png" />
+    <Image Include="..\res\crate.png" />
+    <Image Include="..\res\design.jpg" />
+    <Image Include="..\res\enemy1.png" />
+    <Image Include="..\res\enemy2.png" />
+    <Image Include="..\res\game.png" />
+    <Image Include="..\res\house.jpg" />
+    <Image Include="..\res\metal_wall.png" />
+    <Image Include="..\res\metal_wall_dots.png" />
+    <Image Include="..\res\money.jpg" />
+    <Image Include="..\res\player.png" />
+    <Image Include="..\res\playstore.jpg" />
+    <Image Include="..\res\sand_wall.png" />
+    <Image Include="..\res\SCB_imgs\colors.png" />
+    <Image Include="..\res\SCB_imgs\colors2.png" />
+    <Image Include="..\res\SCB_imgs\colors3.png" />
+    <Image Include="..\res\SCB_imgs\Level1.png" />
+    <Image Include="..\res\SCB_imgs\MainMenu.png" />
+    <Image Include="..\res\SCB_imgs\Options.png" />
+    <Image Include="..\res\Steam.jpg" />
+    <Image Include="..\res\stone_wall.png" />
+    <Image Include="..\res\visual_studio.png" />
+    <Image Include="..\res\wall.png" />
+    <Image Include="..\res\xcode.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\bg_color.xcf" />
+    <None Include="..\res\cloud_circle.xcf" />
+    <None Include="..\res\crate.xcf" />
+    <None Include="..\res\docs\ASCII Chart.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\res\enemy1.xcf" />
+    <None Include="..\res\enemy2.xcf" />
+    <None Include="..\res\metal_wall.xcf" />
+    <None Include="..\res\metal_wall_dots.xcf" />
+    <None Include="..\res\player.xcf" />
+    <None Include="..\res\sand_wall.xcf" />
+    <None Include="..\res\SCB_imgs\colors.xcf" />
+    <None Include="..\res\SCB_imgs\colors2.xcf" />
+    <None Include="..\res\SCB_imgs\colors3.xcf" />
+    <None Include="..\res\SCB_imgs\Level1.xcf" />
+    <None Include="..\res\SCB_imgs\MainMenu.xcf" />
+    <None Include="..\res\SCB_imgs\Options.xcf" />
+    <None Include="..\res\stone_wall.xcf" />
+    <None Include="..\res\wall.xcf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\res\Zillah Modern Expanded.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\res\docs\mem_caps.txt" />
+    <Text Include="..\res\docs\resolutions.txt" />
+    <Text Include="..\res\docs\todo.txt" />
+    <Text Include="..\res\docs\VS_settings.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

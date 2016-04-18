@@ -6,7 +6,7 @@
 #include "Mouse.h"
 using namespace std;
 #include "Scene.h"
-#include "Texture.h"
+#include "TextureInfo.h"
 #include <functional>
 #include <SDL/SDL_ttf.h>
 #include "Hardware.h"
@@ -30,6 +30,7 @@ Position pixelDistToSceneDist(Position2i pixels);
 Position pixelDistToScreenDist(Position2i pixels);
 
 std::string to_string_prec(const double d, const int prec = 2);
+std::string getExtension(const std::string& str);
 
 
 #include <map>
@@ -67,7 +68,7 @@ public:
 
 	 TTF_Font* font;
 
-	 std::map<const string,Texture> textures;
+	 std::map<const string, TextureInfo> textures;
 
 	 Scene* scene;
 	 game_states state;

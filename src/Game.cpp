@@ -114,6 +114,36 @@ std::string to_string_prec(const double num, const int prec)
 	return out.str();
 }
 
+std::string getExtension(const std::string & str)
+{
+	std::string ret;
+	const size_t len = str.size();
+
+	if (len < 3)
+		return ret;
+
+	// searching for point position
+	size_t pointPos = len - 2;
+	bool pointFound = false;
+	while(pointPos > 0)
+	{
+		if (str[pointPos] == '.') {
+			pointFound = true;
+			break;
+		}
+		--pointPos;
+	}
+
+	if (pointFound == false)
+		return ret;
+
+	// putting string after pointPos into return string
+	for (size_t i = pointPos + 1; i < len; ++i)
+		ret += str[i];
+
+	return ret;
+}
+
 
 
 

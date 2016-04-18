@@ -1,6 +1,11 @@
+
+
+
 multi select
 save load
 text alignment -> vertical horizontal
 
 show selected obj-values
 +edit them with kb
+
+load char textures ->  a-z 0-9 signs

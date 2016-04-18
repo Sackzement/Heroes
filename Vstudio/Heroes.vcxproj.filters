@@ -4,6 +4,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{7363a854-e6f0-4fc9-bad1-32295c2d86d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{bc9f60f9-6b97-40e8-9718-ae737045f81f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\docs">
+      <UniqueIdentifier>{139f6958-62c3-418f-ae01-a6cd8c7a9a06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\SCB_imgs">
+      <UniqueIdentifier>{20702227-e87f-4755-b800-244d43025f51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -40,9 +49,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Point.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Texture.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Libs.cpp">
@@ -96,6 +102,12 @@
     <ClCompile Include="..\src\LevelEditor.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\TextureDraw.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TextureInfo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Game.h">
@@ -141,9 +153,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Point.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Texture.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Libs.h">
@@ -212,5 +221,166 @@
     <ClInclude Include="..\src\LevelEditor.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\TextureDraw.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TextureInfo.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\res\App-Store.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\bg_color.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\cloud_circle.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\crate.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\design.jpg">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\enemy1.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\enemy2.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\game.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\house.jpg">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\metal_wall.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\metal_wall_dots.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\money.jpg">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\player.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\playstore.jpg">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\sand_wall.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\Steam.jpg">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\stone_wall.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\visual_studio.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\wall.png">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\xcode.jpg">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="..\res\SCB_imgs\colors.png">
+      <Filter>res\SCB_imgs</Filter>
+    </Image>
+    <Image Include="..\res\SCB_imgs\colors2.png">
+      <Filter>res\SCB_imgs</Filter>
+    </Image>
+    <Image Include="..\res\SCB_imgs\colors3.png">
+      <Filter>res\SCB_imgs</Filter>
+    </Image>
+    <Image Include="..\res\SCB_imgs\Level1.png">
+      <Filter>res\SCB_imgs</Filter>
+    </Image>
+    <Image Include="..\res\SCB_imgs\MainMenu.png">
+      <Filter>res\SCB_imgs</Filter>
+    </Image>
+    <Image Include="..\res\SCB_imgs\Options.png">
+      <Filter>res\SCB_imgs</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\bg_color.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\cloud_circle.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\crate.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\enemy1.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\enemy2.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\metal_wall.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\metal_wall_dots.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\player.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\sand_wall.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\stone_wall.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\wall.xcf">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\res\docs\ASCII Chart.htm">
+      <Filter>res\docs</Filter>
+    </None>
+    <None Include="..\res\SCB_imgs\colors.xcf">
+      <Filter>res\SCB_imgs</Filter>
+    </None>
+    <None Include="..\res\SCB_imgs\colors2.xcf">
+      <Filter>res\SCB_imgs</Filter>
+    </None>
+    <None Include="..\res\SCB_imgs\colors3.xcf">
+      <Filter>res\SCB_imgs</Filter>
+    </None>
+    <None Include="..\res\SCB_imgs\Level1.xcf">
+      <Filter>res\SCB_imgs</Filter>
+    </None>
+    <None Include="..\res\SCB_imgs\MainMenu.xcf">
+      <Filter>res\SCB_imgs</Filter>
+    </None>
+    <None Include="..\res\SCB_imgs\Options.xcf">
+      <Filter>res\SCB_imgs</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\res\Zillah Modern Expanded.ttf">
+      <Filter>res</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\res\docs\mem_caps.txt">
+      <Filter>res\docs</Filter>
+    </Text>
+    <Text Include="..\res\docs\resolutions.txt">
+      <Filter>res\docs</Filter>
+    </Text>
+    <Text Include="..\res\docs\todo.txt">
+      <Filter>res\docs</Filter>
+    </Text>
+    <Text Include="..\res\docs\VS_settings.txt">
+      <Filter>res\docs</Filter>
+    </Text>
   </ItemGroup>
 </Project>

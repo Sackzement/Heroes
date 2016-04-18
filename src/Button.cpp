@@ -10,7 +10,7 @@ Button::Button()
 
 	setFunction([]() {});
 }
-void Button::setTextures(Texture normal, Texture highlighted, Texture pressed)
+void Button::setTextures(TextureDraw normal, TextureDraw highlighted, TextureDraw pressed)
 {
 	textureNormal = normal;
 	textureHighlighted = highlighted;
@@ -63,7 +63,7 @@ void Button::input() {
 
 void Button::render(Transform offset) const {
 
-	Texture toDraw;
+	TextureDraw toDraw;
 
 	switch (state)
 	{

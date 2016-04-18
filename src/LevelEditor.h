@@ -1,19 +1,30 @@
 #pragma once
 
 #include "Scene.h"
+#include "TextureInfo.h"
 
 
 
 
-
-
-
-
-
-
-
-struct LevelEditor :	virtual public Scene
+struct TextureOptions : virtual public Object
 {
+	TextureOptions();
+	~TextureOptions() {}
+
+	bool load()  override;
+	void input() override;
+	void render(Transform offset) const override;
+
+
+	vector<TextureInfo> texinfos;
+};
+
+
+
+
+struct LevelEditor : virtual public Scene
+{ 
+	TextureOptions texops;
 
 
 	LevelEditor();
@@ -21,8 +32,16 @@ struct LevelEditor :	virtual public Scene
 
 
 
+
+
+
+	bool load() override;
+	void unload() override;
+
 	void input() override;
+	void update() override;
 	void render(Transform offset) const override;
+
 
 
 	// selection

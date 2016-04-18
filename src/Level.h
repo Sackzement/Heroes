@@ -37,6 +37,7 @@ struct Level : virtual public Scene {
 	Level();
 	virtual ~Level() {}
 
+	bool load() override;
 	void input() override;
 	void update() override;
 	void checkCollision();

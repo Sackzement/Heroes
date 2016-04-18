@@ -59,6 +59,7 @@ protected:
 public:
 	Uint8 type() const;
 	void addType(Uint8 new_type);
+
 	bool load() override;
 	void unload() override;
 
@@ -82,3 +83,6 @@ protected:
 	void updateChildren();
 	void renderChildren(Transform offset) const;
 };
+
+
+

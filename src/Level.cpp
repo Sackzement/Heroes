@@ -5,6 +5,7 @@
 #include <time.h>
 #include "Collision.h"
 #include "Text.h"
+#include "TextureDraw.h"
 
 #include <iostream>
 using std::cout;
@@ -54,6 +55,24 @@ Level::Level()
 }
 
 
+
+bool Level::load()
+{
+	bool success = true;
+
+	TextureInfo texCloud("cloud_circle.png");
+	TextureInfo texWall("wall.png");
+
+	if (texCloud.load() == false)
+		success = false;
+	if (texWall.load() == false)
+		success = false;
+
+	if (loadChildren() == false)
+		success = false;
+
+	return success;
+}
 
 void Level::input() {
 
@@ -234,13 +253,15 @@ void Level::render(Transform offset) const {
 
 	renderChildren(offset);
 
-	// print mouse pos
+	// get mouse pos
 	Position2i mouse_pos = game.mouse.getPos();
-	cout << "\nMouse pixel pos:  " << mouse_pos.x << "  " << mouse_pos.y;
 	Position mouse_pos_screen = pixelToScreenUnits(mouse_pos);
-	cout << "\nMouse scene pos:  " << mouse_pos_screen.x << "  " << mouse_pos_screen.y;
 	Position mouse_pos_scene = screenUnitsToScene(mouse_pos_screen);
-	cout << "\nMouse scene pos:  " << mouse_pos_scene.x << "  " << mouse_pos_scene.y;
+
+	/*// print mouse pos
+	cout << "\nMouse pixel pos:  " << mouse_pos.x << "  " << mouse_pos.y;
+	cout << "\nMouse scene pos:  " << mouse_pos_screen.x << "  " << mouse_pos_screen.y;
+	cout << "\nMouse scene pos:  " << mouse_pos_scene.x << "  " << mouse_pos_scene.y;*/
 
     {
 		// render mouse pos scene
@@ -275,8 +296,8 @@ void Level::render(Transform offset) const {
 
 
 struct Wall :virtual public Object {
-	Texture tex;
-	Wall() { tex.name = filename_wall_img; }
+	TextureDraw tex;
+	Wall() { tex.setName(filename_wall_img); }
 	~Wall() {}
 	bool load() override {
 		return tex.load(filename_wall_img);
@@ -299,8 +320,8 @@ bool Level::init_bg_clouds()
 
 		Object* cloud = new Object();
 
-		Texture* tex = new Texture();
-		tex->name = filename_circle_img;
+		TextureDraw* tex = new TextureDraw();
+		tex->setName(filename_circle_img);
 		cloud->addLoad(tex);
 		cloud->addRender(tex);
 

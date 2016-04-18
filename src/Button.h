@@ -1,6 +1,6 @@
 #pragma once
 #include "Object.h"
-#include "Texture.h"
+#include "TextureDraw.h"
 #include <functional>
 using std::function;
 
@@ -19,14 +19,14 @@ public:
 	std::function<void()> pressfunction;
 	
 
-	Texture  textureNormal;
-	Texture  textureHighlighted;
-	Texture  texturePressed;
+	TextureDraw  textureNormal;
+	TextureDraw  textureHighlighted;
+	TextureDraw  texturePressed;
 
 
 	     Button();
 		 virtual ~Button() {}
-	void setTextures(Texture normal, Texture highlighted, Texture pressed);
+	void setTextures(TextureDraw normal, TextureDraw highlighted, TextureDraw pressed);
 	void setFunction(function<void()> func);
 	void setState(bt_state st);
 	bool isHighlighted();

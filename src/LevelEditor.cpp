@@ -2,16 +2,68 @@
 #include "Game.h"
 #include "Text.h"
 
+#include "Log.h"
+
+
 #include <iostream>
 using std::cout;
 using std::endl;
 
+#include <boost/filesystem.hpp>
+using namespace boost::filesystem;
+
+#include <SDL/SDL_image.h>
 
 
 
 
 
-LevelEditor::LevelEditor() 
+
+
+
+TextureOptions::TextureOptions()
+{
+}
+
+bool TextureOptions::load()
+{
+	// load all images in res/ folder
+
+	path p(game.path_res);
+	vector<string> v;
+
+	// place all file names in vector
+	for (auto it : directory_iterator(p))
+		v.push_back(it.path().filename().string());
+
+	// log dir and all file names
+	Log("res dir: \"" + p.string() + "\"");
+	for (string it : v)
+		Log(it);
+
+	// collect all img files
+	for (string it : v) {
+
+		string filepath = game.path_res + it;
+
+		string ext = getExtension(it);
+		if (ext == "png")
+			texinfos.push_back(TextureInfo(it));
+	}
+
+	// add to load list
+	for (auto ti : texinfos)
+		addLoad(&ti);
+
+
+	return false;
+}
+
+void TextureOptions::input()
+{
+}
+
+void TextureOptions::render(Transform offset) const
 {
 }
 
@@ -20,6 +72,29 @@ LevelEditor::LevelEditor()
 
 
 
+
+
+
+
+LevelEditor::LevelEditor() 
+{
+	addObject(&texops);
+}
+
+
+
+
+
+bool LevelEditor::load()
+{
+	
+	return loadChildren();
+}
+
+void LevelEditor::unload()
+{
+}
+
 void LevelEditor::input()
 {
 	// return to main menu
@@ -27,6 +102,8 @@ void LevelEditor::input()
 		game.switchToScene(scene_num::mainmenu);
 	if (game.mouse.isButtonDownOnce(SDL_BUTTON_RIGHT))
 		game.switchToScene(scene_num::mainmenu);
+
+
 
 	// mouse move funcs
 	if ( game.mouse.did_move() )
@@ -49,6 +126,10 @@ void LevelEditor::input()
 	}
 }
 
+void LevelEditor::update()
+{
+}
+
 
 
 
@@ -60,13 +141,16 @@ void LevelEditor::render(Transform offset) const
 	renderBG(color::sky_brown, offset);
 
 
-	// print mouse pos
+	// get mouse pos
 	Position2i mouse_pos = game.mouse.getPos();
-	cout << "\nMouse pixel pos:  " << mouse_pos.x << "  " << mouse_pos.y;
 	Position mouse_pos_screen = pixelToScreenUnits(mouse_pos);
-	cout << "\nMouse scene pos:  " << mouse_pos_screen.x << "  " << mouse_pos_screen.y;
 	Position mouse_pos_scene = screenUnitsToScene(mouse_pos_screen);
-	cout << "\nMouse scene pos:  " << mouse_pos_scene.x << "  " << mouse_pos_scene.y;
+
+
+	// print mouse pos
+	cout << "\nMouse pixel pos:  " << mouse_pos.x << "  " << mouse_pos.y;
+	cout << "\nMouse scene pos:  " << mouse_pos_screen.x << "  " << mouse_pos_screen.y;  
+	cout << "\nMouse scene pos:  " << mouse_pos_scene.x << "  " << mouse_pos_scene.y;    
 
 	SDL_assert("LevelEditor render" && 0); // replace / delete ?
 
@@ -83,3 +167,7 @@ void LevelEditor::render(Transform offset) const
 	mouse_text.render(game.window.getTransform());
 	mouse_text.unload();
 }
+
+
+
+

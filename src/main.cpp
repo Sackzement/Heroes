@@ -3,6 +3,8 @@
 #include "Log.h"
 
 
+
+
 #if defined(__WINDOWS__) && (_WINDOWS)
 int WinMain
 #else
@@ -10,6 +12,7 @@ int main
 #endif
 
 (int argc, char** argv) {
+
     
     Log(argv[0]);
 	
