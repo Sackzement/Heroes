@@ -35,6 +35,11 @@ public:
 
 	bool load() override;
 	virtual bool load(const std::string& name);
+
+	// loads textureinfo if there is none
+	bool loadForce();
+	// loads textureinfo if there is none
+	bool loadForce(std::string& name);
 	void unload() override;
 	void render(Transform offset) const override;
 };

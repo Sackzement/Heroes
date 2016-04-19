@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Scene.h"
-#include "TextureInfo.h"
+#include "TextureDraw.h"
 
 
 
@@ -16,7 +16,7 @@ struct TextureOptions : virtual public Object
 	void render(Transform offset) const override;
 
 
-	vector<TextureInfo> texinfos;
+	vector<TextureDraw> textures;
 };
 
 

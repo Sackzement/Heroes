@@ -55,6 +55,29 @@ bool TextureDraw::load(const std::string & name) {
 
 }
 
+bool TextureDraw::loadForce()
+{
+	return loadForce(name);
+}
+
+bool TextureDraw::loadForce(std::string & name)
+{
+	try {
+		TextureInfo& tex = game.textures.at(name);
+
+		pTex = tex.getPointer();
+	}
+	catch (out_of_range ex) {
+		TextureInfo texinf(name);
+
+		texinf.load();
+
+		pTex = texinf.getPointer();
+	}
+
+	return true;
+}
+
 void TextureDraw::unload() {
 
 	pTex = nullptr;

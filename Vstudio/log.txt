@@ -68,3 +68,197 @@ sand_wall.png
 stone_wall.png
 wall.png
 Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf
+C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\Heroes.exe
+res dir: "C:\dev\projects\Heroes\Vstudio\..\build\x64\Debug\res\"
+bg_color.png
+cloud_circle.png
+crate.png
+enemy1.png
+enemy2.png
+metal_wall.png
+metal_wall_dots.png
+player.png
+sand_wall.png
+stone_wall.png
+wall.png
+Zillah Modern Expanded.ttf

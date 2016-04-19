@@ -13,7 +13,7 @@ using std::endl;
 using namespace boost::filesystem;
 
 #include <SDL/SDL_image.h>
-
+#include "TextureDraw.h"
 
 
 
@@ -46,25 +46,38 @@ bool TextureOptions::load()
 
 		string filepath = game.path_res + it;
 
-		string ext = getExtension(it);
-		if (ext == "png")
-			texinfos.push_back(TextureInfo(it));
+		if (getExtension(it) == "png")
+			textures.push_back(TextureDraw(it));
 	}
 
-	// add to load list
-	for (auto ti : texinfos)
-		addLoad(&ti);
+	// forceload all imgs
+	for (auto& tex : textures)
+		tex.loadForce();
 
+
+	// sort textures verticaly
+	size_t len = textures.size();
+	for (int i = 0; i < len; ++i) {
+		TextureDraw& tex = textures[i];
+		tex.pos.y = double(i);
+	}
+
+	// add to textures to Object(TextureOptions)
+	for (auto& tex : textures)
+		addRender(&tex);
 
 	return false;
 }
 
 void TextureOptions::input()
 {
+	inputChildren();
 }
 
 void TextureOptions::render(Transform offset) const
 {
+	offset << *this;
+	renderChildren(offset);
 }
 
 
@@ -152,7 +165,6 @@ void LevelEditor::render(Transform offset) const
 	cout << "\nMouse scene pos:  " << mouse_pos_screen.x << "  " << mouse_pos_screen.y;  
 	cout << "\nMouse scene pos:  " << mouse_pos_scene.x << "  " << mouse_pos_scene.y;    
 
-	SDL_assert("LevelEditor render" && 0); // replace / delete ?
 
 	// render children
 	renderChildren(offset);
